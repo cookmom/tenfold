@@ -22,8 +22,8 @@
 const TAU = Math.PI * 2
 
 export function construct4Fold(R) {
-  const C = (a) => `rgba(80,70,55,${a})`
-  const cons = C(0.35)
+  const C = (a) => { const v = Math.round(245 - (245-80)*a); return `rgb(${v},${v-5},${v-15})`; }
+  const cons = C(0.6)
   const acc  = '#c0392b'
   const blue = 'rgba(50,90,180,.45)'
   const gold = 'rgba(180,120,30,.45)'
@@ -103,9 +103,9 @@ export function construct4Fold(R) {
     desc: 'Begin with a circle divided into 8 equal parts — 4-fold symmetry lives in the number 8.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
-      ...pts8.map(p => ({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.2), sw: 0.4 })),
-      ...pts8.map(p => ({ type: 'circle', cx: p.x, cy: p.y, r: 2.5, stroke: 'none', fill: C(0.45) })),
-      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.5) }
+      ...pts8.map(p => ({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.4), sw: 0.4 })),
+      ...pts8.map(p => ({ type: 'circle', cx: p.x, cy: p.y, r: 2.5, stroke: 'none', fill: C(0.6) })),
+      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.65) }
     ]
   })
 
@@ -145,7 +145,7 @@ export function construct4Fold(R) {
     desc: 'Point the compass at the intersection of the two squares. Open to the outer square boundary — draw a circle tangent to both lines.',
     elements: [
       { type: 'circle', cx: firstInter.x, cy: firstInter.y, r: rSmall, stroke: cons, fill: 'none', sw: 0.6 },
-      { type: 'circle', cx: firstInter.x, cy: firstInter.y, r: 2.5, stroke: 'none', fill: C(0.5) }
+      { type: 'circle', cx: firstInter.x, cy: firstInter.y, r: 2.5, stroke: 'none', fill: C(0.65) }
     ]
   })
 
@@ -158,7 +158,7 @@ export function construct4Fold(R) {
   // Quarter circles at corners of outer square
   const cornerArcs = outerCorners.map((c, i) => {
     const a = ((i * 2 + 1) / 4) * TAU + Math.PI / 4  // angle pointing inward
-    return { type: 'circle', cx: c.x, cy: c.y, r: rSmall * 2, stroke: C(0.2), fill: 'none', sw: 0.4 }
+    return { type: 'circle', cx: c.x, cy: c.y, r: rSmall * 2, stroke: C(0.4), fill: 'none', sw: 0.4 }
   })
   steps.push({
     desc: 'Using the same radius, draw small circles at all 8 intersections and the center. Quarter circles bloom at each corner of the outer square.',

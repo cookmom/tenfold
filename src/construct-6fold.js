@@ -12,7 +12,7 @@
 const TAU = Math.PI * 2
 
 export function construct6Fold(R) {
-  const C = (a) => `rgba(80,70,55,${a})`
+  const C = (a) => { const v = Math.round(245 - (245-80)*a); return `rgb(${v},${v-5},${v-15})`; }
   const cons  = C(0.12)
   const acc   = '#c0392b'
   const blue  = 'rgba(50,90,180,.45)'
@@ -45,7 +45,7 @@ export function construct6Fold(R) {
     desc: 'Place the compass at the center. Draw the first circle — the seed from which all will bloom.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.5) }
+      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.65) }
     ]
   })
 
