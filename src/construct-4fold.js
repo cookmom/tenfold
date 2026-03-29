@@ -162,7 +162,43 @@ export function construct4Fold(R) {
   })
   steps.push({
     desc: 'Using the same radius, draw small circles at all 8 intersections and the center. Quarter circles bloom at each corner of the outer square.',
-    elements: [...allSmallCircles, ...cornerArcs]
+    elements: (() => {
+      const els = []
+      const acc = '#2c3e6b'
+      const grid = 3
+      const spacing = R * 0.7
+      // Draw a grid of 8-pointed stars
+      for (let row = -1; row <= 1; row++) {
+        for (let col = -1; col <= 1; col++) {
+          const cx = col * spacing
+          const cy = row * spacing
+          const sr = spacing * 0.35
+          // 8-pointed star: two overlapping squares
+          for (let sq = 0; sq < 2; sq++) {
+            const rot = sq * Math.PI / 4
+            for (let i = 0; i < 4; i++) {
+              const a1 = rot + (i / 4) * Math.PI * 2
+              const a2 = rot + ((i + 1) / 4) * Math.PI * 2
+              els.push({ type: 'line', x1: cx + Math.cos(a1)*sr, y1: cy + Math.sin(a1)*sr, x2: cx + Math.cos(a2)*sr, y2: cy + Math.sin(a2)*sr, stroke: acc, sw: 1.3 })
+            }
+          }
+        }
+      }
+      // Connecting lines between stars (kite shapes)
+      for (let row = -1; row <= 0; row++) {
+        for (let col = -1; col <= 0; col++) {
+          const cx = (col + 0.5) * spacing
+          const cy = (row + 0.5) * spacing
+          const kr = spacing * 0.18
+          for (let i = 0; i < 4; i++) {
+            const a1 = (i / 4) * Math.PI * 2
+            const a2 = ((i + 1) / 4) * Math.PI * 2
+            els.push({ type: 'line', x1: cx + Math.cos(a1)*kr, y1: cy + Math.sin(a1)*kr, x2: cx + Math.cos(a2)*kr, y2: cy + Math.sin(a2)*kr, stroke: acc, sw: 1.0 })
+          }
+        }
+      }
+      return els
+    })()
   })
 
   // ─── Step 5: Connect circle centers ───────────────────────────────────
