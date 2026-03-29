@@ -261,6 +261,7 @@ Lines through their centers create the grid from which the Mughal 8-pointed star
 <svg id="constructsvgMain" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
 
 <div class="controls" style="margin-top:1rem">
+  <button id="btnPlayPause" onclick="togglePlay()">▶ Play</button>
   <button onclick="activeFoldStep(-1)">← Back</button>
   <button onclick="activeFoldStep(1)" style="background:var(--accent);border-color:var(--accent)">Next →</button>
   <button onclick="activeFoldStep(0)">Reset</button>
@@ -514,7 +515,9 @@ import { construct4Fold } from './src/construct-4fold.js'
 // 8-fold emergent circle-intersection, very faint
 // ═══════════════════════════════════════════════════
 ;(function renderHero() {
-  const TAU = Math.PI * 2
+  
+
+const TAU = Math.PI * 2
   const W = window.innerWidth || 1200
   const H = window.innerHeight || 900
   const R_H = Math.min(W, H) * 0.065 // circle radius
@@ -846,7 +849,49 @@ function renderActiveFold() {
   document.getElementById('foldStepDots').innerHTML = dots
 }
 
+// Play/pause construction animation
+let _apTimer = null
+let _apPlaying = false
+function _apTick() {
+  const steps = allFoldSteps[activeFold]
+  if (!steps) return
+  const cur = foldCurrentStep[activeFold] || 0
+  if (cur >= steps.length - 1) {
+    // Reached end — pause, don't loop
+    _stopPlay()
+    return
+  }
+  foldCurrentStep[activeFold] = cur + 1
+  renderActiveFold()
+}
+function _startPlay() {
+  if (_apTimer) return
+  _apPlaying = true
+  _apTimer = setInterval(_apTick, 2000)
+  const btn = document.getElementById('btnPlayPause')
+  if (btn) btn.textContent = '⏸ Pause'
+}
+function _stopPlay() {
+  _apPlaying = false
+  if (_apTimer) { clearInterval(_apTimer); _apTimer = null }
+  const btn = document.getElementById('btnPlayPause')
+  if (btn) btn.textContent = '▶ Play'
+}
+window.togglePlay = function() {
+  if (_apPlaying) _stopPlay()
+  else { 
+    // If at end, reset first
+    const steps = allFoldSteps[activeFold]
+    if (steps && (foldCurrentStep[activeFold] || 0) >= steps.length - 1) {
+      foldCurrentStep[activeFold] = 0
+      renderActiveFold()
+    }
+    _startPlay()
+  }
+}
+
 window.activeFoldStep = function(dir) {
+  _stopPlay()
   const steps = allFoldSteps[activeFold]
   if (dir === 0) {
     foldCurrentStep[activeFold] = 0
@@ -856,6 +901,7 @@ window.activeFoldStep = function(dir) {
   renderActiveFold()
 }
 
+_stopPlay()
 window.switchFold = function(fold) {
   activeFold = fold
   document.querySelectorAll('.fold-tab').forEach(b => {
@@ -868,17 +914,7 @@ window.switchFold = function(fold) {
 
 // Legacy compatibility (constructStep still wired in HTML)
 // Auto-play: loops when demo is visible, pauses when scrolled away
-// Simple autoplay: cycles construction steps every 1.5s
-let _apTimer = null
-function _apTick() {
-  const steps = allFoldSteps[activeFold]
-  if (!steps) return
-  const cur = foldCurrentStep[activeFold] || 0
-  foldCurrentStep[activeFold] = cur >= steps.length - 1 ? 0 : cur + 1
-  renderActiveFold()
-}
-// Start immediately
-_apTimer = setInterval(_apTick, 1500)
+
 
 window.constructStep = function(dir) { window.activeFoldStep(dir) }
 window.mkStep = function(fold, dir) { /* no-op: tabs replace individual demos */ }
