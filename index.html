@@ -43,6 +43,9 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .draw-circle{animation:compassDraw .8s ease-out forwards}
 .draw-line{animation:rulerDraw .4s ease-out forwards}
 .draw-fade{animation:fadeIn .5s ease forwards;opacity:0}
+.fold-tab{background:rgba(232,228,220,.06);color:var(--fg);border:1px solid rgba(232,228,220,.1);border-radius:6px;padding:.35em .8em;font-family:var(--font);font-size:.7rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,border-color .2s}
+.fold-tab:hover{background:rgba(232,228,220,.12)}
+.fold-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
 @media(max-width:500px){.demo{padding:1rem}.controls{gap:.5rem}}
 </style>
 </head>
@@ -172,11 +175,10 @@ new circles at intersections, connect — and the pattern reveals itself.
 </p>
 
 <blockquote>
-"Mr Oshaghi began with the creation of a shamsa, literally 'little sun'. The decagram
-is progressively broken down to find the classical elements. The pattern is then developed
-through intelligent extension of parallels forming a network of lines, at the intersections
-of which the design emerges."
-<cite>— Richard Henry on Master Oshaghi's workshop, Isfahan</cite>
+"It is important to remember that Ka'ba means <em>cube</em>. The Ka'ba is a cubic form
+— the earthly square — circumscribed by the tawaf, the circular path of circumambulation.
+Heaven and earth, circle and square, are united in this form."
+<cite>— Titus Burckhardt, <em>Art of Islam: Language and Meaning</em></cite>
 </blockquote>
 
 <p>
@@ -186,79 +188,43 @@ every circle and line follows exactly the compass-and-ruler procedure documented
 <strong>Sandy Kurt</strong> from mosques across the Islamic world.
 </p>
 
-<h3>4-fold · India · Agra Fort</h3>
-<p>
+<blockquote>
+"Mr Oshaghi began with the creation of a shamsa, literally 'little sun'. The decagram
+is progressively broken down to find the classical elements. The pattern is then developed
+through intelligent extension of parallels forming a network of lines, at the intersections
+of which <strong>the design emerges</strong>."
+<cite>— Richard Henry on Master Oshaghi's workshop, Isfahan</cite>
+</blockquote>
+
+<!-- ─── Construction tab UI ─── -->
+<div class="demo" id="demo-construction-tabs">
+
+<div class="controls" id="foldTabBar" style="margin-bottom:1rem;gap:.5rem">
+  <button class="fold-tab active" data-fold="4" onclick="switchFold('4')">4-fold</button>
+  <button class="fold-tab" data-fold="6" onclick="switchFold('6')">6-fold</button>
+  <button class="fold-tab" data-fold="8" onclick="switchFold('8')">8-fold</button>
+  <button class="fold-tab" data-fold="12" onclick="switchFold('12')">12-fold</button>
+  <span style="flex:1"></span>
+  <span id="foldOrigin" style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">India · Agra Fort</span>
+</div>
+
+<div id="foldDesc" style="font-size:.78rem;color:rgba(232,228,220,.45);margin-bottom:.8rem;min-height:2.4em;line-height:1.6">
 The 4-fold system builds from interlocking squares — static and dynamic — inscribed
-within a circle. From the intersections of these squares, a family of small tangent circles
-grows. Lines through their centers create the grid from which the Mughal <strong>8-pointed
-star lattice</strong> emerges.
-</p>
-<div class="demo" id="demo-construction-4">
-<svg id="constructsvg4" viewBox="-160 -160 320 320" width="320" height="320"></svg>
-<div class="controls">
-  <button onclick="mkStep('4',-1)">← Back</button>
-  <button onclick="mkStep('4',1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
-  <button onclick="mkStep('4',0)">Reset</button>
-  <span class="val" id="stepLabel4" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
-</div>
-<div class="step-indicator" id="stepDots4"></div>
-<p id="stepDesc4" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
+within a circle. From their intersections, a family of small tangent circles grows.
+Lines through their centers create the grid from which the Mughal 8-pointed star lattice emerges.
 </div>
 
-<h3>6-fold · Iran · Friday Mosque Isfahan</h3>
-<p>
-The 6-fold system begins with the <strong>Flower of Life</strong> — six circles of identical
-radius arranged around a seventh, without ever adjusting the compass. Lines through the
-intersections of these circles weave the hexagonal grid from which the 6-pointed star
-pattern of Isfahan flowers.
-</p>
-<div class="demo" id="demo-construction-6">
-<svg id="constructsvg6" viewBox="-160 -160 320 320" width="320" height="320"></svg>
-<div class="controls">
-  <button onclick="mkStep('6',-1)">← Back</button>
-  <button onclick="mkStep('6',1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
-  <button onclick="mkStep('6',0)">Reset</button>
-  <span class="val" id="stepLabel6" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
-</div>
-<div class="step-indicator" id="stepDots6"></div>
-<p id="stepDesc6" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
-</div>
+<svg id="constructsvgMain" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
 
-<h3>8-fold · Morocco · Zellige</h3>
-<p>
-The 8-fold system — <strong>khatam</strong> — is the master tile of Moroccan zellige.
-Two overlapping squares (one static, one rotated 45°) subdivide the circle into 16 parts.
-Tangent circles at every intersection create the network from which the 8-pointed rosette emerges.
-</p>
-<div class="demo" id="demo-construction">
-<svg id="constructsvg" viewBox="-160 -160 320 320" width="320" height="320"></svg>
-<div class="controls">
-  <button id="btnPrev" onclick="constructStep(-1)">← Back</button>
-  <button id="btnNext" onclick="constructStep(1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
-  <button onclick="constructStep(0)">Reset</button>
-  <span class="val" id="stepLabel" style="flex:1;text-align:right;font-size:.7rem">Step 1 of 8</span>
+<div class="controls" style="margin-top:1rem">
+  <button onclick="activeFoldStep(-1)">← Back</button>
+  <button onclick="activeFoldStep(1)" style="background:var(--accent);border-color:var(--accent)">Next →</button>
+  <button onclick="activeFoldStep(0)">Reset</button>
+  <span class="val" id="foldStepLabel" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
 </div>
-<div class="step-indicator" id="stepDots"></div>
-<p id="stepDesc" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
-</div>
+<div class="step-indicator" id="foldStepDots" style="margin-top:.6rem"></div>
+<p id="foldStepDesc" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:2.4em"></p>
 
-<h3>12-fold · Moorish · Andalusia</h3>
-<p>
-The 12-fold Moorish system works through the lozenge — a rhombus derived from two
-interlocking circles — to find the scale of the 12-point rosette. Circles are
-positioned by proportion alone, and their crossing points grow into the great
-<strong>12-rayed star</strong> of the Alhambra and the mosques of North Africa.
-</p>
-<div class="demo" id="demo-construction-12">
-<svg id="constructsvg12" viewBox="-160 -160 320 320" width="320" height="320"></svg>
-<div class="controls">
-  <button onclick="mkStep('12',-1)">← Back</button>
-  <button onclick="mkStep('12',1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
-  <button onclick="mkStep('12',0)">Reset</button>
-  <span class="val" id="stepLabel12" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
-</div>
-<div class="step-indicator" id="stepDots12"></div>
-<p id="stepDesc12" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
 </div>
 
 <pre><span class="cm">// All four constructions follow Sandy Kurt's compass-and-ruler method:</span>
@@ -268,6 +234,14 @@ positioned by proportion alone, and their crossing points grow into the great
 <span class="cm">// 12-fold: Lozenge → hexagonal circles → 12-ray star (Andalusia)</span></pre>
 
 <!-- ═══════════════════════════════════════════════════ -->
+
+<blockquote>
+"Orientation is a primary phenomenon of our presence in the world. It is not a
+concept we impose upon it — it is the very structure of lived experience.
+To be oriented is to know where you are, which direction you face, and to whom you pray."
+<cite>— Henry Corbin, <em>The Man of Light in Iranian Sufism</em></cite>
+</blockquote>
+
 <h2>4 · Self-Similarity</h2>
 
 <p>
@@ -526,31 +500,39 @@ function makeConstructionDemo({ steps, svgId, labelId, dotsId, descId }) {
   return { step(dir) { if (dir === 0) current = 0; else current = Math.max(0, Math.min(steps.length - 1, current + dir)); render() } }
 }
 
-// ─── 4-fold demo ─────────────────────────────────────────────────────
-const steps4  = construct4Fold(120)
-const demo4   = makeConstructionDemo({ steps: steps4,  svgId: 'constructsvg4',  labelId: 'stepLabel4',  dotsId: 'stepDots4',  descId: 'stepDesc4' })
-window.mkStep = function(fold, dir) {
-  if (fold === '4')  demo4.step(dir)
-  if (fold === '6')  demo6.step(dir)
-  if (fold === '8')  demo8.step(dir)
-  if (fold === '12') demo12.step(dir)
+// ─── Tab-based construction demos ────────────────────────────────────
+const allFoldSteps = {
+  '4':  construct4Fold(120),
+  '6':  construct6Fold(120),
+  '8':  construct8Fold(120),
+  '12': construct12Fold(120)
+}
+const foldOriginLabel = {
+  '4':  'India · Agra Fort',
+  '6':  'Iran · Friday Mosque Isfahan',
+  '8':  'Morocco · Zellige',
+  '12': 'Moorish · Andalusia'
+}
+const foldDescText = {
+  '4':  'The 4-fold system builds from interlocking squares — static and dynamic — inscribed within a circle. From their intersections, a family of small tangent circles grows. Lines through their centers create the grid from which the Mughal 8-pointed star lattice emerges.',
+  '6':  'The 6-fold system begins with the Flower of Life — six circles of identical radius arranged around a seventh, without ever adjusting the compass. Lines through the intersections weave the hexagonal grid from which the 6-pointed star of Isfahan flowers.',
+  '8':  'The 8-fold system — khatam — is the master tile of Moroccan zellige. Two overlapping squares (one static, one rotated 45°) subdivide the circle into 16 parts. Tangent circles at every intersection create the network from which the 8-pointed rosette emerges.',
+  '12': 'The 12-fold Moorish system works through the lozenge — a rhombus derived from two interlocking circles — to find the scale of the 12-point rosette. Circles are positioned by proportion alone, growing into the great 12-rayed star of the Alhambra.'
 }
 
-// ─── 6-fold demo ─────────────────────────────────────────────────────
-const steps6 = construct6Fold(120)
-const demo6  = makeConstructionDemo({ steps: steps6,  svgId: 'constructsvg6',  labelId: 'stepLabel6',  dotsId: 'stepDots6',  descId: 'stepDesc6' })
+const foldCurrentStep = { '4': 0, '6': 0, '8': 0, '12': 0 }
+let activeFold = '4'
 
-// ─── 8-fold demo (legacy wiring kept) ────────────────────────────────
-const constructionSteps = construct8Fold(120)
-let currentStep = 0
-
-function renderConstruction() {
-  const svg = document.getElementById('constructsvg')
-  const isFinalStep = (currentStep === constructionSteps.length - 1)
+function renderActiveFold() {
+  const steps = allFoldSteps[activeFold]
+  const current = foldCurrentStep[activeFold]
+  const svg = document.getElementById('constructsvgMain')
+  const isFinalStep = (current === steps.length - 1)
   let html = ''
-  for (let s = 0; s <= currentStep; s++) {
-    const step = constructionSteps[s]
-    const isCurrent = (s === currentStep)
+
+  for (let s = 0; s <= current; s++) {
+    const step = steps[s]
+    const isCurrent = (s === current)
     if (isFinalStep && !step.isFinal) {
       for (const el of step.elements) {
         const faded = {...el}
@@ -564,25 +546,43 @@ function renderConstruction() {
       })
     }
   }
+
   svg.innerHTML = html
-  const total = constructionSteps.length
-  document.getElementById('stepLabel').textContent = `Step ${currentStep + 1} of ${total}`
-  document.getElementById('stepDesc').textContent = constructionSteps[currentStep].desc
+  document.getElementById('foldStepLabel').textContent = `Step ${current + 1} of ${steps.length}`
+  document.getElementById('foldStepDesc').textContent = steps[current].desc
   let dots = ''
-  for (let i = 0; i < total; i++) {
-    const cls = i < currentStep ? 'step-dot done' : i === currentStep ? 'step-dot current' : 'step-dot'
+  for (let i = 0; i < steps.length; i++) {
+    const cls = i < current ? 'step-dot done' : i === current ? 'step-dot current' : 'step-dot'
     dots += `<div class="${cls}"></div>`
   }
-  document.getElementById('stepDots').innerHTML = dots
+  document.getElementById('foldStepDots').innerHTML = dots
 }
 
-const demo8 = { step(dir) { if (dir === 0) currentStep = 0; else currentStep = Math.max(0, Math.min(constructionSteps.length - 1, currentStep + dir)); renderConstruction() } }
-window.constructStep = function(dir) { demo8.step(dir) }
-renderConstruction()
+window.activeFoldStep = function(dir) {
+  const steps = allFoldSteps[activeFold]
+  if (dir === 0) {
+    foldCurrentStep[activeFold] = 0
+  } else {
+    foldCurrentStep[activeFold] = Math.max(0, Math.min(steps.length - 1, foldCurrentStep[activeFold] + dir))
+  }
+  renderActiveFold()
+}
 
-// ─── 12-fold demo ────────────────────────────────────────────────────
-const steps12 = construct12Fold(120)
-const demo12  = makeConstructionDemo({ steps: steps12, svgId: 'constructsvg12', labelId: 'stepLabel12', dotsId: 'stepDots12', descId: 'stepDesc12' })
+window.switchFold = function(fold) {
+  activeFold = fold
+  document.querySelectorAll('.fold-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.fold === fold)
+  })
+  document.getElementById('foldOrigin').textContent = foldOriginLabel[fold]
+  document.getElementById('foldDesc').textContent = foldDescText[fold]
+  renderActiveFold()
+}
+
+// Legacy compatibility (constructStep still wired in HTML)
+window.constructStep = function(dir) { window.activeFoldStep(dir) }
+window.mkStep = function(fold, dir) { /* no-op: tabs replace individual demos */ }
+
+renderActiveFold()
 
 // ═══════════════════════════════════════════════════
 // SECTION 4: Self-Similarity (multi-scale)
