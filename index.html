@@ -8,12 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d0d12;--fg:rgba(232,228,220,.85);--dim:rgba(232,228,220,.4);--faint:rgba(232,228,220,.18);--accent:#a0432e;--cons:rgba(180,165,140,.18);--font:'Inter',system-ui,sans-serif}
+:root{--bg:#0d0d12;--fg:rgba(232,228,220,.85);--dim:rgba(232,228,220,.4);--faint:rgba(232,228,220,.18);--accent:#8b3525;--cons:rgba(120,110,95,.25);--font:'Inter',system-ui,sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;font-weight:300;line-height:1.8}
 main{max-width:740px;margin:0 auto;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,4vw,2.5rem) 8rem}
 h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:200;letter-spacing:-.03em;line-height:1.15;margin-bottom:.4rem}
-h2{font-size:clamp(.8rem,2vw,1rem);font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:clamp(3rem,8vw,5rem) 0 1.2rem;padding-top:1rem;border-top:1px solid rgba(232,228,220,.06)}
+h2{font-size:clamp(.8rem,2vw,1rem);font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(100,90,75,.6);margin:clamp(3rem,8vw,5rem) 0 1.2rem;padding-top:1rem;border-top:1px solid rgba(232,228,220,.06)}
 h3{font-size:.85rem;font-weight:400;letter-spacing:.06em;color:var(--dim);margin:2rem 0 .8rem}
 p{margin-bottom:1.2rem;color:rgba(232,228,220,.58);font-weight:300}
 p strong{color:var(--fg);font-weight:400}
@@ -21,14 +21,14 @@ blockquote{border-left:2px solid rgba(232,228,220,.1);padding-left:1.2rem;margin
 blockquote cite{display:block;margin-top:.5rem;font-style:normal;font-size:.8rem;letter-spacing:.06em;color:rgba(232,228,220,.3)}
 .bismillah{font-size:clamp(1.1rem,3vw,1.6rem);color:rgba(232,228,220,.35);margin-bottom:clamp(2rem,5vw,3.5rem);text-align:center;line-height:1.6}
 .subtitle{font-size:clamp(.7rem,1.8vw,.85rem);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem}
-.demo{background:rgba(242,234,218,.06);border:1px solid rgba(180,165,140,.12);border-radius:14px;padding:clamp(1rem,3vw,2rem);margin:1.5rem 0 2rem}
-.demo svg{width:100%;height:auto;display:block;filter:url(#pencil);background:radial-gradient(ellipse at center,rgba(242,234,218,.08) 0%,rgba(232,222,205,.04) 70%,transparent 100%);border-radius:8px}
+.demo{background:#f5f0e6;border:1px solid rgba(180,165,140,.3);border-radius:14px;padding:clamp(1rem,3vw,2rem);margin:1.5rem 0 2rem}
+.demo svg{width:100%;height:auto;display:block;filter:url(#pencil);background:#f5f0e6;border-radius:8px}
 .controls{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
-.controls label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);min-width:50px}
+.controls label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(100,90,75,.6);min-width:50px}
 .controls input[type=range]{flex:1;min-width:80px;accent-color:var(--accent);height:2px;-webkit-appearance:none;background:rgba(232,228,220,.1);border-radius:1px;outline:none}
 .controls input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--fg);cursor:pointer}
 .controls select,.controls button{background:rgba(232,228,220,.06);color:var(--fg);border:1px solid rgba(232,228,220,.1);border-radius:6px;padding:.35em .7em;font-family:var(--font);font-size:.7rem;letter-spacing:.06em;cursor:pointer}
-.controls button:hover{background:rgba(180,165,140,.18)}
+.controls button:hover{background:rgba(120,110,95,.25)}
 .controls button.active{background:var(--accent);border-color:var(--accent)}
 .controls .val{font-size:.7rem;color:var(--dim);min-width:20px;font-variant-numeric:tabular-nums}
 pre{background:rgba(232,228,220,.03);border:1px solid rgba(232,228,220,.05);border-radius:10px;padding:1.2rem;overflow-x:auto;margin:1.5rem 0;font-size:.78rem;line-height:1.6;font-family:'JetBrains Mono',monospace;color:rgba(232,228,220,.5)}
@@ -44,7 +44,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .draw-line{animation:rulerDraw .4s ease-out forwards}
 .draw-fade{animation:fadeIn .5s ease forwards;opacity:0}
 .fold-tab{background:rgba(232,228,220,.06);color:var(--fg);border:1px solid rgba(232,228,220,.1);border-radius:6px;padding:.35em .8em;font-family:var(--font);font-size:.7rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,border-color .2s}
-.fold-tab:hover{background:rgba(180,165,140,.18)}
+.fold-tab:hover{background:rgba(120,110,95,.25)}
 .fold-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
 /* ─── Hero background pattern ─── */
 #hero-bg{position:fixed;top:0;left:0;width:100%;height:100vh;pointer-events:none;z-index:0;overflow:hidden;opacity:1}
@@ -74,7 +74,7 @@ main{position:relative;z-index:1}
 <defs>
 <filter id="pencil" x="-2%" y="-2%" width="104%" height="104%">
   <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" seed="2" result="noise"/>
-  <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.6" xChannelSelector="R" yChannelSelector="G"/>
+  <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
 </filter>
 </defs>
 </svg>
@@ -595,7 +595,7 @@ function renderCircle() {
     pts.push([x, y])
     html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.5" fill="rgba(232,228,220,.4)"/>`
     // Radial lines
-    html += `<line x1="0" y1="0" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(180,165,140,.12)" stroke-width="0.5"/>`
+    html += `<line x1="0" y1="0" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(120,110,95,.15)" stroke-width="0.5"/>`
   }
   
   if (!circleShowStar) {
