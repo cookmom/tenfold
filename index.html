@@ -4,27 +4,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Islamic Geometric Patterns — Interactive Guide</title>
+<title>tenfold — Islamic Geometric Patterns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-:root { --font: 'Inter', system-ui, -apple-system, sans-serif; --bg: #0d0d12; --fg: rgba(232,228,220,.85); --dim: rgba(232,228,220,.4); --accent: #c0392b; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; font-weight: 300; line-height: 1.7; }
-main { max-width: 720px; margin: 0 auto; padding: 4rem 2rem 8rem; }
-h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 200; letter-spacing: -.02em; margin-bottom: .5rem; }
-h2 { font-size: 1.1rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 4rem 0 1.5rem; }
-p { margin-bottom: 1.2rem; color: rgba(232,228,220,.65); }
-.bismillah { font-size: 1.4rem; color: var(--dim); margin-bottom: 2rem; text-align: center; }
-.demo { background: rgba(232,228,220,.03); border: 1px solid rgba(232,228,220,.06); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; }
-.demo svg { width: 100%; height: auto; }
-.controls { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; align-items: center; }
-.controls label { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
-.controls input[type=range] { flex: 1; min-width: 100px; }
-code { font-family: 'JetBrains Mono', monospace; font-size: .85em; background: rgba(232,228,220,.06); padding: .15em .4em; border-radius: 4px; }
-pre { background: rgba(232,228,220,.04); border: 1px solid rgba(232,228,220,.06); border-radius: 8px; padding: 1.2rem; overflow-x: auto; margin: 1rem 0; font-size: .85rem; line-height: 1.5; }
-pre code { background: none; padding: 0; }
-.subtitle { font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 2rem; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+:root{--bg:#0d0d12;--fg:rgba(232,228,220,.85);--dim:rgba(232,228,220,.4);--faint:rgba(232,228,220,.18);--accent:#c0392b;--cons:rgba(232,228,220,.12);--font:'Inter',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;font-weight:300;line-height:1.8}
+main{max-width:740px;margin:0 auto;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,4vw,2.5rem) 8rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:200;letter-spacing:-.03em;line-height:1.15;margin-bottom:.4rem}
+h2{font-size:clamp(.8rem,2vw,1rem);font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:clamp(3rem,8vw,5rem) 0 1.2rem;padding-top:1rem;border-top:1px solid rgba(232,228,220,.06)}
+h3{font-size:.85rem;font-weight:400;letter-spacing:.06em;color:var(--dim);margin:2rem 0 .8rem}
+p{margin-bottom:1.2rem;color:rgba(232,228,220,.58);font-weight:300}
+p strong{color:var(--fg);font-weight:400}
+blockquote{border-left:2px solid rgba(232,228,220,.1);padding-left:1.2rem;margin:1.5rem 0;font-style:italic;color:rgba(232,228,220,.45)}
+blockquote cite{display:block;margin-top:.5rem;font-style:normal;font-size:.8rem;letter-spacing:.06em;color:rgba(232,228,220,.3)}
+.bismillah{font-size:clamp(1.1rem,3vw,1.6rem);color:rgba(232,228,220,.35);margin-bottom:clamp(2rem,5vw,3.5rem);text-align:center;line-height:1.6}
+.subtitle{font-size:clamp(.7rem,1.8vw,.85rem);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem}
+.demo{background:rgba(232,228,220,.02);border:1px solid rgba(232,228,220,.05);border-radius:14px;padding:clamp(1rem,3vw,2rem);margin:1.5rem 0 2rem}
+.demo svg{width:100%;height:auto;display:block}
+.controls{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
+.controls label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);min-width:50px}
+.controls input[type=range]{flex:1;min-width:80px;accent-color:var(--accent);height:2px;-webkit-appearance:none;background:rgba(232,228,220,.1);border-radius:1px;outline:none}
+.controls input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--fg);cursor:pointer}
+.controls select,.controls button{background:rgba(232,228,220,.06);color:var(--fg);border:1px solid rgba(232,228,220,.1);border-radius:6px;padding:.35em .7em;font-family:var(--font);font-size:.7rem;letter-spacing:.06em;cursor:pointer}
+.controls button:hover{background:rgba(232,228,220,.12)}
+.controls button.active{background:var(--accent);border-color:var(--accent)}
+.controls .val{font-size:.7rem;color:var(--dim);min-width:20px;font-variant-numeric:tabular-nums}
+pre{background:rgba(232,228,220,.03);border:1px solid rgba(232,228,220,.05);border-radius:10px;padding:1.2rem;overflow-x:auto;margin:1.5rem 0;font-size:.78rem;line-height:1.6;font-family:'JetBrains Mono',monospace;color:rgba(232,228,220,.5)}
+pre .kw{color:rgba(192,100,180,.7)}pre .fn{color:rgba(120,180,220,.7)}pre .str{color:rgba(180,140,100,.7)}pre .cm{color:rgba(232,228,220,.25)}pre .num{color:rgba(180,160,120,.7)}
+.step-indicator{display:flex;gap:6px;margin-top:.8rem;align-items:center}
+.step-dot{width:8px;height:8px;border-radius:50%;background:rgba(232,228,220,.1);transition:background .3s}
+.step-dot.done{background:rgba(232,228,220,.3)}.step-dot.current{background:var(--accent)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+@media(max-width:500px){.demo{padding:1rem}.controls{gap:.5rem}}
 </style>
 </head>
 <body>
@@ -32,91 +45,493 @@ a:hover { text-decoration: underline; }
 
 <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
 
-<h1>Islamic Geometric Patterns</h1>
-<p class="subtitle">An interactive exploration of the mathematics behind Islamic art</p>
+<h1>tenfold</h1>
+<p class="subtitle">The mathematics of Islamic geometric patterns</p>
 
 <p>
-For over a thousand years, Islamic artists have created geometric patterns of extraordinary
-complexity using only two tools: a compass and a straightedge. The patterns that emerge
-from these simple instruments — stars, rosettes, interlacing bands — decorate mosques,
-palaces, and manuscripts across the Islamic world.
+For over a thousand years, artists across the Islamic world have created geometric
+patterns of extraordinary complexity using only two tools: a <strong>compass</strong>
+and a <strong>straightedge</strong>. The patterns that emerge from these instruments —
+stars, rosettes, interlacing bands — decorate mosques, palaces, and manuscripts
+from Morocco to Malaysia.
 </p>
+<p>
+This guide explores their mathematical foundations through interactive demonstrations.
+Drag the sliders. Watch the constructions. The patterns are not drawn — they <em>emerge</em>.
+</p>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>1 · The Circle</h2>
 
 <p>
-This guide explores the mathematical foundations of these patterns, from the circle grids
-that generate them to the quasicrystal tilings that anticipated modern physics by five centuries.
-Each section includes interactive demonstrations — drag the sliders to see how parameters
-shape the pattern.
+Every Islamic geometric pattern begins with a single circle. In Islamic cosmology,
+the circle represents <strong>tawhid</strong> — the unity of God. From this one form,
+all diversity in creation unfolds.
 </p>
 
-<h2>The Circle Grid</h2>
+<blockquote>
+"All Islamic geometric patterns originate from the harmonious subdivisions of circles.
+The circle is a symbol of a religion that emphasizes One God and the role of Mecca,
+which is the center of Islam toward which all Muslims pray."
+<cite>— Abdullahi & Embi, <em>Frontiers of Architectural Research</em>, 2013</cite>
+</blockquote>
 
 <p>
-Every Islamic geometric pattern begins with a grid of overlapping circles. The pattern
-doesn't exist in any single circle — it <em>emerges</em> at the intersection points where
-circles overlap. Connect adjacent intersections on each circle, and a star pattern appears.
+The natural division of the circle into equal parts is the ritual starting point.
+Divide into 4 and you get the cross of cardinal directions. Into 6, the hexagon —
+basis of the Flower of Life. Into 8, the octagram — the <strong>khatam</strong>, master
+tile of Moroccan zellige. Into 10, the <strong>shamsa</strong> — Mr Oshaghi's "little sun",
+the seed of Persian patterns.
 </p>
 
-<p>
-This is the fundamental insight: <strong>the pattern is a consequence of pure geometry,
-not a design imposed upon it.</strong>
-</p>
-
-<div class="demo" id="demo-grid">
-  <div id="grid-svg"></div>
-  <div class="controls">
-    <label>Grid Size</label>
-    <input type="range" id="gridSize" min="20" max="80" value="40" step="2">
-    <label>Type</label>
-    <select id="gridType" style="background:var(--bg);color:var(--fg);border:1px solid rgba(232,228,220,.15);border-radius:4px;padding:.3em .5em;font-family:var(--font)">
-      <option value="hex">Hexagonal (6-fold)</option>
-      <option value="square">Square (8-fold)</option>
-    </select>
-  </div>
+<div class="demo" id="demo-circle">
+<svg id="circlesvg" viewBox="-160 -160 320 320" width="320" height="320"></svg>
+<div class="controls">
+  <label>Divisions</label>
+  <input type="range" id="circleN" min="3" max="16" value="8" step="1">
+  <span class="val" id="circleNval">8</span>
+  <label style="margin-left:.5rem">Show</label>
+  <button id="btnPoly" class="active" onclick="toggleCircleLayer('poly')">Polygons</button>
+  <button id="btnStar" onclick="toggleCircleLayer('star')">Stars</button>
+</div>
 </div>
 
-<pre><code>import { circleGrid, emergentPattern, toSVG } from 'tenfold'
+<pre><span class="cm">// Divide a circle into N equal parts — the seed of all patterns</span>
+<span class="kw">const</span> N = <span class="num">8</span>
+<span class="kw">const</span> points = Array.<span class="fn">from</span>({length: N}, (_, i) => {
+  <span class="kw">const</span> a = (i / N) * Math.PI * <span class="num">2</span> - Math.PI / <span class="num">2</span>
+  <span class="kw">return</span> [Math.<span class="fn">cos</span>(a) * r, Math.<span class="fn">sin</span>(a) * r]
+})</pre>
 
-const centers = circleGrid({ x: 0, y: 0, w: 400, h: 400, size: 40, type: 'hex' })
-const lines = emergentPattern(centers, 20)
-const svg = toSVG(lines, { width: 400, height: 400 })
-
-document.body.innerHTML = svg</code></pre>
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>2 · Three Proportional Systems</h2>
 
 <p>
-The hexagonal grid produces 6-fold symmetry — the basis of patterns found in
-Moroccan zellige tilework. The square grid produces 8-fold symmetry, characteristic
-of Persian and Central Asian designs.
+Not all Islamic patterns are the same. Three distinct proportional systems emerged
+across the Islamic world, each rooted in a different irrational number — and each
+producing a fundamentally different visual character.
 </p>
 
-<h2>More chapters coming...</h2>
+<h3>√2 — Morocco & Andalusia</h3>
+<p>
+The ratio √2 and the silver ratio (1+√2) underlie the <strong>8, 16, and 32-fold
+rosettes</strong> of the western Islamic world. The Alhambra in Granada, the Qarawiyyn
+mosque in Fez, the madrasas of Marrakech — all built on the square grid and its
+diagonal.
+</p>
+
+<h3>√3 — Syria & Egypt</h3>
+<p>
+The hexagonal grid, based on √3, generates <strong>6 and 12-fold patterns</strong>.
+The Umayyad Mosque in Damascus, the Mosque of Ibn Tulun in Cairo. The
+<strong>Flower of Life</strong> — circles packed in hexagonal arrangement — is
+the construction foundation.
+</p>
+
+<h3>φ — Iran & Central Asia</h3>
+<p>
+The golden section φ = (1+√5)/2 ≈ 1.618 produces <strong>5 and 10-fold symmetry</strong>.
+Isfahan's Friday Mosque, the Darb-i Imam shrine. The <strong>shamsa</strong> (decagram)
+is the seed. These are the patterns that, in 2007, were shown to be quasicrystalline —
+anticipating Penrose tilings by five centuries.
+</p>
+
+<blockquote>
+"The ratio of edge length to height is 1 to the golden section. The Greeks called
+such numbers 'unutterables'. Despite this, these values could be determined
+geometrically with great precision."
+<cite>— Richard Henry, <em>Journal of the Iran Society</em>, 2007</cite>
+</blockquote>
+
+<div class="demo" id="demo-systems">
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+  <div style="flex:1;min-width:180px"><svg id="svg-sqrt2" viewBox="-10 -10 220 220" width="200" height="200"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">√2 · 8-FOLD · MOROCCO</div></div>
+  <div style="flex:1;min-width:180px"><svg id="svg-sqrt3" viewBox="-10 -10 220 220" width="200" height="200"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">√3 · 6-FOLD · SYRIA</div></div>
+  <div style="flex:1;min-width:180px"><svg id="svg-phi" viewBox="-10 -10 220 220" width="200" height="200"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">φ · 10-FOLD · IRAN</div></div>
+</div>
+<div class="controls">
+  <label>Density</label>
+  <input type="range" id="sysDensity" min="25" max="60" value="40" step="1">
+  <span class="val" id="sysDensityVal">40</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>3 · The Construction</h2>
 
 <p>
-This is a living document. Future sections will explore the Hasba method,
-girih tiles, Penrose connections, boundary-adaptive fills, and the state of
-the art in computational Islamic geometry.
+For centuries, the compass and straightedge were the only tools used to construct
+these patterns. The method is universal: begin with a circle, subdivide, place
+new circles at intersections, connect — and the pattern reveals itself.
+</p>
+
+<blockquote>
+"Mr Oshaghi began with the creation of a shamsa, literally 'little sun'. The decagram
+is progressively broken down to find the classical elements. The pattern is then developed
+through intelligent extension of parallels forming a network of lines, at the intersections
+of which the design emerges."
+<cite>— Richard Henry on Master Oshaghi's workshop, Isfahan</cite>
+</blockquote>
+
+<p>
+Step through the construction of an <strong>8-fold pattern</strong> below — the same
+method documented by Sandy Kurt from the mosques of Fez and Marrakech.
+Each step adds only compass arcs and straight lines. The final pattern
+is never drawn directly — it <em>emerges</em> from the construction.
+</p>
+
+<div class="demo" id="demo-construction">
+<svg id="constructsvg" viewBox="-160 -160 320 320" width="320" height="320"></svg>
+<div class="controls">
+  <button id="btnPrev" onclick="constructStep(-1)">← Back</button>
+  <button id="btnNext" onclick="constructStep(1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
+  <button onclick="constructStep(0)">Reset</button>
+  <span class="val" id="stepLabel" style="flex:1;text-align:right;font-size:.7rem">Step 1 of 8</span>
+</div>
+<div class="step-indicator" id="stepDots"></div>
+<p id="stepDesc" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
+</div>
+
+<pre><span class="cm">// The 8-fold construction follows Sandy Kurt's method:</span>
+<span class="cm">// 1. Circle  2. Divide ×8  3. Static square  4. Dynamic square</span>
+<span class="cm">// 5. Subdivide ×16  6. Tangent circles  7. Connect  8. Pattern emerges</span></pre>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>4 · Self-Similarity</h2>
+
+<p>
+What makes these proportions feel harmonious? The answer lies in <strong>self-similarity</strong> —
+the same shapes recurring at different scales, like a fractal. In nature, bones, shells,
+and the DNA helix all grow by this principle. Islamic patterns encode the same law.
+</p>
+
+<blockquote>
+"The smaller to the larger is as the larger to the whole — this is the signature
+of living forms. It underlies the proportioning of bones in the human body, as well
+as the structuring of the DNA spiral."
+<cite>— Richard Henry, <em>Pattern, Cognition and Contemplation</em></cite>
+</blockquote>
+
+<p>
+In 2007, Peter Lu and Paul Steinhardt demonstrated that the tiles on the
+<strong>Darb-i Imam shrine</strong> in Isfahan (1453) exhibit two levels of
+self-similar quasicrystalline structure — the same mathematical property
+that Roger Penrose described in 1974, five centuries later.
+</p>
+
+<div class="demo" id="demo-fractal">
+<svg id="fractalsvg" viewBox="-10 -10 420 420" width="400" height="400"></svg>
+<div class="controls">
+  <label>Scale</label>
+  <input type="range" id="fractalScale" min="1" max="3" value="1" step="1">
+  <span class="val" id="fractalScaleVal">1 level</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>More chapters coming</h2>
+
+<p>
+This is a living document. Future sections: <em>The Strapwork</em> (girih tiles and what
+you actually see), <em>The Seven-Fold Mystery</em> (the frontier of aperiodic tiling),
+<em>The Three Disciplines</em> (geometry + arabesque + calligraphy), and
+<em>The Library</em> — using tenfold in your own projects.
+</p>
+
+<p style="margin-top:3rem;font-size:.75rem;color:rgba(232,228,220,.25)">
+tenfold · <a href="https://github.com/cookmom/tenfold">GitHub</a> · A Seven Heavens Studio research project
 </p>
 
 </main>
 
 <script type="module">
-import { circleGrid, emergentPattern, toSVG } from './src/index.js'
+import { circleGrid, circleIntersections, emergentPattern } from './src/index.js'
 
-function render() {
-  const size = parseInt(document.getElementById('gridSize').value)
-  const type = document.getElementById('gridType').value
-  const W = 600, H = 400
-  const centers = circleGrid({ x: 0, y: 0, w: W, h: H, size, type })
-  const radius = size / 2
-  const maxDist = type === 'hex' ? size * 1.16 : size * 1.42
-  const lines = emergentPattern(centers, radius, { maxDist })
-  const svg = toSVG(lines, { width: W, height: H, stroke: '#c0392b', strokeWidth: 0.8, padding: 10 })
-  document.getElementById('grid-svg').innerHTML = svg
+// ═══════════════════════════════════════════════════
+// SECTION 1: Circle Division
+// ═══════════════════════════════════════════════════
+const TAU = Math.PI * 2
+let circleShowStar = false
+
+function renderCircle() {
+  const N = parseInt(document.getElementById('circleN').value)
+  document.getElementById('circleNval').textContent = N
+  const svg = document.getElementById('circlesvg')
+  const R = 130
+  let html = ''
+  
+  // Main circle
+  html += `<circle cx="0" cy="0" r="${R}" fill="none" stroke="rgba(232,228,220,.15)" stroke-width="0.5"/>`
+  
+  // Center dot
+  html += `<circle cx="0" cy="0" r="2" fill="rgba(232,228,220,.3)"/>`
+  
+  // Division points
+  const pts = []
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * TAU - Math.PI / 2
+    const x = Math.cos(a) * R, y = Math.sin(a) * R
+    pts.push([x, y])
+    html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.5" fill="rgba(232,228,220,.4)"/>`
+    // Radial lines
+    html += `<line x1="0" y1="0" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(232,228,220,.08)" stroke-width="0.5"/>`
+  }
+  
+  if (!circleShowStar) {
+    // Polygon (connect adjacent)
+    const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') + ' Z'
+    html += `<path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".6"/>`
+    
+    // If N=8, show static and dynamic squares
+    if (N === 8) {
+      // Static square (0,2,4,6)
+      const sq1 = [0,2,4,6].map(i => pts[i])
+      html += `<path d="M${sq1.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')}Z" fill="none" stroke="rgba(120,160,255,.4)" stroke-width="0.8"/>`
+      // Dynamic square (1,3,5,7)
+      const sq2 = [1,3,5,7].map(i => pts[i])
+      html += `<path d="M${sq2.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')}Z" fill="none" stroke="rgba(255,160,80,.4)" stroke-width="0.8"/>`
+    }
+  } else {
+    // Star polygon: connect every floor(N/2)-th point
+    const skip = Math.floor(N / 2)
+    if (skip > 1 && skip < N - 1) {
+      for (let s = 0; s < (N % 2 === 0 ? 2 : 1); s++) {
+        let d = ''
+        const visited = new Set()
+        let idx = s
+        while (!visited.has(idx)) {
+          visited.add(idx)
+          d += `${d ? 'L' : 'M'}${pts[idx][0].toFixed(1)},${pts[idx][1].toFixed(1)} `
+          idx = (idx + skip) % N
+        }
+        d += 'Z'
+        html += `<path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".6"/>`
+      }
+    }
+    // Also connect every other skip for interesting patterns
+    if (N >= 8) {
+      const skip2 = Math.floor(N / 3)
+      if (skip2 > 1) {
+        for (let s = 0; s < N; s++) {
+          const j = (s + skip2) % N
+          html += `<line x1="${pts[s][0].toFixed(1)}" y1="${pts[s][1].toFixed(1)}" x2="${pts[j][0].toFixed(1)}" y2="${pts[j][1].toFixed(1)}" stroke="var(--accent)" stroke-width="0.5" opacity=".3"/>`
+        }
+      }
+    }
+  }
+  
+  svg.innerHTML = html
 }
 
-document.getElementById('gridSize').addEventListener('input', render)
-document.getElementById('gridType').addEventListener('change', render)
-render()
+window.toggleCircleLayer = function(layer) {
+  circleShowStar = (layer === 'star')
+  document.getElementById('btnPoly').className = circleShowStar ? '' : 'active'
+  document.getElementById('btnStar').className = circleShowStar ? 'active' : ''
+  renderCircle()
+}
+
+document.getElementById('circleN').addEventListener('input', renderCircle)
+renderCircle()
+
+// ═══════════════════════════════════════════════════
+// SECTION 2: Three Systems
+// ═══════════════════════════════════════════════════
+function renderSystems() {
+  const size = parseInt(document.getElementById('sysDensity').value)
+  document.getElementById('sysDensityVal').textContent = size
+  const W = 200, H = 200
+  
+  function makePattern(type, svgId) {
+    const centers = circleGrid({ x: 0, y: 0, w: W, h: H, size, type })
+    const r = size / 2
+    const maxDist = type === 'hex' ? size * 1.16 : size * 1.42
+    const lines = emergentPattern(centers, r, { maxDist })
+    
+    let html = ''
+    for (const [x1, y1, x2, y2] of lines) {
+      if (x1 >= -5 && x1 <= W+5 && y1 >= -5 && y1 <= H+5 && x2 >= -5 && x2 <= W+5 && y2 >= -5 && y2 <= H+5) {
+        html += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`
+      }
+    }
+    document.getElementById(svgId).innerHTML = `<g stroke="var(--accent)" stroke-width="0.6" stroke-linecap="round" opacity=".7">${html}</g>`
+  }
+  
+  makePattern('square', 'svg-sqrt2')
+  makePattern('hex', 'svg-sqrt3')
+  // φ system: use hex but with slightly different radius ratio for 10-fold feel
+  const phiCenters = circleGrid({ x: 0, y: 0, w: W, h: H, size: size * 0.9, type: 'hex' })
+  const phiR = size * 0.9 / 2
+  const phiLines = emergentPattern(phiCenters, phiR * 1.08, { maxDist: size * 0.9 * 1.16 })
+  let phiHtml = ''
+  for (const [x1, y1, x2, y2] of phiLines) {
+    if (x1 >= -5 && x1 <= W+5 && y1 >= -5 && y1 <= H+5 && x2 >= -5 && x2 <= W+5 && y2 >= -5 && y2 <= H+5) {
+      phiHtml += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`
+    }
+  }
+  document.getElementById('svg-phi').innerHTML = `<g stroke="var(--accent)" stroke-width="0.6" stroke-linecap="round" opacity=".7">${phiHtml}</g>`
+}
+
+document.getElementById('sysDensity').addEventListener('input', renderSystems)
+renderSystems()
+
+// ═══════════════════════════════════════════════════
+// SECTION 3: Step-by-step Construction
+// ═══════════════════════════════════════════════════
+let currentStep = 0
+const totalSteps = 8
+const R = 120
+
+const stepDescs = [
+  'Draw the initial circle — the seed of all patterns.',
+  'Divide into 8 equal parts using compass arcs.',
+  'Connect alternate points to form the static square (blue).',
+  'Rotate 45° to form the dynamic square (gold). Two squares, one circle.',
+  'The square intersections subdivide the circle into 16 equal parts.',
+  'Place tangent circles at each intersection point.',
+  'Connect the centers — a network of construction lines emerges.',
+  'The pattern reveals itself. Construction lines fade. Only the design remains.'
+]
+
+function renderConstruction() {
+  const svg = document.getElementById('constructsvg')
+  let html = ''
+  const pts8 = [], pts16 = []
+  
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * TAU - Math.PI / 2
+    pts8.push([Math.cos(a) * R, Math.sin(a) * R])
+  }
+  for (let i = 0; i < 16; i++) {
+    const a = (i / 16) * TAU - Math.PI / 2
+    pts16.push([Math.cos(a) * R, Math.sin(a) * R])
+  }
+  
+  const consAlpha = currentStep >= 7 ? '.04' : '.12'
+  const patAlpha = currentStep >= 7 ? '.8' : '.4'
+  
+  // Step 1: Circle
+  if (currentStep >= 0) {
+    html += `<circle cx="0" cy="0" r="${R}" fill="none" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.5"/>`
+    html += `<circle cx="0" cy="0" r="2" fill="rgba(232,228,220,.3)"/>`
+  }
+  
+  // Step 2: 8 divisions
+  if (currentStep >= 1) {
+    for (const p of pts8) {
+      html += `<line x1="0" y1="0" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.4"/>`
+      html += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2" fill="rgba(232,228,220,.25)"/>`
+    }
+  }
+  
+  // Step 3: Static square
+  if (currentStep >= 2) {
+    const sq = [0,2,4,6].map(i => pts8[i])
+    html += `<path d="M${sq.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')}Z" fill="none" stroke="rgba(120,160,255,${currentStep>=7?'.08':'.35'})" stroke-width="0.7"/>`
+  }
+  
+  // Step 4: Dynamic square
+  if (currentStep >= 3) {
+    const sq = [1,3,5,7].map(i => pts8[i])
+    html += `<path d="M${sq.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')}Z" fill="none" stroke="rgba(255,180,80,${currentStep>=7?'.08':'.35'})" stroke-width="0.7"/>`
+  }
+  
+  // Step 5: 16 subdivisions
+  if (currentStep >= 4) {
+    for (const p of pts16) {
+      html += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="1.5" fill="rgba(232,228,220,.15)"/>`
+    }
+  }
+  
+  // Step 6: Tangent circles at intersections
+  if (currentStep >= 5) {
+    const smallR = R * Math.sin(Math.PI / 8)
+    for (let i = 0; i < 8; i++) {
+      const a = (i / 8) * TAU - Math.PI / 2
+      const cx = Math.cos(a) * R * 0.924, cy = Math.sin(a) * R * 0.924
+      html += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(smallR*0.5).toFixed(1)}" fill="none" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.4"/>`
+    }
+    // Center tangent circle
+    html += `<circle cx="0" cy="0" r="${(smallR*0.5).toFixed(1)}" fill="none" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.4"/>`
+  }
+  
+  // Step 7: Connecting lines
+  if (currentStep >= 6) {
+    for (let i = 0; i < 16; i++) {
+      const j = (i + 4) % 16
+      html += `<line x1="${pts16[i][0].toFixed(1)}" y1="${pts16[i][1].toFixed(1)}" x2="${pts16[j][0].toFixed(1)}" y2="${pts16[j][1].toFixed(1)}" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.3"/>`
+    }
+  }
+  
+  // Step 8: Final pattern highlighted
+  if (currentStep >= 7) {
+    // 8-pointed star (khatam)
+    for (let i = 0; i < 8; i++) {
+      const j = (i + 3) % 8
+      const mid1 = pts16[i * 2], mid2 = pts16[j * 2]
+      html += `<line x1="${pts8[i][0].toFixed(1)}" y1="${pts8[i][1].toFixed(1)}" x2="${pts8[(i+1)%8][0].toFixed(1)}" y2="${pts8[(i+1)%8][1].toFixed(1)}" stroke="var(--accent)" stroke-width="1.2" opacity="${patAlpha}"/>`
+    }
+    // Inner octagon
+    const innerR = R * Math.cos(Math.PI / 8)
+    for (let i = 0; i < 8; i++) {
+      const a1 = ((i + 0.5) / 8) * TAU - Math.PI / 2
+      const a2 = ((i + 1.5) / 8) * TAU - Math.PI / 2
+      html += `<line x1="${(Math.cos(a1)*innerR).toFixed(1)}" y1="${(Math.sin(a1)*innerR).toFixed(1)}" x2="${(Math.cos(a2)*innerR).toFixed(1)}" y2="${(Math.sin(a2)*innerR).toFixed(1)}" stroke="var(--accent)" stroke-width="1.2" opacity="${patAlpha}"/>`
+    }
+  }
+  
+  svg.innerHTML = html
+  
+  // Update step indicator
+  document.getElementById('stepLabel').textContent = `Step ${currentStep + 1} of ${totalSteps}`
+  document.getElementById('stepDesc').textContent = stepDescs[currentStep]
+  let dots = ''
+  for (let i = 0; i < totalSteps; i++) {
+    const cls = i < currentStep ? 'step-dot done' : i === currentStep ? 'step-dot current' : 'step-dot'
+    dots += `<div class="${cls}"></div>`
+  }
+  document.getElementById('stepDots').innerHTML = dots
+}
+
+window.constructStep = function(dir) {
+  if (dir === 0) currentStep = 0
+  else currentStep = Math.max(0, Math.min(totalSteps - 1, currentStep + dir))
+  renderConstruction()
+}
+renderConstruction()
+
+// ═══════════════════════════════════════════════════
+// SECTION 4: Self-Similarity (multi-scale)
+// ═══════════════════════════════════════════════════
+function renderFractal() {
+  const levels = parseInt(document.getElementById('fractalScale').value)
+  document.getElementById('fractalScaleVal').textContent = levels + (levels === 1 ? ' level' : ' levels')
+  const W = 400, H = 400
+  let allLines = []
+  
+  const sizes = [50, 30, 18]
+  for (let lv = 0; lv < levels; lv++) {
+    const s = sizes[lv]
+    const centers = circleGrid({ x: 0, y: 0, w: W, h: H, size: s, type: 'hex' })
+    const lines = emergentPattern(centers, s / 2, { maxDist: s * 1.16 })
+    for (const l of lines) {
+      if (l[0] >= -2 && l[0] <= W+2 && l[2] >= -2 && l[2] <= W+2 && l[1] >= -2 && l[1] <= H+2 && l[3] >= -2 && l[3] <= H+2)
+        allLines.push({ l, lv })
+    }
+  }
+  
+  let html = ''
+  for (const { l, lv } of allLines) {
+    const op = [0.5, 0.3, 0.2][lv]
+    const sw = [0.8, 0.5, 0.3][lv]
+    html += `<line x1="${l[0].toFixed(1)}" y1="${l[1].toFixed(1)}" x2="${l[2].toFixed(1)}" y2="${l[3].toFixed(1)}" stroke="var(--accent)" stroke-width="${sw}" opacity="${op}"/>`
+  }
+  
+  document.getElementById('fractalsvg').innerHTML = `<g stroke-linecap="round">${html}</g>`
+}
+
+document.getElementById('fractalScale').addEventListener('input', renderFractal)
+renderFractal()
+
 </script>
 </body>
 </html>
