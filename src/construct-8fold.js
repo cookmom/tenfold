@@ -68,21 +68,21 @@ export function construct8Fold(R) {
 
   // Build steps
   const steps = []
-  const C = (a) => `rgba(232,228,220,${a})`
-  const cons = C(0.12) // construction
+  const C = (a) => `rgba(80,70,55,${a})`
+  const cons = C(0.35) // construction
   // acc already declared above
   const acc = C(0.85)  // accent — final khatam lines
-  const blue = 'rgba(120,160,255,.35)'
-  const gold = 'rgba(255,180,80,.35)'
+  const blue = 'rgba(50,90,180,.45)'
+  const gold = 'rgba(180,120,30,.45)'
 
   // Step 1: Main circle + center
   steps.push({
     desc: 'Draw the initial circle — the foundation of all Islamic patterns.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.4) },
-      { type: 'line', x1: 0, y1: 0, x2: R*0.95, y2: 0, stroke: C(0.3), sw: 0.4 },
-      { type: 'text', x: R*0.45, y: -8, text: 'R', fill: C(0.4), size: 11 }
+      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.5) },
+      { type: 'line', x1: 0, y1: 0, x2: R*0.95, y2: 0, stroke: C(0.45), sw: 0.4 },
+      { type: 'text', x: R*0.45, y: -8, text: 'R', fill: C(0.5), size: 11 }
     ]
   })
 
@@ -90,7 +90,7 @@ export function construct8Fold(R) {
   steps.push({
     desc: 'Divide the circle into 8 equal parts — the compass finds each point.',
     elements: pts8.map(p => ({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: cons, sw: 0.4 }))
-      .concat(pts8.map(p => ({ type: 'circle', cx: p.x, cy: p.y, r: 2, stroke: 'none', fill: C(0.3) })))
+      .concat(pts8.map(p => ({ type: 'circle', cx: p.x, cy: p.y, r: 2, stroke: 'none', fill: C(0.45) })))
   })
 
   // Step 3: Static square (connect points 0,2,4,6)
@@ -115,9 +115,9 @@ export function construct8Fold(R) {
   steps.push({
     desc: 'The square intersections divide the circle into 16 equal parts.',
     elements: pts16.filter((_, i) => i % 2 === 1).map(p => (
-      { type: 'circle', cx: p.x, cy: p.y, r: 1.5, stroke: 'none', fill: C(0.25) }
+      { type: 'circle', cx: p.x, cy: p.y, r: 1.5, stroke: 'none', fill: C(0.5) }
     )).concat(pts16.filter((_, i) => i % 2 === 1).map(p => (
-      { type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.06), sw: 0.3 }
+      { type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.45), sw: 0.3 }
     )))
   })
 
@@ -188,8 +188,8 @@ export function construct8Fold(R) {
     const cos = Math.cos(a), sin = Math.sin(a)
     // Lines parallel to each radial direction, offset by rSmall
     const px = -sin * rSmall, py = cos * rSmall
-    lineNet.push({ type: 'line', x1: cos * R * 1.2 + px, y1: sin * R * 1.2 + py, x2: -cos * R * 1.2 + px, y2: -sin * R * 1.2 + py, stroke: C(0.08), sw: 0.25 })
-    lineNet.push({ type: 'line', x1: cos * R * 1.2 - px, y1: sin * R * 1.2 - py, x2: -cos * R * 1.2 - px, y2: -sin * R * 1.2 - py, stroke: C(0.08), sw: 0.25 })
+    lineNet.push({ type: 'line', x1: cos * R * 1.2 + px, y1: sin * R * 1.2 + py, x2: -cos * R * 1.2 + px, y2: -sin * R * 1.2 + py, stroke: C(0.2), sw: 0.25 })
+    lineNet.push({ type: 'line', x1: cos * R * 1.2 - px, y1: sin * R * 1.2 - py, x2: -cos * R * 1.2 - px, y2: -sin * R * 1.2 - py, stroke: C(0.2), sw: 0.25 })
   }
   steps.push({
     desc: 'Parallel lines in all 8 directions — the complete construction network.',
@@ -207,7 +207,7 @@ export function construct8Fold(R) {
         type: 'line',
         x1: c.x + Math.cos(a1) * oR, y1: c.y + Math.sin(a1) * oR,
         x2: c.x + Math.cos(a2) * oR, y2: c.y + Math.sin(a2) * oR,
-        stroke: C(0.15), sw: 0.5
+        stroke: C(0.45), sw: 0.5
       })
     }
   }

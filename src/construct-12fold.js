@@ -19,11 +19,11 @@
 const TAU = Math.PI * 2
 
 export function construct12Fold(R) {
-  const C = (a) => `rgba(232,228,220,${a})`
-  const cons = C(0.12)
+  const C = (a) => `rgba(80,70,55,${a})`
+  const cons = C(0.35)
   const acc  = '#c0392b'
-  const blue = 'rgba(120,160,255,.35)'
-  const gold = 'rgba(255,180,80,.35)'
+  const blue = 'rgba(50,90,180,.45)'
+  const gold = 'rgba(180,120,30,.45)'
 
   const steps = []
 
@@ -96,8 +96,8 @@ export function construct12Fold(R) {
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
       { type: 'line', x1: -R * 1.2, y1: 0, x2: R * 1.2, y2: 0, stroke: cons, sw: 0.5 },
-      { type: 'circle', cx: A.x, cy: A.y, r: 2.5, stroke: 'none', fill: C(0.4) },
-      { type: 'circle', cx: B.x, cy: B.y, r: 2.5, stroke: 'none', fill: C(0.4) },
+      { type: 'circle', cx: A.x, cy: A.y, r: 2.5, stroke: 'none', fill: C(0.5) },
+      { type: 'circle', cx: B.x, cy: B.y, r: 2.5, stroke: 'none', fill: C(0.5) },
       { type: 'circle', cx: 0,   cy: 0,   r: 2,   stroke: 'none', fill: C(0.35) }
     ]
   })
@@ -143,9 +143,9 @@ export function construct12Fold(R) {
       { type: 'circle', cx: Hmirr.x, cy: Hmirr.y, r: 3, stroke: 'none', fill: C(0.35) },
       { type: 'line',   x1: G.x, y1: G.y, x2: H.x, y2: H.y, stroke: C(0.2), sw: 0.5 },
       { type: 'circle', cx: innerCenter.x, cy: innerCenter.y, r: innerR, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: -innerCenter.x, cy: innerCenter.y, r: innerR, stroke: C(0.06), fill: 'none', sw: 0.4 },
-      { type: 'circle', cx: innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.06), fill: 'none', sw: 0.4 },
-      { type: 'circle', cx: -innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.06), fill: 'none', sw: 0.4 }
+      { type: 'circle', cx: -innerCenter.x, cy: innerCenter.y, r: innerR, stroke: C(0.45), fill: 'none', sw: 0.4 },
+      { type: 'circle', cx: innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.45), fill: 'none', sw: 0.4 },
+      { type: 'circle', cx: -innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.45), fill: 'none', sw: 0.4 }
     ]
   })
 
@@ -154,7 +154,7 @@ export function construct12Fold(R) {
     type: 'circle', cx: c.x, cy: c.y, r: rK, stroke: cons, fill: 'none', sw: 0.45
   }))
   hexCircles.push({ type: 'circle', cx: K.x, cy: K.y, r: 3, stroke: 'none', fill: C(0.45) })
-  hexCircles.push({ type: 'circle', cx: 0, cy: 0, r: rK, stroke: C(0.08), fill: 'none', sw: 0.4 })
+  hexCircles.push({ type: 'circle', cx: 0, cy: 0, r: rK, stroke: C(0.2), fill: 'none', sw: 0.4 })
   steps.push({
     desc: 'The inner circle meets the vertical axis at K. Compass to center, open to K — draw 6 circles arranged as a hexagon. The 12-fold grid is forming.',
     elements: hexCircles

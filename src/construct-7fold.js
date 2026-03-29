@@ -99,11 +99,11 @@ export function tetradecagonPoints(R, cx = 0, cy = 0, rotation = -Math.PI / 2) {
  * @returns {Array<Object>} Steps array
  */
 export function construct7Fold(R) {
-  const C = (a) => `rgba(232,228,220,${a})`
-  const cons = C(0.12)
+  const C = (a) => `rgba(80,70,55,${a})`
+  const cons = C(0.35)
   const acc  = '#c0392b'
-  const blue = 'rgba(120,160,255,.35)'
-  const gold = 'rgba(255,180,80,.4)'
+  const blue = 'rgba(50,90,180,.45)'
+  const gold = 'rgba(180,120,30,.5)'
   const green = 'rgba(100,200,120,.35)'
 
   const steps = []
@@ -125,7 +125,7 @@ export function construct7Fold(R) {
     desc: 'The main circle. 7 is the most elusive fold in Islamic geometry: it cannot be constructed with compass and straightedge (proven impossible). Yet craftsmen in 12th-century Afghanistan made stunning 7-fold patterns using approximate methods.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 1 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, fill: C(0.3), stroke: 'none' },
+      { type: 'circle', cx: 0, cy: 0, r: 2, fill: C(0.45), stroke: 'none' },
     ]
   })
 
@@ -203,7 +203,7 @@ export function construct7Fold(R) {
         stroke: 'rgba(192,57,43,.6)', sw: 1.2
       })
     }
-    picEl.push({ type: 'circle', cx: mx, cy: my, r: 1.5, fill: C(0.4), stroke: 'none' })
+    picEl.push({ type: 'circle', cx: mx, cy: my, r: 1.5, fill: C(0.5), stroke: 'none' })
   }
   steps.push({
     desc: `Bonner's 14-s4 contact angle: θ ≈ 51.43°. From the midpoint of each tetradecagon edge, two rays emerge at ±51.43°. This angle corresponds to 4 edge intervals of the 14-gon — the most historically attested 7-fold pattern family (Great Mosque of Dunaysir, 1200 CE).`,
@@ -272,7 +272,7 @@ export function construct7Fold(R) {
   // Outer tetradecagon for framing
   for (let i = 0; i < 14; i++) {
     const p = pts14[i], q = pts14[(i + 1) % 14]
-    finalEl.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.15), sw: 0.7 })
+    finalEl.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.45), sw: 0.7 })
   }
 
   // The complete PIC star lines (all 28 contact rays, resolved)

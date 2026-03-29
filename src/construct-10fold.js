@@ -37,11 +37,11 @@ const PHI = (1 + Math.sqrt(5)) / 2  // Golden ratio ≈ 1.6180...
  * @returns {Array<Object>} - Steps array, each with {desc, elements, isFinal?}
  */
 export function construct10Fold(R) {
-  const C = (a) => `rgba(232,228,220,${a})`
-  const cons = C(0.12)
+  const C = (a) => `rgba(80,70,55,${a})`
+  const cons = C(0.35)
   const acc  = '#c0392b'
-  const blue = 'rgba(120,160,255,.35)'
-  const gold = 'rgba(255,180,80,.35)'
+  const blue = 'rgba(50,90,180,.45)'
+  const gold = 'rgba(180,120,30,.45)'
   const phi_c = 'rgba(212,180,100,.4)'   // golden color for φ proportions
 
   const steps = []
@@ -85,7 +85,7 @@ export function construct10Fold(R) {
     desc: 'Draw the main circle — the shamsa begins here. In Persian, shamsa (شمسه) means "sun." All 10-fold proportions arise from this single circle and the golden ratio φ.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 1 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, fill: C(0.3), stroke: 'none' },
+      { type: 'circle', cx: 0, cy: 0, r: 2, fill: C(0.45), stroke: 'none' },
     ]
   })
 
@@ -100,7 +100,7 @@ export function construct10Fold(R) {
     })
   }
   for (const p of pts10) {
-    diametersStep.push({ type: 'circle', cx: p.x, cy: p.y, r: 3, fill: C(0.4), stroke: 'none' })
+    diametersStep.push({ type: 'circle', cx: p.x, cy: p.y, r: 3, fill: C(0.5), stroke: 'none' })
   }
   steps.push({
     desc: `Divide the circle into 10 equal parts (36° apart). Unlike 6-fold or 8-fold, this cannot be done with a compass alone — the heptagon requires φ. The side of the inscribed decagon equals R/φ exactly.`,
@@ -176,7 +176,7 @@ export function construct10Fold(R) {
   const star104El = []
   for (let i = 0; i < 10; i++) {
     const p = pts10[i], q = pts10[(i + 4) % 10]
-    star104El.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.25), sw: 0.8 })
+    star104El.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.5), sw: 0.8 })
   }
   steps.push({
     desc: `Draw the {10/4} star — connect every vertex to the fourth vertex. This is the shamsa, the "sun" of Persian art. The arms are sharper than {10/3}, creating the distinctive 10-rayed star seen in the Darb-i Imam shrine, Isfahan (1453 CE).`,
@@ -222,7 +222,7 @@ export function construct10Fold(R) {
       })
     }
     // Mark midpoint
-    picEl.push({ type: 'circle', cx: mx, cy: my, r: 2, fill: C(0.4), stroke: 'none' })
+    picEl.push({ type: 'circle', cx: mx, cy: my, r: 2, fill: C(0.5), stroke: 'none' })
   }
   steps.push({
     desc: `The Kaplan PIC contact angle: θ = 72° = 90°−180°/10. From the midpoint of each decagon edge, two rays emerge at ±72° to the edge. Where these rays meet their counterparts from neighboring edges, the star arms form. This is the mathematical DNA of every 10-fold pattern.`,
@@ -248,7 +248,7 @@ export function construct10Fold(R) {
   // Inner decagon
   for (let i = 0; i < 10; i++) {
     const p = pts10in[i], q = pts10in[(i + 1) % 10]
-    finalEl.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.25), sw: 0.8 })
+    finalEl.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.5), sw: 0.8 })
   }
 
   steps.push({

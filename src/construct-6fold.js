@@ -12,11 +12,11 @@
 const TAU = Math.PI * 2
 
 export function construct6Fold(R) {
-  const C = (a) => `rgba(232,228,220,${a})`
+  const C = (a) => `rgba(80,70,55,${a})`
   const cons  = C(0.12)
   const acc   = '#c0392b'
-  const blue  = 'rgba(120,160,255,.35)'
-  const gold  = 'rgba(255,180,80,.35)'
+  const blue  = 'rgba(50,90,180,.45)'
+  const gold  = 'rgba(180,120,30,.45)'
 
   // Petal centers: 6 circles at distance R, 60° intervals (radius = R)
   const petalCenters = []
@@ -45,7 +45,7 @@ export function construct6Fold(R) {
     desc: 'Place the compass at the center. Draw the first circle — the seed from which all will bloom.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.4) }
+      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.5) }
     ]
   })
 
