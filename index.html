@@ -37,12 +37,12 @@ pre .kw{color:rgba(192,100,180,.7)}pre .fn{color:rgba(120,180,220,.7)}pre .str{c
 .step-dot{width:8px;height:8px;border-radius:50%;background:rgba(232,228,220,.1);transition:background .3s}
 .step-dot.done{background:rgba(232,228,220,.3)}.step-dot.current{background:var(--accent)}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-@keyframes compassDraw{from{stroke-dashoffset:var(--dash)}to{stroke-dashoffset:0}}
-@keyframes rulerDraw{from{stroke-dashoffset:var(--dash)}to{stroke-dashoffset:0}}
+@keyframes compassDraw{from{stroke-dashoffset:var(--dash,9999)}to{stroke-dashoffset:0}}
+@keyframes rulerDraw{from{stroke-dashoffset:var(--dash,9999)}to{stroke-dashoffset:0}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .draw-circle{animation:compassDraw .8s ease-out forwards}
 .draw-line{animation:rulerDraw .4s ease-out forwards}
-.draw-fade{animation:fadeIn .5s ease forwards}
+.draw-fade{animation:fadeIn .5s ease forwards;opacity:0}
 @media(max-width:500px){.demo{padding:1rem}.controls{gap:.5rem}}
 </style>
 </head>
@@ -453,60 +453,118 @@ renderSystems()
 // SECTION 3: Step-by-step Construction (Sandy Kurt method)
 // ═══════════════════════════════════════════════════
 
-// ─── Generic element renderer ────────────────────────────────────────
+// ─── Generic element renderer with staggered animation ───────────────
 function renderElement(el, animate, delayMs) {
-  const delayStyle = delayMs ? `animation-delay:${delayMs}ms;` : ''
   if (el.type === 'circle' && el.fill === 'none') {
-    // Compass-drawn circle: stroke-dasharray animation
     const circ = Math.PI * 2 * el.r
-    const dashAttr = animate ? ` stroke-dasharray="${circ.toFixed(0)}" style="--dash:${circ.toFixed(0)}" class="draw-circle"` : ''
-    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="none" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"${dashAttr}/>`
+    if (animate) {
+      const aStyle = `--dash:${circ.toFixed(0)};animation-delay:${delayMs||0}ms`
+      return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="none" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}" stroke-dasharray="${circ.toFixed(0)}" class="draw-circle" style="${aStyle}"/>`
+    }
+    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="none" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"/>`
   }
   if (el.type === 'circle') {
-    // Dot — just fade in
-    const fadeAttr = animate ? ' class="draw-fade"' : ''
-    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"${fadeAttr}/>`
+    if (animate) {
+      const aStyle = `animation-delay:${delayMs||0}ms`
+      return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}" class="draw-fade" style="${aStyle}"/>`
+    }
+    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"/>`
   }
   if (el.type === 'line') {
-    // Ruler-drawn line: stroke-dasharray animation
     const len = Math.sqrt((el.x2-el.x1)**2 + (el.y2-el.y1)**2)
-    const dashAttr = animate ? ` stroke-dasharray="${len.toFixed(0)}" style="--dash:${len.toFixed(0)}" class="draw-line"` : ''
-    return `<line x1="${el.x1.toFixed(1)}" y1="${el.y1.toFixed(1)}" x2="${el.x2.toFixed(1)}" y2="${el.y2.toFixed(1)}" stroke="${el.stroke}" stroke-width="${el.sw||0.5}"${dashAttr}/>`
+    if (animate) {
+      const aStyle = `--dash:${len.toFixed(0)};animation-delay:${delayMs||0}ms`
+      return `<line x1="${el.x1.toFixed(1)}" y1="${el.y1.toFixed(1)}" x2="${el.x2.toFixed(1)}" y2="${el.y2.toFixed(1)}" stroke="${el.stroke}" stroke-width="${el.sw||0.5}" stroke-dasharray="${len.toFixed(0)}" class="draw-line" style="${aStyle}"/>`
+    }
+    return `<line x1="${el.x1.toFixed(1)}" y1="${el.y1.toFixed(1)}" x2="${el.x2.toFixed(1)}" y2="${el.y2.toFixed(1)}" stroke="${el.stroke}" stroke-width="${el.sw||0.5}"/>`
   }
   return ''
 }
 
+// ─── Generic construction demo engine ────────────────────────────────
+function makeConstructionDemo({ steps, svgId, labelId, dotsId, descId }) {
+  let current = 0
+
+  function render() {
+    const svg = document.getElementById(svgId)
+    const isFinalStep = (current === steps.length - 1)
+    let html = ''
+
+    for (let s = 0; s <= current; s++) {
+      const step = steps[s]
+      const isCurrent = (s === current)
+      
+      if (isFinalStep && !step.isFinal) {
+        // Ghost out construction on final reveal
+        for (const el of step.elements) {
+          const faded = {...el}
+          if (faded.stroke && faded.stroke !== 'none') faded.stroke = 'rgba(232,228,220,.03)'
+          if (faded.fill   && faded.fill   !== 'none') faded.fill   = 'rgba(232,228,220,.03)'
+          html += renderElement(faded, false)
+        }
+      } else {
+        step.elements.forEach((el, idx) => {
+          // Stagger animation: each element 40ms after previous
+          const delay = isCurrent ? idx * 40 : 0
+          html += renderElement(el, isCurrent, delay)
+        })
+      }
+    }
+
+    svg.innerHTML = html
+    document.getElementById(labelId).textContent = `Step ${current + 1} of ${steps.length}`
+    document.getElementById(descId).textContent = steps[current].desc
+    let dots = ''
+    for (let i = 0; i < steps.length; i++) {
+      const cls = i < current ? 'step-dot done' : i === current ? 'step-dot current' : 'step-dot'
+      dots += `<div class="${cls}"></div>`
+    }
+    document.getElementById(dotsId).innerHTML = dots
+  }
+
+  render()
+  return { step(dir) { if (dir === 0) current = 0; else current = Math.max(0, Math.min(steps.length - 1, current + dir)); render() } }
+}
+
+// ─── 4-fold demo ─────────────────────────────────────────────────────
+const steps4  = construct4Fold(120)
+const demo4   = makeConstructionDemo({ steps: steps4,  svgId: 'constructsvg4',  labelId: 'stepLabel4',  dotsId: 'stepDots4',  descId: 'stepDesc4' })
+window.mkStep = function(fold, dir) {
+  if (fold === '4')  demo4.step(dir)
+  if (fold === '6')  demo6.step(dir)
+  if (fold === '8')  demo8.step(dir)
+  if (fold === '12') demo12.step(dir)
+}
+
+// ─── 6-fold demo ─────────────────────────────────────────────────────
+const steps6 = construct6Fold(120)
+const demo6  = makeConstructionDemo({ steps: steps6,  svgId: 'constructsvg6',  labelId: 'stepLabel6',  dotsId: 'stepDots6',  descId: 'stepDesc6' })
+
+// ─── 8-fold demo (legacy wiring kept) ────────────────────────────────
+const constructionSteps = construct8Fold(120)
+let currentStep = 0
+
 function renderConstruction() {
   const svg = document.getElementById('constructsvg')
+  const isFinalStep = (currentStep === constructionSteps.length - 1)
   let html = ''
-  
-  // Render all steps up to current
   for (let s = 0; s <= currentStep; s++) {
     const step = constructionSteps[s]
     const isCurrent = (s === currentStep)
-    const isFinal = step.isFinal
-    
-    const isFinalStep = (currentStep === constructionSteps.length - 1)
-    const shouldAnimate = isCurrent
-    
-    if (isFinalStep && !isFinal) {
-      // Fade previous construction on final reveal
+    if (isFinalStep && !step.isFinal) {
       for (const el of step.elements) {
         const faded = {...el}
         if (faded.stroke && faded.stroke !== 'none') faded.stroke = 'rgba(232,228,220,.03)'
-        if (faded.fill && faded.fill !== 'none') faded.fill = 'rgba(232,228,220,.03)'
+        if (faded.fill   && faded.fill   !== 'none') faded.fill   = 'rgba(232,228,220,.03)'
         html += renderElement(faded, false)
       }
     } else {
-      for (const el of step.elements) {
-        html += renderElement(el, shouldAnimate)
-      }
+      step.elements.forEach((el, idx) => {
+        html += renderElement(el, isCurrent, isCurrent ? idx * 40 : 0)
+      })
     }
   }
-  
   svg.innerHTML = html
-  
-  // Update UI
   const total = constructionSteps.length
   document.getElementById('stepLabel').textContent = `Step ${currentStep + 1} of ${total}`
   document.getElementById('stepDesc').textContent = constructionSteps[currentStep].desc
@@ -518,12 +576,13 @@ function renderConstruction() {
   document.getElementById('stepDots').innerHTML = dots
 }
 
-window.constructStep = function(dir) {
-  if (dir === 0) currentStep = 0
-  else currentStep = Math.max(0, Math.min(constructionSteps.length - 1, currentStep + dir))
-  renderConstruction()
-}
+const demo8 = { step(dir) { if (dir === 0) currentStep = 0; else currentStep = Math.max(0, Math.min(constructionSteps.length - 1, currentStep + dir)); renderConstruction() } }
+window.constructStep = function(dir) { demo8.step(dir) }
 renderConstruction()
+
+// ─── 12-fold demo ────────────────────────────────────────────────────
+const steps12 = construct12Fold(120)
+const demo12  = makeConstructionDemo({ steps: steps12, svgId: 'constructsvg12', labelId: 'stepLabel12', dotsId: 'stepDots12', descId: 'stepDesc12' })
 
 // ═══════════════════════════════════════════════════
 // SECTION 4: Self-Similarity (multi-scale)
