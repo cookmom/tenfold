@@ -1,0 +1,17 @@
+{
+  "name": "islamic-patterns",
+  "version": "0.1.0",
+  "description": "Islamic geometric pattern generator — zero dependencies, pure SVG output",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./circle-grid": "./src/circle-grid.js",
+    "./emergent": "./src/emergent.js",
+    "./svg": "./src/svg.js",
+    "./clip": "./src/clip.js"
+  },
+  "files": ["src/"],
+  "license": "MIT",
+  "keywords": ["islamic", "geometric", "pattern", "svg", "zellige", "girih", "generative"]
+}

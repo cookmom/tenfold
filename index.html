@@ -1,0 +1,122 @@
+<!-- بسم الله الرحمن الرحيم -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Islamic Geometric Patterns — Interactive Guide</title>
+<style>
+:root { --font: 'Inter', system-ui, -apple-system, sans-serif; --bg: #0d0d12; --fg: rgba(232,228,220,.85); --dim: rgba(232,228,220,.4); --accent: #c0392b; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; font-weight: 300; line-height: 1.7; }
+main { max-width: 720px; margin: 0 auto; padding: 4rem 2rem 8rem; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 200; letter-spacing: -.02em; margin-bottom: .5rem; }
+h2 { font-size: 1.1rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 4rem 0 1.5rem; }
+p { margin-bottom: 1.2rem; color: rgba(232,228,220,.65); }
+.bismillah { font-size: 1.4rem; color: var(--dim); margin-bottom: 2rem; text-align: center; }
+.demo { background: rgba(232,228,220,.03); border: 1px solid rgba(232,228,220,.06); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; }
+.demo svg { width: 100%; height: auto; }
+.controls { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; align-items: center; }
+.controls label { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.controls input[type=range] { flex: 1; min-width: 100px; }
+code { font-family: 'JetBrains Mono', monospace; font-size: .85em; background: rgba(232,228,220,.06); padding: .15em .4em; border-radius: 4px; }
+pre { background: rgba(232,228,220,.04); border: 1px solid rgba(232,228,220,.06); border-radius: 8px; padding: 1.2rem; overflow-x: auto; margin: 1rem 0; font-size: .85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+.subtitle { font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 2rem; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+
+<div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+
+<h1>Islamic Geometric Patterns</h1>
+<p class="subtitle">An interactive exploration of the mathematics behind Islamic art</p>
+
+<p>
+For over a thousand years, Islamic artists have created geometric patterns of extraordinary
+complexity using only two tools: a compass and a straightedge. The patterns that emerge
+from these simple instruments — stars, rosettes, interlacing bands — decorate mosques,
+palaces, and manuscripts across the Islamic world.
+</p>
+
+<p>
+This guide explores the mathematical foundations of these patterns, from the circle grids
+that generate them to the quasicrystal tilings that anticipated modern physics by five centuries.
+Each section includes interactive demonstrations — drag the sliders to see how parameters
+shape the pattern.
+</p>
+
+<h2>The Circle Grid</h2>
+
+<p>
+Every Islamic geometric pattern begins with a grid of overlapping circles. The pattern
+doesn't exist in any single circle — it <em>emerges</em> at the intersection points where
+circles overlap. Connect adjacent intersections on each circle, and a star pattern appears.
+</p>
+
+<p>
+This is the fundamental insight: <strong>the pattern is a consequence of pure geometry,
+not a design imposed upon it.</strong>
+</p>
+
+<div class="demo" id="demo-grid">
+  <div id="grid-svg"></div>
+  <div class="controls">
+    <label>Grid Size</label>
+    <input type="range" id="gridSize" min="20" max="80" value="40" step="2">
+    <label>Type</label>
+    <select id="gridType" style="background:var(--bg);color:var(--fg);border:1px solid rgba(232,228,220,.15);border-radius:4px;padding:.3em .5em;font-family:var(--font)">
+      <option value="hex">Hexagonal (6-fold)</option>
+      <option value="square">Square (8-fold)</option>
+    </select>
+  </div>
+</div>
+
+<pre><code>import { circleGrid, emergentPattern, toSVG } from 'islamic-patterns'
+
+const centers = circleGrid({ x: 0, y: 0, w: 400, h: 400, size: 40, type: 'hex' })
+const lines = emergentPattern(centers, 20)
+const svg = toSVG(lines, { width: 400, height: 400 })
+
+document.body.innerHTML = svg</code></pre>
+
+<p>
+The hexagonal grid produces 6-fold symmetry — the basis of patterns found in
+Moroccan zellige tilework. The square grid produces 8-fold symmetry, characteristic
+of Persian and Central Asian designs.
+</p>
+
+<h2>More chapters coming...</h2>
+
+<p>
+This is a living document. Future sections will explore the Hasba method,
+girih tiles, Penrose connections, boundary-adaptive fills, and the state of
+the art in computational Islamic geometry.
+</p>
+
+</main>
+
+<script type="module">
+import { circleGrid, emergentPattern, toSVG } from './src/index.js'
+
+function render() {
+  const size = parseInt(document.getElementById('gridSize').value)
+  const type = document.getElementById('gridType').value
+  const W = 600, H = 400
+  const centers = circleGrid({ x: 0, y: 0, w: W, h: H, size, type })
+  const radius = size / 2
+  const maxDist = type === 'hex' ? size * 1.16 : size * 1.42
+  const lines = emergentPattern(centers, radius, { maxDist })
+  const svg = toSVG(lines, { width: W, height: H, stroke: '#c0392b', strokeWidth: 0.8, padding: 10 })
+  document.getElementById('grid-svg').innerHTML = svg
+}
+
+document.getElementById('gridSize').addEventListener('input', render)
+document.getElementById('gridType').addEventListener('change', render)
+render()
+</script>
+</body>
+</html>
