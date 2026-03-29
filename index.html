@@ -877,15 +877,15 @@ function startAutoPlay() {
   _autoPlayTimer = setInterval(() => {
     if (!_autoPlayVisible) return
     const fold = activeFold
-    const steps = allConstructions[fold]
+    const steps = allFoldSteps[activeFold]
     if (!steps) return
-    const cur = foldCurrentStep[fold] || 0
+    const cur = foldCurrentStep[activeFold] || 0
     if (cur >= steps.length - 1) {
-      foldCurrentStep[fold] = 0
+      foldCurrentStep[activeFold] = 0
     } else {
-      foldCurrentStep[fold] = cur + 1
+      foldCurrentStep[activeFold] = cur + 1
     }
-    renderActiveConstruction()
+    renderActiveFold()
   }, 1500)
 }
 
