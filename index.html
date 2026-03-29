@@ -581,7 +581,7 @@ const TAU = Math.PI * 2
 import { construct10Fold } from './src/construct-10fold.js'
 import { construct7Fold } from './src/construct-7fold.js'
 import { morphPattern, naturalTheta, thetaToFold } from './src/metamorphosis.js'
-import { picHex, naturalContactAngle } from './src/pic.js'
+import { picHex, picSquare, naturalContactAngle } from './src/pic.js'
 
 // ═══════════════════════════════════════════════════
 // SECTION 1: Circle Division
@@ -1106,7 +1106,9 @@ function renderGenPattern() {
   document.getElementById('genSizeVal').textContent = size
 
   const W = 400, H = 400
-  const segs = picHex(3, size, theta, W / 2, H / 2)
+  let segs
+  if (fold === 4) segs = picSquare(Math.ceil(400/size), Math.ceil(400/size), size, theta, W/2, H/2)
+  else segs = picHex(Math.ceil(3 * 60/size), size, theta, W/2, H/2)
 
   let html = ''
   for (const [x1, y1, x2, y2] of segs) {
@@ -1132,7 +1134,9 @@ window.genExportSVG = function() {
   const theta = parseFloat(document.getElementById('genTheta').value)
   const size = parseInt(document.getElementById('genSize').value)
   const W = 400, H = 400
-  const segs = picHex(3, size, theta, W / 2, H / 2)
+  let segs
+  if (fold === 4) segs = picSquare(Math.ceil(400/size), Math.ceil(400/size), size, theta, W/2, H/2)
+  else segs = picHex(Math.ceil(3 * 60/size), size, theta, W/2, H/2)
 
   let lines = ''
   for (const [x1, y1, x2, y2] of segs) {
