@@ -66,3 +66,27 @@ Photos by Adam Williamson and Richard Henry.
 - Lu & Steinhardt (2007) — Decagonal Quasicrystalline Tilings in Medieval Islamic Architecture (Science)
 - Bonner (2017) — Islamic Geometric Patterns (Springer)
 - Kaplan (2005) — Islamic Star Patterns from Polygons in Contact
+
+## Full Bibliography (from Henry's Iran lecture)
+
+### Geometry & Pattern
+- El-Said, I. & Parman, A. — *Geometric Concepts in Islamic Art* (World of Islam Festival Trust, 1976)
+- Ghyka, M. — *The Geometry of Art and Life* (Dover, 1977)
+- Olsen, S. — *Golden Section* (Wooden Books, 2006)
+- Hejazi, M. — *Geometry in Nature and Persian Architecture* (Building and Environment 40, 2005)
+- Senechal, M. — *Quasicrystals and Geometry* (Cambridge University Press, 1995)
+- Ozdural, A. — *A Mathematical Sonata for Architecture: Omar Khayyam and the Friday Mosque of Isfahan* (Technology and Culture 39.4, 1998)
+
+### Islamic Art & Spirituality
+- Burckhardt, T. — *Art of Islam: Language and Meaning* (World of Islam Festival Trust, 1976)
+- Nasr, S.H. — *Islamic Art and Spirituality* (Golgonooza, 1987)
+- Corbin, H. — *The Man of Light in Iranian Sufism* (Omega, 1971)
+- Guenon, R. — *The Symbolism of the Cross* (Sophia Perennis, 2004)
+
+### Science & Discovery
+- Lu, P.J. & Steinhardt, P.J. — *Decagonal and Quasi-Crystalline Tilings in Medieval Islamic Architecture* (Science 315, Feb 2007)
+- Reiner, E. & Pingree, D. — *Babylonian Planetary Omens: The Venus Tablet of Ammisaduqa* (Undena, 1975)
+
+### Biology & Cognition
+- Betts, M. — *The Human Body* (Wooden Books, 2004)
+- Lewis-Williams, D.J. & Clottes, J. — *The mind in the cave — the cave in the mind: altered consciousness in the Upper Palaeolithic* (Anthropology of Consciousness 9(1), 1998)
