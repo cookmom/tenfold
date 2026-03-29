@@ -867,6 +867,8 @@ window.toggleAutoPlay = function() {
       foldCurrentStep[fold] = cur + 1
     }
     renderActiveConstruction()
+// Auto-play by default
+setTimeout(toggleAutoPlay, 2000)
   }, 1500)
 }
 
