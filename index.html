@@ -258,10 +258,10 @@ Lines through their centers create the grid from which the Mughal 8-pointed star
 <svg id="constructsvgMain" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
 
 <div class="controls" style="margin-top:1rem">
-  <button id="btnPlayPause" onclick="togglePlay()">▶ Play</button>
-  <button onclick="activeFoldStep(-1)">← Back</button>
-  <button onclick="activeFoldStep(1)" style="background:var(--accent);border-color:var(--accent)">Next →</button>
-  <button onclick="activeFoldStep(0)">Reset</button>
+  <button id="btnPlayPause" onclick="togglePlay()" style="display:none">▶ Play</button>
+  <button onclick="activeFoldStep(-1)" style="display:none">← Back</button>
+  <button onclick="activeFoldStep(1)" style="display:none">Next →</button>
+  <button onclick="activeFoldStep(0)" style="display:none">Reset</button>
   <span class="val" id="foldStepLabel" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
 </div>
 <div class="step-indicator" id="foldStepDots" style="margin-top:.6rem"></div>
@@ -402,9 +402,9 @@ that Roger Penrose described in 1974, five centuries later.
 <div id="desc10fold" style="font-size:.78rem;color:rgba(45,38,28,.55);margin-bottom:.8rem;min-height:2.4em;line-height:1.6"></div>
 <svg id="svg10fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
 <div class="controls" style="margin-top:.8rem">
-  <button onclick="step10fold(-1)">← Back</button>
-  <button onclick="step10fold(0)">↺ Reset</button>
-  <button onclick="step10fold(1)">Next →</button>
+  <button onclick="step10fold(-1)" style="display:none">← Back</button>
+  <button onclick="step10fold(0)" style="display:none">↺ Reset</button>
+  <button onclick="step10fold(1)" style="display:none">Next →</button>
   <span class="val" id="label10fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
 </div>
 <div class="step-indicator" id="dots10fold" style="margin-top:.6rem"></div>
@@ -436,9 +436,9 @@ every self-similar level is a power of 1/φ.
 </div>
 <svg id="svg7fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
 <div class="controls" style="margin-top:.8rem">
-  <button onclick="step7fold(-1)">← Back</button>
-  <button onclick="step7fold(0)">↺ Reset</button>
-  <button onclick="step7fold(1)">Next →</button>
+  <button onclick="step7fold(-1)" style="display:none">← Back</button>
+  <button onclick="step7fold(0)" style="display:none">↺ Reset</button>
+  <button onclick="step7fold(1)" style="display:none">Next →</button>
   <span class="val" id="label7fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
 </div>
 <div class="step-indicator" id="dots7fold" style="margin-top:.6rem"></div>
@@ -1255,9 +1255,9 @@ window.tilingToggleUnit = function() {
 }
 renderTiling()
 
-// Touch swipe on construction demo
-(function() {
-  const el = document.getElementById('demo-construction-tabs') || document.getElementById('demo-construction');
+// Touch swipe on ALL step-through demos
+function addSwipe(elId, nextFn, prevFn) {
+  const el = document.getElementById(elId);
   if (!el) return;
   let startX = 0, startY = 0;
   el.addEventListener('touchstart', e => {
@@ -1268,11 +1268,18 @@ renderTiling()
     const dx = e.changedTouches[0].clientX - startX;
     const dy = e.changedTouches[0].clientY - startY;
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-      if (dx < 0) activeFoldStep(1);  // swipe left = next
-      else activeFoldStep(-1);         // swipe right = prev
+      if (dx < 0) nextFn();
+      else prevFn();
     }
   }, { passive: true });
-})();
+}
+// Construction
+addSwipe('demo-construction-tabs', () => activeFoldStep(1), () => activeFoldStep(-1));
+addSwipe('demo-construction', () => activeFoldStep(1), () => activeFoldStep(-1));
+// 10-fold
+addSwipe('demo-10fold', () => step10fold(1), () => step10fold(-1));
+// 7-fold
+addSwipe('demo-7fold', () => step7fold(1), () => step7fold(-1));
 </script>
 </body>
 </html>
