@@ -18,6 +18,20 @@
 import { circleIntersections } from './circle-grid.js'
 
 export function emergentPattern(centers, radius, options = {}) {
+  // maxDist controls which circle pairs can share intersection points.
+  // Default radius * 2.32 is calibrated for radius ≈ spacing/2 (touching circles).
+  //
+  // For overlapping circles the correct maxDist must exceed the grid spacing
+  // but stay below the second-nearest neighbor distance:
+  //   hex grid: adjacent = spacing, second-nearest = spacing*√3
+  //   square grid: adjacent = spacing, second-nearest = spacing*√2
+  //
+  // The factor 2.32 = 2*1.16 works only when radius ≈ spacing/2, i.e. 2.32*r ≈ 1.16*spacing.
+  // For larger radii the caller should pass maxDist explicitly as a fraction of spacing,
+  // e.g. emergentPattern(centers, r, { maxDist: spacing * 1.3 }) for hex grids.
+  //
+  // Warning: for hex grids with radius > spacing*0.577, maxDist=radius*2.32 may exceed
+  // the second-nearest neighbor distance (spacing*√3) causing unintended connections.
   const { maxDist = radius * 2.32, clip } = options
 
   const pts = new Map()

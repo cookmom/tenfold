@@ -180,12 +180,56 @@ of which the design emerges."
 </blockquote>
 
 <p>
-Step through the construction of an <strong>8-fold pattern</strong> below — the same
-method documented by Sandy Kurt from the mosques of Fez and Marrakech.
-Each step adds only compass arcs and straight lines. The final pattern
-is never drawn directly — it <em>emerges</em> from the construction.
+Four traditions. Four construction methods. Each rooted in a different proportional system,
+each revealing a different face of the divine geometry. Step through any of them below —
+every circle and line follows exactly the compass-and-ruler procedure documented by
+<strong>Sandy Kurt</strong> from mosques across the Islamic world.
 </p>
 
+<h3>4-fold · India · Agra Fort</h3>
+<p>
+The 4-fold system builds from interlocking squares — static and dynamic — inscribed
+within a circle. From the intersections of these squares, a family of small tangent circles
+grows. Lines through their centers create the grid from which the Mughal <strong>8-pointed
+star lattice</strong> emerges.
+</p>
+<div class="demo" id="demo-construction-4">
+<svg id="constructsvg4" viewBox="-160 -160 320 320" width="320" height="320"></svg>
+<div class="controls">
+  <button onclick="mkStep('4',-1)">← Back</button>
+  <button onclick="mkStep('4',1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
+  <button onclick="mkStep('4',0)">Reset</button>
+  <span class="val" id="stepLabel4" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="stepDots4"></div>
+<p id="stepDesc4" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
+</div>
+
+<h3>6-fold · Iran · Friday Mosque Isfahan</h3>
+<p>
+The 6-fold system begins with the <strong>Flower of Life</strong> — six circles of identical
+radius arranged around a seventh, without ever adjusting the compass. Lines through the
+intersections of these circles weave the hexagonal grid from which the 6-pointed star
+pattern of Isfahan flowers.
+</p>
+<div class="demo" id="demo-construction-6">
+<svg id="constructsvg6" viewBox="-160 -160 320 320" width="320" height="320"></svg>
+<div class="controls">
+  <button onclick="mkStep('6',-1)">← Back</button>
+  <button onclick="mkStep('6',1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
+  <button onclick="mkStep('6',0)">Reset</button>
+  <span class="val" id="stepLabel6" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="stepDots6"></div>
+<p id="stepDesc6" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
+</div>
+
+<h3>8-fold · Morocco · Zellige</h3>
+<p>
+The 8-fold system — <strong>khatam</strong> — is the master tile of Moroccan zellige.
+Two overlapping squares (one static, one rotated 45°) subdivide the circle into 16 parts.
+Tangent circles at every intersection create the network from which the 8-pointed rosette emerges.
+</p>
 <div class="demo" id="demo-construction">
 <svg id="constructsvg" viewBox="-160 -160 320 320" width="320" height="320"></svg>
 <div class="controls">
@@ -198,9 +242,30 @@ is never drawn directly — it <em>emerges</em> from the construction.
 <p id="stepDesc" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
 </div>
 
-<pre><span class="cm">// The 8-fold construction follows Sandy Kurt's method:</span>
-<span class="cm">// 1. Circle  2. Divide ×8  3. Static square  4. Dynamic square</span>
-<span class="cm">// 5. Subdivide ×16  6. Tangent circles  7. Connect  8. Pattern emerges</span></pre>
+<h3>12-fold · Moorish · Andalusia</h3>
+<p>
+The 12-fold Moorish system works through the lozenge — a rhombus derived from two
+interlocking circles — to find the scale of the 12-point rosette. Circles are
+positioned by proportion alone, and their crossing points grow into the great
+<strong>12-rayed star</strong> of the Alhambra and the mosques of North Africa.
+</p>
+<div class="demo" id="demo-construction-12">
+<svg id="constructsvg12" viewBox="-160 -160 320 320" width="320" height="320"></svg>
+<div class="controls">
+  <button onclick="mkStep('12',-1)">← Back</button>
+  <button onclick="mkStep('12',1)" style="background:var(--accent);border-color:var(--accent)">Next Step →</button>
+  <button onclick="mkStep('12',0)">Reset</button>
+  <span class="val" id="stepLabel12" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="stepDots12"></div>
+<p id="stepDesc12" style="font-size:.78rem;margin-top:.8rem;color:var(--dim)"></p>
+</div>
+
+<pre><span class="cm">// All four constructions follow Sandy Kurt's compass-and-ruler method:</span>
+<span class="cm">// 4-fold: Square grid → tangent circles → star lattice (Agra Fort)</span>
+<span class="cm">// 6-fold: Flower of Life → hexagonal grid → hexagram (Isfahan)</span>
+<span class="cm">// 8-fold: Static+dynamic squares → 16-fold → khatam rosette (Morocco)</span>
+<span class="cm">// 12-fold: Lozenge → hexagonal circles → 12-ray star (Andalusia)</span></pre>
 
 <!-- ═══════════════════════════════════════════════════ -->
 <h2>4 · Self-Similarity</h2>
@@ -253,6 +318,9 @@ tenfold · <a href="https://github.com/cookmom/tenfold">GitHub</a> · A Seven He
 <script type="module">
 import { circleGrid, circleIntersections, emergentPattern } from './src/index.js'
 import { construct8Fold } from './src/construct-8fold.js'
+import { construct6Fold } from './src/construct-6fold.js'
+import { construct12Fold } from './src/construct-12fold.js'
+import { construct4Fold } from './src/construct-4fold.js'
 
 // ═══════════════════════════════════════════════════
 // SECTION 1: Circle Division
@@ -384,10 +452,10 @@ renderSystems()
 // ═══════════════════════════════════════════════════
 // SECTION 3: Step-by-step Construction (Sandy Kurt method)
 // ═══════════════════════════════════════════════════
-const constructionSteps = construct8Fold(120)
-let currentStep = 0
 
-function renderElement(el, animate) {
+// ─── Generic element renderer ────────────────────────────────────────
+function renderElement(el, animate, delayMs) {
+  const delayStyle = delayMs ? `animation-delay:${delayMs}ms;` : ''
   if (el.type === 'circle' && el.fill === 'none') {
     // Compass-drawn circle: stroke-dasharray animation
     const circ = Math.PI * 2 * el.r

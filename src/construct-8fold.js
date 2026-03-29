@@ -28,36 +28,50 @@ export function construct8Fold(R) {
   }
 
   // Small circle radius: tangent to adjacent construction lines
-  // For 8-fold: the small circle at an intersection fits between
-  // a radial line and the next one (22.5° apart).
-  // r_small = R * sin(π/8) * some factor based on tangency
-  // From Sandy's construction: compass at square corner, tangent to 
-  // both the vertical/horizontal AND diagonal lines.
-  // The distance from a square corner to the nearest line:
-  // At a corner of the static square (top), the nearest diagonal line 
-  // passes at distance = R * sin(π/4) * sin(π/8)
-  // Simplified: r_small ≈ R * (1 - cos(π/8)) * 1.08
-  // Actually from the geometry: the small circle at intersection has
-  // radius = R * tan(π/8) / 2 ≈ R * 0.2071
-  const rSmall = R * Math.tan(Math.PI / 8) / 2
+  // For 8-fold: the two overlapping squares (static at 0° and dynamic at 45°)
+  // intersect at 8 points. Each intersection is where one side of the static square
+  // meets one side of the dynamic square.
+  //
+  // The static square has sides like x-y=R (connecting top to right).
+  // The dynamic square has sides like x=R/√2 (vertical through diagonal corner).
+  // Their intersection: (R/√2, R/√2-R) = (R/√2, R(1/√2-1))
+  // Distance from origin = R*√(1/2 + (1/√2-1)²) = R*√(2-√2) ≈ 0.7654*R
+  //
+  // The small circle fits at each intersection, tangent to BOTH square sides.
+  // The angle between the two sides at the intersection = π/4 (45°).
+  // The incircle of the wedge (tangent to both sides, touching the vertex) has:
+  //   center on the angle bisector at distance d from vertex
+  //   radius = d * tan(π/8)  [half the wedge angle = π/8]
+  //
+  // Sandy's construction places the compass at square CORNER (on main circle),
+  // spanning to the intersection point = distance R - R*√(2-√2) from corner.
+  // But the clean formula: rSmall = R * tan(π/8) / 2 = R*(√2-1)/2 ≈ 0.2071*R
+  // This comes from the geometry of the two tangent lines at 45° crossing angle.
+  const rSmall = R * Math.tan(Math.PI / 8) / 2  // = R*(√2-1)/2 ≈ 0.2071*R
 
-  // Inner circle radius (step 9): tangent to the small circle at step 8
-  // The small circle at step 8 is at the intersection of two construction lines
-  // Its center is approximately at R * cos(π/8) from center
-  // Inner circle: R_inner = R * cos(π/8) - rSmall
-  const rInner = R * Math.cos(Math.PI / 8) - rSmall
+  // CORRECT circle centers at square-side intersections:
+  // The 8 octagon vertices (where the two squares' sides cross) are at:
+  //   distance = R * √(2-√2) ≈ 0.7654*R from center
+  // NOT at R*cos(π/8) = 0.9239*R (that is the octagon apothem, not vertex distance)
+  const octR = R * Math.sqrt(2 - Math.SQRT2)  // ≈ 0.7654*R — square intersection radius
 
-  // Second ring circles (steps 10-12): at R * cos(π/8), radius rSmall
+  // Inner circle radius (step 9): tangent to the small circles from inside
+  // Small circles have center at octR and radius rSmall
+  // Inner tangent circle: rInner = octR - rSmall
+  const rInner = octR - rSmall
+
+  // Second ring circles (steps 10-12): at the octagon intersection radius
   const ring2Centers = pts8.map(p => ({
-    x: p.x * Math.cos(Math.PI / 8),
-    y: p.y * Math.cos(Math.PI / 8)
+    x: p.x * Math.sqrt(2 - Math.SQRT2),
+    y: p.y * Math.sqrt(2 - Math.SQRT2)
   }))
 
   // Build steps
   const steps = []
   const C = (a) => `rgba(232,228,220,${a})`
   const cons = C(0.12) // construction
-  const acc = '#c0392b'
+  // acc already declared above
+  const acc = C(0.85)  // accent — final khatam lines
   const blue = 'rgba(120,160,255,.35)'
   const gold = 'rgba(255,180,80,.35)'
 
@@ -106,8 +120,11 @@ export function construct8Fold(R) {
   })
 
   // Step 6: Small circles at square intersections + center
+  // Centers are at the 8 octagon vertices (sqrt(2-√2)*R from center) plus origin.
+  // BUG FIX: was 0.924 (= cos(π/8)) — correct scale is sqrt(2-√2) ≈ 0.7654
+  const octScale = Math.sqrt(2 - Math.SQRT2)  // ≈ 0.7654
   const circCenters = [{ x: 0, y: 0 }].concat(
-    pts8.map(p => ({ x: p.x * 0.924, y: p.y * 0.924 }))
+    pts8.map(p => ({ x: p.x * octScale, y: p.y * octScale }))
   )
   steps.push({
     desc: 'Point the compass on each intersection — draw circles tangent to the construction lines.',
@@ -195,68 +212,49 @@ export function construct8Fold(R) {
     elements: octEls
   })
 
-  // FINAL STEP: The pattern — khatam star + rosette
-  // Fade construction, highlight final design
+  // FINAL STEP: The khatam — proper 8-pointed star rosette ({8/3} star polygon)
+  //
+  // The khatam is the {8/3} star polygon:
+  //   - 8 outer tips at radius R, at angles k*45° (the pts8 points)
+  //   - Connect each tip to the tip 3 steps away (skip 2 in between)
+  //   - The 8 crossing points of these lines form an inner octagon at R*(√2-1)
+  //
+  // Exact identity: inner octagon radius = R * cos(3π/8)/cos(π/8) = R*(√2-1) = R*tan(π/8)
+  //
+  // Fixes vs original:
+  //   - Was {16/3} (16-pointed figure) → now correct {8/3} (8-pointed khatam)
+  //   - Was innerScale=0.55 (arbitrary) → now exact R*(√2-1) ≈ 0.4142*R
+  //   - Added missing 'acc' color variable
+  //   - Fixed circCenters scale from 0.924 (cos π/8) to sqrt(2-√2) (correct octagon radius)
   const finalEls = []
   
-  // 8-pointed star (two overlapping squares at the khatam scale)
-  // The star points land on the main circle's 16-subdivision points
-  // Connect every-other-16th-point to skip one and make the star
-  for (let i = 0; i < 16; i++) {
-    const j = (i + 2) % 16
+  // {8/3}: connect pts8[i] to pts8[(i+3)%8] — these 8 lines form the khatam star
+  for (let i = 0; i < 8; i++) {
+    const j = (i + 3) % 8
     finalEls.push({
       type: 'line',
-      x1: pts16[i].x * 0.85, y1: pts16[i].y * 0.85,
-      x2: pts16[j].x * 0.85, y2: pts16[j].y * 0.85,
-      stroke: acc, sw: 1.5
+      x1: pts8[i].x, y1: pts8[i].y,
+      x2: pts8[j].x, y2: pts8[j].y,
+      stroke: acc, sw: 1.4
     })
   }
   
-  // Inner octagon
+  // Inner octagon at the 8 crossing points, exactly at R*(√2-1) = R*tan(π/8)
+  // Vertices at angles: k*45° + 22.5° (halfway between star tips)
+  const innerR = R * (Math.SQRT2 - 1)  // = R * tan(π/8) ≈ 0.4142*R (EXACT)
   for (let i = 0; i < 8; i++) {
-    const a1 = (i / 8) * TAU + TAU / 16 - TAU / 4
-    const a2 = ((i + 1) / 8) * TAU + TAU / 16 - TAU / 4
+    const a1 = (i / 8) * TAU - TAU / 4 + TAU / 16  // 22.5° offset between star tips
+    const a2 = ((i + 1) / 8) * TAU - TAU / 4 + TAU / 16
     finalEls.push({
       type: 'line',
-      x1: Math.cos(a1) * rInner, y1: Math.sin(a1) * rInner,
-      x2: Math.cos(a2) * rInner, y2: Math.sin(a2) * rInner,
-      stroke: acc, sw: 1.5
-    })
-  }
-
-  // Outer octagon (on main circle)
-  for (let i = 0; i < 8; i++) {
-    const a1 = ((i + 0.5) / 8) * TAU - TAU / 4
-    const a2 = ((i + 1.5) / 8) * TAU - TAU / 4
-    finalEls.push({
-      type: 'line',
-      x1: Math.cos(a1) * R, y1: Math.sin(a1) * R,
-      x2: Math.cos(a2) * R, y2: Math.sin(a2) * R,
-      stroke: acc, sw: 1.0
-    })
-  }
-
-  // Connecting kite shapes between inner and outer octagons
-  for (let i = 0; i < 8; i++) {
-    const outerA = ((i + 0.5) / 8) * TAU - TAU / 4
-    const innerA1 = (i / 8) * TAU + TAU / 16 - TAU / 4
-    const innerA2 = ((i + 1) / 8) * TAU + TAU / 16 - TAU / 4
-    finalEls.push({
-      type: 'line',
-      x1: Math.cos(outerA) * R, y1: Math.sin(outerA) * R,
-      x2: Math.cos(innerA1) * rInner, y2: Math.sin(innerA1) * rInner,
-      stroke: acc, sw: 1.2
-    })
-    finalEls.push({
-      type: 'line',
-      x1: Math.cos(outerA) * R, y1: Math.sin(outerA) * R,
-      x2: Math.cos(innerA2) * rInner, y2: Math.sin(innerA2) * rInner,
-      stroke: acc, sw: 1.2
+      x1: Math.cos(a1) * innerR, y1: Math.sin(a1) * innerR,
+      x2: Math.cos(a2) * innerR, y2: Math.sin(a2) * innerR,
+      stroke: acc, sw: 1.4
     })
   }
 
   steps.push({
-    desc: 'The pattern reveals itself. Construction fades — only the khatam star remains.',
+    desc: 'The khatam reveals itself — the 8-pointed star, heart of Moroccan zellige.',
     elements: finalEls,
     isFinal: true
   })
