@@ -11,11 +11,16 @@
 :root{--bg:#f5f0e6;--fg:rgba(40,32,24,.9);--dim:rgba(70,60,45,.6);--faint:rgba(100,90,75,.15);--accent:#a0432e;--cons:rgba(120,110,95,.25);--font:'Inter',system-ui,sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;font-weight:300;line-height:1.8}
-main{max-width:1100px;margin:0 auto;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,4vw,2.5rem) 8rem}
+main{max-width:72rem;margin:0 auto;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,4vw,2.5rem) 8rem}
 h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:200;letter-spacing:-.02em;line-height:1.15;margin-bottom:.4rem}
-.section-row{display:grid;grid-template-columns:1fr;gap:2rem;margin:1.5rem 0 2rem}
-@media(min-width:760px){.section-row{grid-template-columns:1fr 1fr}.section-row .demo{margin:0}}
-.section-text{display:flex;flex-direction:column;justify-content:center}
+.section-row{display:grid;grid-template-columns:1fr;gap:2rem;margin:4rem 0}
+@media(min-width:760px){
+  .section-row{grid-template-columns:1.2fr 0.8fr;gap:3rem;align-items:start}
+  .section-row>.demo-col{position:sticky;top:1.5rem}
+  .section-row .demo{margin:0}
+}
+.section-text{min-width:0}
+.demo-col{min-width:0}
 .toc{margin:2rem 0 3rem;padding:1.5rem 0;border-top:1px solid rgba(120,110,95,.18);border-bottom:1px solid rgba(120,110,95,.12)}
 .toc ol{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;justify-content:center}
 .toc li{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
@@ -136,8 +141,8 @@ Drag the sliders. Watch the constructions. The patterns are not drawn — they <
 
 <!-- ═══════════════════════════════════════════════════ -->
 <div class="section-row">
-<div><div class="demo" id="demo-circle">
-<svg id="circlesvg" viewBox="-160 -160 320 320" width="320" height="320"></svg>
+<div class="demo-col"><div class="demo" id="demo-circle">
+<svg id="circlesvg" viewBox="-160 -160 320 320" style="width:100%;height:auto;max-height:500px"></svg>
 <div class="controls">
   <label>Divisions</label>
   <input type="range" id="circleN" min="3" max="16" value="8" step="1">
