@@ -274,12 +274,141 @@ that Roger Penrose described in 1974, five centuries later.
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
+<h2>5 · The Shamsa — 10-Fold Decagonal Pattern</h2>
+
+<p>
+The 10-fold pattern is the library's namesake. In Persian it is called <strong>shamsa</strong>
+(شمسه) — "sun." It appears in the Darb-i Imam shrine in Isfahan (1453 CE), one of the most
+mathematically sophisticated buildings ever constructed.
+</p>
+
+<p>
+Unlike all other fold systems, 10-fold geometry is governed entirely by the <strong>golden
+ratio φ = (1+√5)/2 ≈ 1.618</strong>. The decagon side length equals R/φ exactly.
+The {10/3} star's inner decagon sits at radius R/φ. Every intersection, every proportion,
+every self-similar level is a power of 1/φ.
+</p>
+
+<div class="demo" id="demo-10fold">
+<div class="controls" style="margin-bottom:1rem;gap:.5rem">
+  <span style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">Iran · Darb-i Imam, Isfahan · 1453 CE</span>
+</div>
+<div id="desc10fold" style="font-size:.78rem;color:rgba(232,228,220,.45);margin-bottom:.8rem;min-height:2.4em;line-height:1.6"></div>
+<svg id="svg10fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
+<div class="controls" style="margin-top:.8rem">
+  <button onclick="step10fold(-1)">← Back</button>
+  <button onclick="step10fold(0)">↺ Reset</button>
+  <button onclick="step10fold(1)">Next →</button>
+  <span class="val" id="label10fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="dots10fold" style="margin-top:.6rem"></div>
+<p id="stepdesc10fold" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:3.2em"></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>6 · The Seven-Fold Mystery</h2>
+
+<p>
+7-fold symmetry is the frontier. The regular heptagon <strong>cannot be constructed with
+compass and straightedge</strong> — this was proven impossible (7 is not a Fermat prime,
+and cannot be expressed as a product of distinct Fermat primes with a power of 2).
+Yet Islamic craftsmen created 7-fold patterns in the 12th century CE using approximate
+methods with < 0.5° cumulative error.
+</p>
+
+<p>
+The earliest known example: <strong>the Ghaznavid minaret of Mas'ud III in Ghazna,
+Afghanistan, 1099–1115 CE</strong>. Jay Bonner and Marc Pelletier documented the
+systematic 7/14 construction in their 2012 Bridges paper, revealing how heptagonal
+sub-grids generate these rare patterns.
+</p>
+
+<div class="demo" id="demo-7fold">
+<div class="controls" style="margin-bottom:1rem;gap:.5rem">
+  <span style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">Afghanistan / Turkey · 12th–13th century CE · Experimental</span>
+</div>
+<svg id="svg7fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
+<div class="controls" style="margin-top:.8rem">
+  <button onclick="step7fold(-1)">← Back</button>
+  <button onclick="step7fold(0)">↺ Reset</button>
+  <button onclick="step7fold(1)">Next →</button>
+  <span class="val" id="label7fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="dots7fold" style="margin-top:.6rem"></div>
+<p id="stepdesc7fold" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:3.2em"></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>7 · Pattern Metamorphosis</h2>
+
+<p>
+Every Islamic star pattern can be described by a single number: the <strong>contact angle θ</strong>.
+Move θ from 30° to 75° and the pattern transforms continuously from 3-fold to 12-fold symmetry.
+</p>
+
+<p>
+This is Craig Kaplan's "parquet deformation" — inspired by Hofstadter and Huff's work on
+continuously morphing tilings. The pattern below uses a hexagonal base tiling; as you drag
+the slider, the star arms lengthen and rotate, passing through every fold family.
+</p>
+
+<div class="demo" id="demo-metamorphosis">
+<svg id="morphsvg" viewBox="0 0 400 240" style="width:100%;height:auto;display:block"></svg>
+<div class="controls" style="margin-top:.8rem">
+  <label>θ</label>
+  <input type="range" id="morphTheta" min="15" max="85" value="67.5" step="0.5">
+  <span class="val" id="morphThetaVal">67.5°</span>
+  <span style="font-size:.65rem;color:var(--dim);margin-left:.5rem" id="morphFoldLabel">≈ 8-fold</span>
+</div>
+<div class="controls" style="margin-top:.4rem;gap:.4rem;flex-wrap:wrap">
+  <button onclick="morphJumpTo(30)" title="3-fold" id="btn-morph-3">3</button>
+  <button onclick="morphJumpTo(45)" title="4-fold" id="btn-morph-4">4</button>
+  <button onclick="morphJumpTo(60)" title="6-fold" id="btn-morph-6">6</button>
+  <button onclick="morphJumpTo(67.5)" title="8-fold" class="active" id="btn-morph-8">8</button>
+  <button onclick="morphJumpTo(72)" title="10-fold" id="btn-morph-10">10</button>
+  <button onclick="morphJumpTo(75)" title="12-fold" id="btn-morph-12">12</button>
+  <button onclick="morphJumpTo(77.14)" title="14-fold" id="btn-morph-14">14</button>
+  <span style="font-size:.65rem;color:var(--dim);margin-left:auto">← drag or tap fold count →</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2>8 · Generate Any Pattern</h2>
+
+<p>
+Any fold count, any contact angle, instant SVG. This is tenfold's power demo.
+The generator uses the <strong>Kaplan PIC algorithm</strong> on a hexagonal tiling —
+the same mathematical engine that underlies all Islamic geometric art.
+</p>
+
+<div class="demo" id="demo-generate">
+<svg id="gensvg" viewBox="0 0 400 400" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
+<div class="controls" style="margin-top:1rem">
+  <label>Fold</label>
+  <input type="range" id="genFold" min="3" max="16" value="10" step="1">
+  <span class="val" id="genFoldVal">10</span>
+</div>
+<div class="controls">
+  <label>θ</label>
+  <input type="range" id="genTheta" min="10" max="85" value="72" step="0.5">
+  <span class="val" id="genThetaVal">72°</span>
+  <button onclick="genLinkFold()" id="btnGenLink" class="active" title="Link θ to natural fold angle">Auto θ</button>
+</div>
+<div class="controls">
+  <label>Scale</label>
+  <input type="range" id="genSize" min="20" max="80" value="48" step="2">
+  <span class="val" id="genSizeVal">48</span>
+  <button onclick="genExportSVG()" style="margin-left:auto">⬇ SVG</button>
+</div>
+<p id="genCaption" style="font-size:.7rem;color:var(--dim);margin-top:.6rem;margin-bottom:0;text-align:center"></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
 <h2>More chapters coming</h2>
 
 <p>
 This is a living document. Future sections: <em>The Strapwork</em> (girih tiles and what
-you actually see), <em>The Seven-Fold Mystery</em> (the frontier of aperiodic tiling),
-<em>The Three Disciplines</em> (geometry + arabesque + calligraphy), and
+you actually see), <em>The Three Disciplines</em> (geometry + arabesque + calligraphy), and
 <em>The Library</em> — using tenfold in your own projects.
 </p>
 
@@ -295,6 +424,10 @@ import { construct8Fold } from './src/construct-8fold.js'
 import { construct6Fold } from './src/construct-6fold.js'
 import { construct12Fold } from './src/construct-12fold.js'
 import { construct4Fold } from './src/construct-4fold.js'
+import { construct10Fold } from './src/construct-10fold.js'
+import { construct7Fold } from './src/construct-7fold.js'
+import { morphPattern, naturalTheta, thetaToFold } from './src/metamorphosis.js'
+import { picHex, naturalContactAngle } from './src/pic.js'
 
 // ═══════════════════════════════════════════════════
 // SECTION 1: Circle Division
@@ -616,6 +749,144 @@ function renderFractal() {
 
 document.getElementById('fractalScale').addEventListener('input', renderFractal)
 renderFractal()
+
+// ═══════════════════════════════════════════════════
+// SECTION 5: 10-Fold Shamsa Construction
+// ═══════════════════════════════════════════════════
+const steps10fold = construct10Fold(120)
+const demo10fold = makeConstructionDemo({
+  steps: steps10fold,
+  svgId: 'svg10fold',
+  labelId: 'label10fold',
+  dotsId: 'dots10fold',
+  descId: 'stepdesc10fold'
+})
+window.step10fold = function(dir) { demo10fold.step(dir) }
+
+// ═══════════════════════════════════════════════════
+// SECTION 6: 7-Fold Experimental Construction
+// ═══════════════════════════════════════════════════
+const steps7fold = construct7Fold(120)
+const demo7fold = makeConstructionDemo({
+  steps: steps7fold,
+  svgId: 'svg7fold',
+  labelId: 'label7fold',
+  dotsId: 'dots7fold',
+  descId: 'stepdesc7fold'
+})
+window.step7fold = function(dir) { demo7fold.step(dir) }
+
+// ═══════════════════════════════════════════════════
+// SECTION 7: Pattern Metamorphosis
+// ═══════════════════════════════════════════════════
+function renderMorphPattern() {
+  const theta = parseFloat(document.getElementById('morphTheta').value)
+  document.getElementById('morphThetaVal').textContent = theta.toFixed(1) + '°'
+  
+  // Label the nearest fold count
+  const foldApprox = thetaToFold(theta)
+  const roundFold = Math.round(foldApprox * 2) / 2
+  const isExact = Math.abs(naturalTheta(Math.round(foldApprox)) - theta) < 0.3
+  const foldStr = isExact ? `${Math.round(foldApprox)}-fold` : `≈ ${roundFold.toFixed(1)}-fold`
+  document.getElementById('morphFoldLabel').textContent = foldStr
+
+  const W = 400, H = 240
+  const size = 36
+  const segs = morphPattern(theta, W, H, size)
+
+  let html = ''
+  for (const [x1, y1, x2, y2] of segs) {
+    if (x1 < -10 || x1 > W + 10 || y1 < -10 || y1 > H + 10) continue
+    html += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--accent)" stroke-width="0.9" opacity="0.75" stroke-linecap="round"/>`
+  }
+  document.getElementById('morphsvg').innerHTML = `<g>${html}</g>`
+
+  // Highlight active fold button
+  document.querySelectorAll('[onclick^="morphJumpTo"]').forEach(b => b.classList.remove('active'))
+  const naturalAngles = { 30: '3', 45: '4', 60: '6', 67.5: '8', 72: '10', 75: '12', 77.14: '14' }
+  const closest = Object.keys(naturalAngles).find(t => Math.abs(parseFloat(t) - theta) < 0.3)
+  if (closest) {
+    const btn = document.getElementById(`btn-morph-${naturalAngles[closest]}`)
+    if (btn) btn.classList.add('active')
+  }
+}
+
+window.morphJumpTo = function(theta) {
+  document.getElementById('morphTheta').value = theta
+  renderMorphPattern()
+}
+
+document.getElementById('morphTheta').addEventListener('input', renderMorphPattern)
+renderMorphPattern()
+
+// ═══════════════════════════════════════════════════
+// SECTION 8: Generate Any Pattern (PIC)
+// ═══════════════════════════════════════════════════
+let genAutoTheta = true
+
+function renderGenPattern() {
+  const fold = parseInt(document.getElementById('genFold').value)
+  const size = parseInt(document.getElementById('genSize').value)
+
+  if (genAutoTheta) {
+    const nat = naturalContactAngle(fold)
+    document.getElementById('genTheta').value = nat.toFixed(1)
+    document.getElementById('genThetaVal').textContent = nat.toFixed(1) + '°'
+  }
+  const theta = parseFloat(document.getElementById('genTheta').value)
+  document.getElementById('genFoldVal').textContent = fold
+  document.getElementById('genThetaVal').textContent = theta.toFixed(1) + '°'
+  document.getElementById('genSizeVal').textContent = size
+
+  const W = 400, H = 400
+  const segs = picHex(3, size, theta, W / 2, H / 2)
+
+  let html = ''
+  for (const [x1, y1, x2, y2] of segs) {
+    if (x1 < -20 || x1 > W + 20 || y1 < -20 || y1 > H + 20) continue
+    html += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--accent)" stroke-width="0.9" opacity="0.8" stroke-linecap="round"/>`
+  }
+  document.getElementById('gensvg').innerHTML = `<g>${html}</g>`
+
+  const natAngle = naturalContactAngle(fold).toFixed(1)
+  const isNatural = Math.abs(theta - parseFloat(natAngle)) < 0.3
+  document.getElementById('genCaption').textContent =
+    `${fold}-fold · θ = ${theta.toFixed(1)}°${isNatural ? ' (natural angle)' : ''} · PIC algorithm on hex tiling · ${segs.length} segments`
+}
+
+window.genLinkFold = function() {
+  genAutoTheta = !genAutoTheta
+  document.getElementById('btnGenLink').classList.toggle('active', genAutoTheta)
+  renderGenPattern()
+}
+
+window.genExportSVG = function() {
+  const fold = parseInt(document.getElementById('genFold').value)
+  const theta = parseFloat(document.getElementById('genTheta').value)
+  const size = parseInt(document.getElementById('genSize').value)
+  const W = 400, H = 400
+  const segs = picHex(3, size, theta, W / 2, H / 2)
+
+  let lines = ''
+  for (const [x1, y1, x2, y2] of segs) {
+    lines += `  <line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#c0392b" stroke-width="1" stroke-linecap="round"/>\n`
+  }
+
+  const svg = `<!-- بسم الله الرحمن الرحيم -->\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">\n  <!-- tenfold · ${fold}-fold · θ=${theta.toFixed(1)}° · PIC on hex tiling -->\n  <rect width="${W}" height="${H}" fill="#0d0d12"/>\n  <g stroke-linecap="round">\n${lines}  </g>\n</svg>`
+
+  const blob = new Blob([svg], { type: 'image/svg+xml' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `tenfold-${fold}fold-theta${theta.toFixed(0)}.svg`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+document.getElementById('genFold').addEventListener('input', renderGenPattern)
+document.getElementById('genTheta').addEventListener('input', () => { genAutoTheta = false; document.getElementById('btnGenLink').classList.remove('active'); renderGenPattern() })
+document.getElementById('genSize').addEventListener('input', renderGenPattern)
+renderGenPattern()
 
 </script>
 </body>
