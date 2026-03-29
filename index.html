@@ -1207,6 +1207,54 @@ document.getElementById('genSize').addEventListener('input', renderGenPattern)
 renderGenPattern()
 
 
+// SECTION 4: Tiling
+function renderTiling() {
+  const grid = parseInt(document.getElementById('tilingGrid').value)
+  document.getElementById('tilingGridVal').textContent = grid + ' × ' + grid
+  const svg = document.getElementById('tilingsvg')
+  if (!svg) return
+  
+  const W = 400, H = 400
+  const cellW = W / grid, cellH = H / grid
+  const size = cellW * 0.8
+  const r = size / 2
+  
+  let html = ''
+  for (let row = 0; row < grid; row++) {
+    for (let col = 0; col < grid; col++) {
+      const cx = col * cellW + cellW/2
+      const cy = row * cellH + cellH/2
+      // Draw an 8-fold star in each cell
+      const pts = []
+      for (let i = 0; i < 16; i++) {
+        const a = (i / 16) * Math.PI * 2
+        pts.push([cx + Math.cos(a) * r * 0.9, cy + Math.sin(a) * r * 0.9])
+      }
+      // Connect every 3rd point for the star
+      for (let i = 0; i < 16; i++) {
+        const j = (i + 3) % 16
+        html += '<line x1="' + pts[i][0].toFixed(1) + '" y1="' + pts[i][1].toFixed(1) + '" x2="' + pts[j][0].toFixed(1) + '" y2="' + pts[j][1].toFixed(1) + '" stroke="rgb(120,110,95)" stroke-width="0.8"/>'
+      }
+      // Inner octagon
+      for (let i = 0; i < 8; i++) {
+        const a1 = ((i + 0.5) / 8) * Math.PI * 2
+        const a2 = ((i + 1.5) / 8) * Math.PI * 2
+        const ir = r * 0.5
+        html += '<line x1="' + (cx + Math.cos(a1)*ir).toFixed(1) + '" y1="' + (cy + Math.sin(a1)*ir).toFixed(1) + '" x2="' + (cx + Math.cos(a2)*ir).toFixed(1) + '" y2="' + (cy + Math.sin(a2)*ir).toFixed(1) + '" stroke="rgb(140,130,115)" stroke-width="0.5"/>'
+      }
+    }
+  }
+  svg.innerHTML = html
+}
+
+document.getElementById('tilingGrid').addEventListener('input', renderTiling)
+window.tilingToggleUnit = function() {
+  const btn = document.getElementById('tilingShowUnit')
+  btn.classList.toggle('active')
+  renderTiling()
+}
+renderTiling()
+
 // Touch swipe on construction demo
 (function() {
   const el = document.getElementById('demo-construction-tabs') || document.getElementById('demo-construction');
