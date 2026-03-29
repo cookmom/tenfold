@@ -1259,19 +1259,25 @@ renderTiling()
 function addSwipe(elId, nextFn, prevFn) {
   const el = document.getElementById(elId);
   if (!el) return;
-  let startX = 0, startY = 0;
+  let startX = 0, startY = 0, swiping = false;
   el.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
-  }, { passive: true });
+    swiping = false;
+  });
+  el.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - startX);
+    const dy = Math.abs(e.touches[0].clientY - startY);
+    if (dx > 10 && dx > dy) { swiping = true; e.preventDefault(); }
+  }, { passive: false });
   el.addEventListener('touchend', e => {
+    if (!swiping) return;
     const dx = e.changedTouches[0].clientX - startX;
-    const dy = e.changedTouches[0].clientY - startY;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+    if (Math.abs(dx) > 40) {
       if (dx < 0) nextFn();
       else prevFn();
     }
-  }, { passive: true });
+  });
 }
 // Construction
 addSwipe('demo-construction-tabs', () => activeFoldStep(1), () => activeFoldStep(-1));
@@ -1285,26 +1291,32 @@ addSwipe('demo-7fold', () => step7fold(1), () => step7fold(-1));
 function addSliderSwipe(demoId, sliderId) {
   const el = document.getElementById(demoId);
   if (!el) return;
-  let startX = 0, startY = 0;
+  let startX = 0, startY = 0, swiping = false;
   el.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
-  }, { passive: true });
+    swiping = false;
+  });
+  el.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - startX);
+    const dy = Math.abs(e.touches[0].clientY - startY);
+    if (dx > 10 && dx > dy) { swiping = true; e.preventDefault(); }
+  }, { passive: false });
   el.addEventListener('touchend', e => {
+    if (!swiping) return;
     const dx = e.changedTouches[0].clientX - startX;
-    const dy = e.changedTouches[0].clientY - startY;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+    if (Math.abs(dx) > 40) {
       const slider = document.getElementById(sliderId);
       if (!slider) return;
       const step = parseFloat(slider.step) || 1;
       const min = parseFloat(slider.min), max = parseFloat(slider.max);
       let val = parseFloat(slider.value);
-      if (dx < 0) val = Math.min(max, val + step);  // swipe left = increase
-      else val = Math.max(min, val - step);           // swipe right = decrease
+      if (dx < 0) val = Math.min(max, val + step);
+      else val = Math.max(min, val - step);
       slider.value = val;
       slider.dispatchEvent(new Event('input'));
     }
-  }, { passive: true });
+  });
 }
 addSliderSwipe('demo-circle', 'circleN');
 addSliderSwipe('demo-systems', 'sysDensity');
