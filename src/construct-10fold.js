@@ -39,7 +39,7 @@ const PHI = (1 + Math.sqrt(5)) / 2  // Golden ratio ≈ 1.6180...
 export function construct10Fold(R) {
   const C = (a) => { const v = Math.round(245 - (245-80)*a); return `rgb(${v},${v-5},${v-15})`; }
   const cons = C(0.6)
-  const acc  = '#c0392b'
+  const acc  = '#2c3e6b'
   const blue = 'rgba(50,90,180,.45)'
   const gold = 'rgba(180,120,30,.45)'
   const phi_c = 'rgba(212,180,100,.4)'   // golden color for φ proportions

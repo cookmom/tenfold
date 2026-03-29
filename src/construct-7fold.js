@@ -101,7 +101,7 @@ export function tetradecagonPoints(R, cx = 0, cy = 0, rotation = -Math.PI / 2) {
 export function construct7Fold(R) {
   const C = (a) => { const v = Math.round(245 - (245-80)*a); return `rgb(${v},${v-5},${v-15})`; }
   const cons = C(0.6)
-  const acc  = '#c0392b'
+  const acc  = '#2c3e6b'
   const blue = 'rgba(50,90,180,.45)'
   const gold = 'rgba(180,120,30,.5)'
   const green = 'rgba(100,200,120,.35)'
