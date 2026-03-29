@@ -1280,6 +1280,39 @@ addSwipe('demo-construction', () => activeFoldStep(1), () => activeFoldStep(-1))
 addSwipe('demo-10fold', () => step10fold(1), () => step10fold(-1));
 // 7-fold
 addSwipe('demo-7fold', () => step7fold(1), () => step7fold(-1));
+
+// Slider-based demos: swipe nudges the primary slider
+function addSliderSwipe(demoId, sliderId) {
+  const el = document.getElementById(demoId);
+  if (!el) return;
+  let startX = 0, startY = 0;
+  el.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      const slider = document.getElementById(sliderId);
+      if (!slider) return;
+      const step = parseFloat(slider.step) || 1;
+      const min = parseFloat(slider.min), max = parseFloat(slider.max);
+      let val = parseFloat(slider.value);
+      if (dx < 0) val = Math.min(max, val + step);  // swipe left = increase
+      else val = Math.max(min, val - step);           // swipe right = decrease
+      slider.value = val;
+      slider.dispatchEvent(new Event('input'));
+    }
+  }, { passive: true });
+}
+addSliderSwipe('demo-circle', 'circleN');
+addSliderSwipe('demo-systems', 'sysDensity');
+addSliderSwipe('demo-tiling', 'tilingGrid');
+addSliderSwipe('demo-fractal', 'fractalZoom');
+addSliderSwipe('demo-metamorphosis', 'morphTheta');
+addSliderSwipe('demo-generate', 'genFold');
+
 </script>
 </body>
 </html>
