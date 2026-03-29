@@ -246,6 +246,7 @@ tenfold · <a href="https://github.com/cookmom/tenfold">GitHub</a> · A Seven He
 
 <script type="module">
 import { circleGrid, circleIntersections, emergentPattern } from './src/index.js'
+import { construct8Fold } from './src/construct-8fold.js'
 
 // ═══════════════════════════════════════════════════
 // SECTION 1: Circle Division
@@ -375,117 +376,61 @@ document.getElementById('sysDensity').addEventListener('input', renderSystems)
 renderSystems()
 
 // ═══════════════════════════════════════════════════
-// SECTION 3: Step-by-step Construction
+// SECTION 3: Step-by-step Construction (Sandy Kurt method)
 // ═══════════════════════════════════════════════════
+const constructionSteps = construct8Fold(120)
 let currentStep = 0
-const totalSteps = 8
-const R = 120
 
-const stepDescs = [
-  'Draw the initial circle — the seed of all patterns.',
-  'Divide into 8 equal parts using compass arcs.',
-  'Connect alternate points to form the static square (blue).',
-  'Rotate 45° to form the dynamic square (gold). Two squares, one circle.',
-  'The square intersections subdivide the circle into 16 equal parts.',
-  'Place tangent circles at each intersection point.',
-  'Connect the centers — a network of construction lines emerges.',
-  'The pattern reveals itself. Construction lines fade. Only the design remains.'
-]
+function renderElement(el) {
+  if (el.type === 'circle') {
+    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"/>`
+  }
+  if (el.type === 'line') {
+    return `<line x1="${el.x1.toFixed(1)}" y1="${el.y1.toFixed(1)}" x2="${el.x2.toFixed(1)}" y2="${el.y2.toFixed(1)}" stroke="${el.stroke}" stroke-width="${el.sw||0.5}"/>`
+  }
+  return ''
+}
 
 function renderConstruction() {
   const svg = document.getElementById('constructsvg')
   let html = ''
-  const pts8 = [], pts16 = []
   
-  for (let i = 0; i < 8; i++) {
-    const a = (i / 8) * TAU - Math.PI / 2
-    pts8.push([Math.cos(a) * R, Math.sin(a) * R])
-  }
-  for (let i = 0; i < 16; i++) {
-    const a = (i / 16) * TAU - Math.PI / 2
-    pts16.push([Math.cos(a) * R, Math.sin(a) * R])
-  }
-  
-  const consAlpha = currentStep >= 7 ? '.04' : '.12'
-  const patAlpha = currentStep >= 7 ? '.8' : '.4'
-  
-  // Step 1: Circle
-  if (currentStep >= 0) {
-    html += `<circle cx="0" cy="0" r="${R}" fill="none" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.5"/>`
-    html += `<circle cx="0" cy="0" r="2" fill="rgba(232,228,220,.3)"/>`
-  }
-  
-  // Step 2: 8 divisions
-  if (currentStep >= 1) {
-    for (const p of pts8) {
-      html += `<line x1="0" y1="0" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.4"/>`
-      html += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2" fill="rgba(232,228,220,.25)"/>`
-    }
-  }
-  
-  // Step 3: Static square
-  if (currentStep >= 2) {
-    const sq = [0,2,4,6].map(i => pts8[i])
-    html += `<path d="M${sq.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')}Z" fill="none" stroke="rgba(120,160,255,${currentStep>=7?'.08':'.35'})" stroke-width="0.7"/>`
-  }
-  
-  // Step 4: Dynamic square
-  if (currentStep >= 3) {
-    const sq = [1,3,5,7].map(i => pts8[i])
-    html += `<path d="M${sq.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')}Z" fill="none" stroke="rgba(255,180,80,${currentStep>=7?'.08':'.35'})" stroke-width="0.7"/>`
-  }
-  
-  // Step 5: 16 subdivisions
-  if (currentStep >= 4) {
-    for (const p of pts16) {
-      html += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="1.5" fill="rgba(232,228,220,.15)"/>`
-    }
-  }
-  
-  // Step 6: Tangent circles at intersections
-  if (currentStep >= 5) {
-    const smallR = R * Math.sin(Math.PI / 8)
-    for (let i = 0; i < 8; i++) {
-      const a = (i / 8) * TAU - Math.PI / 2
-      const cx = Math.cos(a) * R * 0.924, cy = Math.sin(a) * R * 0.924
-      html += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(smallR*0.5).toFixed(1)}" fill="none" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.4"/>`
-    }
-    // Center tangent circle
-    html += `<circle cx="0" cy="0" r="${(smallR*0.5).toFixed(1)}" fill="none" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.4"/>`
-  }
-  
-  // Step 7: Connecting lines
-  if (currentStep >= 6) {
-    for (let i = 0; i < 16; i++) {
-      const j = (i + 4) % 16
-      html += `<line x1="${pts16[i][0].toFixed(1)}" y1="${pts16[i][1].toFixed(1)}" x2="${pts16[j][0].toFixed(1)}" y2="${pts16[j][1].toFixed(1)}" stroke="rgba(232,228,220,${consAlpha})" stroke-width="0.3"/>`
-    }
-  }
-  
-  // Step 8: Final pattern highlighted
-  if (currentStep >= 7) {
-    // 8-pointed star (khatam)
-    for (let i = 0; i < 8; i++) {
-      const j = (i + 3) % 8
-      const mid1 = pts16[i * 2], mid2 = pts16[j * 2]
-      html += `<line x1="${pts8[i][0].toFixed(1)}" y1="${pts8[i][1].toFixed(1)}" x2="${pts8[(i+1)%8][0].toFixed(1)}" y2="${pts8[(i+1)%8][1].toFixed(1)}" stroke="var(--accent)" stroke-width="1.2" opacity="${patAlpha}"/>`
-    }
-    // Inner octagon
-    const innerR = R * Math.cos(Math.PI / 8)
-    for (let i = 0; i < 8; i++) {
-      const a1 = ((i + 0.5) / 8) * TAU - Math.PI / 2
-      const a2 = ((i + 1.5) / 8) * TAU - Math.PI / 2
-      html += `<line x1="${(Math.cos(a1)*innerR).toFixed(1)}" y1="${(Math.sin(a1)*innerR).toFixed(1)}" x2="${(Math.cos(a2)*innerR).toFixed(1)}" y2="${(Math.sin(a2)*innerR).toFixed(1)}" stroke="var(--accent)" stroke-width="1.2" opacity="${patAlpha}"/>`
+  // Render all steps up to current
+  for (let s = 0; s <= currentStep; s++) {
+    const step = constructionSteps[s]
+    const isCurrent = (s === currentStep)
+    const isFinal = step.isFinal
+    
+    // If final step, fade all previous construction
+    if (currentStep === constructionSteps.length - 1 && !isFinal) {
+      // Render previous steps at very low opacity
+      for (const el of step.elements) {
+        const faded = {...el}
+        if (faded.stroke && faded.stroke.startsWith('rgba')) {
+          faded.stroke = 'rgba(232,228,220,.03)'
+        } else if (faded.stroke) {
+          faded.stroke = 'rgba(232,228,220,.04)'
+        }
+        if (faded.fill && faded.fill.startsWith('rgba') && faded.fill !== 'none') {
+          faded.fill = 'rgba(232,228,220,.04)'
+        }
+        html += renderElement(faded)
+      }
+    } else {
+      for (const el of step.elements) {
+        html += renderElement(el)
+      }
     }
   }
   
   svg.innerHTML = html
   
-  // Update step indicator
-  document.getElementById('stepLabel').textContent = `Step ${currentStep + 1} of ${totalSteps}`
-  document.getElementById('stepDesc').textContent = stepDescs[currentStep]
+  // Update UI
+  const total = constructionSteps.length
+  document.getElementById('stepLabel').textContent = `Step ${currentStep + 1} of ${total}`
+  document.getElementById('stepDesc').textContent = constructionSteps[currentStep].desc
   let dots = ''
-  for (let i = 0; i < totalSteps; i++) {
+  for (let i = 0; i < total; i++) {
     const cls = i < currentStep ? 'step-dot done' : i === currentStep ? 'step-dot current' : 'step-dot'
     dots += `<div class="${cls}"></div>`
   }
@@ -494,7 +439,7 @@ function renderConstruction() {
 
 window.constructStep = function(dir) {
   if (dir === 0) currentStep = 0
-  else currentStep = Math.max(0, Math.min(totalSteps - 1, currentStep + dir))
+  else currentStep = Math.max(0, Math.min(constructionSteps.length - 1, currentStep + dir))
   renderConstruction()
 }
 renderConstruction()
