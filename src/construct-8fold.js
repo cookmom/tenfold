@@ -80,7 +80,9 @@ export function construct8Fold(R) {
     desc: 'Draw the initial circle — the foundation of all Islamic patterns.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.4) }
+      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.4) },
+      { type: 'line', x1: 0, y1: 0, x2: R*0.95, y2: 0, stroke: C(0.3), sw: 0.4 },
+      { type: 'text', x: R*0.45, y: -8, text: 'R', fill: C(0.4), size: 11 }
     ]
   })
 
@@ -127,10 +129,12 @@ export function construct8Fold(R) {
     pts8.map(p => ({ x: p.x * octScale, y: p.y * octScale }))
   )
   steps.push({
-    desc: 'Point the compass on each intersection — draw circles tangent to the construction lines.',
+    desc: 'Point the compass on each intersection — draw circles tangent to the construction lines. Radius r = R·tan(π/8)/2 ≈ 0.207R.',
     elements: circCenters.map(c => (
       { type: 'circle', cx: c.x, cy: c.y, r: rSmall, stroke: cons, fill: 'none', sw: 0.4 }
-    ))
+    )).concat([
+      { type: 'text', x: R*0.55, y: R*0.85, text: 'r = R·tan(π/8)/2', fill: C(0.35), size: 9 }
+    ])
   })
 
   // Step 7: Horizontal + vertical connecting lines
@@ -254,7 +258,7 @@ export function construct8Fold(R) {
   }
 
   steps.push({
-    desc: 'The khatam reveals itself — the 8-pointed star, heart of Moroccan zellige.',
+    desc: 'The khatam {8/3} reveals itself — the 8-pointed star, heart of Moroccan zellige. Inner radius = R·(√2−1).',
     elements: finalEls,
     isFinal: true
   })
