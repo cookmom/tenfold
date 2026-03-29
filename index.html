@@ -843,6 +843,33 @@ window.switchFold = function(fold) {
 }
 
 // Legacy compatibility (constructStep still wired in HTML)
+let _autoPlayTimer = null
+window.toggleAutoPlay = function() {
+  const btn = document.getElementById('btnAutoPlay')
+  if (_autoPlayTimer) {
+    clearInterval(_autoPlayTimer)
+    _autoPlayTimer = null
+    btn.textContent = '▶ Auto'
+    btn.classList.remove('active')
+    return
+  }
+  btn.textContent = '⏸ Stop'
+  btn.classList.add('active')
+  _autoPlayTimer = setInterval(() => {
+    const fold = activeFold
+    const steps = allConstructions[fold]
+    if (!steps) return
+    const cur = foldCurrentStep[fold] || 0
+    if (cur >= steps.length - 1) {
+      // Loop back to start
+      foldCurrentStep[fold] = 0
+    } else {
+      foldCurrentStep[fold] = cur + 1
+    }
+    renderActiveConstruction()
+  }, 1500)
+}
+
 window.constructStep = function(dir) { window.activeFoldStep(dir) }
 window.mkStep = function(fold, dir) { /* no-op: tabs replace individual demos */ }
 
