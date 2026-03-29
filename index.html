@@ -37,6 +37,12 @@ pre .kw{color:rgba(192,100,180,.7)}pre .fn{color:rgba(120,180,220,.7)}pre .str{c
 .step-dot{width:8px;height:8px;border-radius:50%;background:rgba(232,228,220,.1);transition:background .3s}
 .step-dot.done{background:rgba(232,228,220,.3)}.step-dot.current{background:var(--accent)}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+@keyframes compassDraw{from{stroke-dashoffset:var(--dash)}to{stroke-dashoffset:0}}
+@keyframes rulerDraw{from{stroke-dashoffset:var(--dash)}to{stroke-dashoffset:0}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.draw-circle{animation:compassDraw .8s ease-out forwards}
+.draw-line{animation:rulerDraw .4s ease-out forwards}
+.draw-fade{animation:fadeIn .5s ease forwards}
 @media(max-width:500px){.demo{padding:1rem}.controls{gap:.5rem}}
 </style>
 </head>
@@ -381,12 +387,23 @@ renderSystems()
 const constructionSteps = construct8Fold(120)
 let currentStep = 0
 
-function renderElement(el) {
+function renderElement(el, animate) {
+  if (el.type === 'circle' && el.fill === 'none') {
+    // Compass-drawn circle: stroke-dasharray animation
+    const circ = Math.PI * 2 * el.r
+    const dashAttr = animate ? ` stroke-dasharray="${circ.toFixed(0)}" style="--dash:${circ.toFixed(0)}" class="draw-circle"` : ''
+    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="none" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"${dashAttr}/>`
+  }
   if (el.type === 'circle') {
-    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"/>`
+    // Dot — just fade in
+    const fadeAttr = animate ? ' class="draw-fade"' : ''
+    return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"${fadeAttr}/>`
   }
   if (el.type === 'line') {
-    return `<line x1="${el.x1.toFixed(1)}" y1="${el.y1.toFixed(1)}" x2="${el.x2.toFixed(1)}" y2="${el.y2.toFixed(1)}" stroke="${el.stroke}" stroke-width="${el.sw||0.5}"/>`
+    // Ruler-drawn line: stroke-dasharray animation
+    const len = Math.sqrt((el.x2-el.x1)**2 + (el.y2-el.y1)**2)
+    const dashAttr = animate ? ` stroke-dasharray="${len.toFixed(0)}" style="--dash:${len.toFixed(0)}" class="draw-line"` : ''
+    return `<line x1="${el.x1.toFixed(1)}" y1="${el.y1.toFixed(1)}" x2="${el.x2.toFixed(1)}" y2="${el.y2.toFixed(1)}" stroke="${el.stroke}" stroke-width="${el.sw||0.5}"${dashAttr}/>`
   }
   return ''
 }
@@ -401,24 +418,20 @@ function renderConstruction() {
     const isCurrent = (s === currentStep)
     const isFinal = step.isFinal
     
-    // If final step, fade all previous construction
-    if (currentStep === constructionSteps.length - 1 && !isFinal) {
-      // Render previous steps at very low opacity
+    const isFinalStep = (currentStep === constructionSteps.length - 1)
+    const shouldAnimate = isCurrent
+    
+    if (isFinalStep && !isFinal) {
+      // Fade previous construction on final reveal
       for (const el of step.elements) {
         const faded = {...el}
-        if (faded.stroke && faded.stroke.startsWith('rgba')) {
-          faded.stroke = 'rgba(232,228,220,.03)'
-        } else if (faded.stroke) {
-          faded.stroke = 'rgba(232,228,220,.04)'
-        }
-        if (faded.fill && faded.fill.startsWith('rgba') && faded.fill !== 'none') {
-          faded.fill = 'rgba(232,228,220,.04)'
-        }
-        html += renderElement(faded)
+        if (faded.stroke && faded.stroke !== 'none') faded.stroke = 'rgba(232,228,220,.03)'
+        if (faded.fill && faded.fill !== 'none') faded.fill = 'rgba(232,228,220,.03)'
+        html += renderElement(faded, false)
       }
     } else {
       for (const el of step.elements) {
-        html += renderElement(el)
+        html += renderElement(el, shouldAnimate)
       }
     }
   }
