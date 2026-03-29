@@ -51,9 +51,9 @@ pre .kw{color:rgba(192,100,180,.7)}pre .fn{color:rgba(120,180,220,.7)}pre .str{c
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 @keyframes compassDraw{from{stroke-dashoffset:var(--dash,9999)}to{stroke-dashoffset:0}}
 @keyframes rulerDraw{from{stroke-dashoffset:var(--dash,9999)}to{stroke-dashoffset:0}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.draw-circle{animation:compassDraw .8s ease-out forwards}
-.draw-line{animation:rulerDraw .4s ease-out forwards}
+
+
+
 .draw-fade{animation:fadeIn .5s ease forwards;opacity:0}
 .fold-tab{background:rgba(160,140,110,.08);color:var(--fg);border:1px solid rgba(160,140,110,.15);border-radius:0;padding:.35em .8em;font-family:var(--font);font-size:.7rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,border-color .2s}
 .fold-tab:hover{background:rgba(120,110,95,.25)}
@@ -732,7 +732,7 @@ function renderElement(el, animate, delayMs) {
     return `<circle cx="${el.cx.toFixed(1)}" cy="${el.cy.toFixed(1)}" r="${el.r.toFixed(1)}" fill="${el.fill||'none'}" stroke="${el.stroke||'none'}" stroke-width="${el.sw||0.5}"/>`
   }
   if (el.type === 'text') {
-    const fadeAttr = animate ? ' class="draw-fade"' : ''
+    const fadeAttr = ''
     return `<text x="${el.x.toFixed(1)}" y="${el.y.toFixed(1)}" fill="${el.fill||'rgba(120,110,95,.4)'}" font-family="var(--font)" font-size="${el.size||9}" font-weight="300" letter-spacing=".04em" font-style="italic"${fadeAttr}>${el.text}</text>`
   }
   if (el.type === 'line') {
