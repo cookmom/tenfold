@@ -1,5 +1,5 @@
 {
-  "name": "islamic-patterns",
+  "name": "tenfold",
   "version": "0.1.0",
   "description": "Islamic geometric pattern generator — zero dependencies, pure SVG output",
   "type": "module",
