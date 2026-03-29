@@ -868,60 +868,17 @@ window.switchFold = function(fold) {
 
 // Legacy compatibility (constructStep still wired in HTML)
 // Auto-play: loops when demo is visible, pauses when scrolled away
-let _autoPlayTimer = null
-let _autoPlayVisible = false
-
-function startAutoPlay() {
-  if (_autoPlayTimer) return
-  _autoPlayVisible = true
-  _autoPlayTimer = setInterval(() => {
-    if (!_autoPlayVisible) return
-    const fold = activeFold
-    const steps = allFoldSteps[activeFold]
-    if (!steps) return
-    const cur = foldCurrentStep[activeFold] || 0
-    if (cur >= steps.length - 1) {
-      foldCurrentStep[activeFold] = 0
-    } else {
-      foldCurrentStep[activeFold] = cur + 1
-    }
-    renderActiveFold()
-  }, 1500)
+// Simple autoplay: cycles construction steps every 1.5s
+let _apTimer = null
+function _apTick() {
+  const steps = allFoldSteps[activeFold]
+  if (!steps) return
+  const cur = foldCurrentStep[activeFold] || 0
+  foldCurrentStep[activeFold] = cur >= steps.length - 1 ? 0 : cur + 1
+  renderActiveFold()
 }
-
-function stopAutoPlay() {
-  _autoPlayVisible = false
-  if (_autoPlayTimer) { clearInterval(_autoPlayTimer); _autoPlayTimer = null }
-}
-
-// Observe all .demo elements — auto-play when visible
-const _demoObserver = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting && entry.target.id === 'demo-construction') {
-      startAutoPlay()
-    } else if (!entry.isIntersecting && entry.target.id === 'demo-construction') {
-      stopAutoPlay()
-    }
-  }
-}, { threshold: 0.3 })
-
-// Observe all demos — each auto-plays when visible
-document.querySelectorAll('.demo').forEach(el => _demoObserver.observe(el))
-
-// Also auto-play construction on page load if visible
-setTimeout(() => {
-  const el = document.getElementById('demo-construction')
-  if (el) {
-    const rect = el.getBoundingClientRect()
-    if (rect.top < window.innerHeight && rect.bottom > 0) startAutoPlay()
-  }
-}, 3000)
-
-// Keep manual controls working
-window.toggleAutoPlay = function() {
-  if (_autoPlayTimer) stopAutoPlay()
-  else startAutoPlay()
-}
+// Start immediately
+_apTimer = setInterval(_apTick, 1500)
 
 window.constructStep = function(dir) { window.activeFoldStep(dir) }
 window.mkStep = function(fold, dir) { /* no-op: tabs replace individual demos */ }
