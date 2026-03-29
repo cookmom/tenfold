@@ -189,6 +189,20 @@ the seed of Persian patterns.
 
 </div>
 </div>
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-systems">
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+  <div style="flex:1;min-width:180px"><svg id="svg-sqrt2" viewBox="-10 -10 220 220" style="width:100%;height:auto;max-height:500px"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">√2 · 8-FOLD · MOROCCO</div></div>
+  <div style="flex:1;min-width:180px"><svg id="svg-sqrt3" viewBox="-10 -10 220 220" style="width:100%;height:auto;max-height:500px"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">√3 · 6-FOLD · SYRIA</div></div>
+  <div style="flex:1;min-width:180px"><svg id="svg-phi" viewBox="-10 -10 220 220" style="width:100%;height:auto;max-height:500px"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">φ · 10-FOLD · IRAN</div></div>
+</div>
+<div class="controls">
+  <label>Density</label>
+  <input type="range" id="sysDensity" min="25" max="60" value="40" step="1">
+  <span class="val" id="sysDensityVal">40</span>
+</div>
+</div></div>
+<div class="section-text">
 <h2>2 · Three Proportional Systems</h2>
 
 <p>
@@ -227,21 +241,42 @@ such numbers 'unutterables'. Despite this, these values could be determined
 geometrically with great precision."
 <cite>— Richard Henry, <em>Journal of the Iran Society</em>, 2007</cite>
 </blockquote>
-
-<div class="demo" id="demo-systems">
-<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-  <div style="flex:1;min-width:180px"><svg id="svg-sqrt2" viewBox="-10 -10 220 220" width="200" height="200"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">√2 · 8-FOLD · MOROCCO</div></div>
-  <div style="flex:1;min-width:180px"><svg id="svg-sqrt3" viewBox="-10 -10 220 220" width="200" height="200"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">√3 · 6-FOLD · SYRIA</div></div>
-  <div style="flex:1;min-width:180px"><svg id="svg-phi" viewBox="-10 -10 220 220" width="200" height="200"></svg><div style="text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--dim);margin-top:4px">φ · 10-FOLD · IRAN</div></div>
-</div>
-<div class="controls">
-  <label>Density</label>
-  <input type="range" id="sysDensity" min="25" max="60" value="40" step="1">
-  <span class="val" id="sysDensityVal">40</span>
 </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-construction-tabs">
+
+<div class="controls" id="foldTabBar" style="margin-bottom:1rem;gap:.5rem">
+  <button class="fold-tab active" data-fold="4" onclick="switchFold('4')">4-fold</button>
+  <button class="fold-tab" data-fold="6" onclick="switchFold('6')">6-fold</button>
+  <button class="fold-tab" data-fold="8" onclick="switchFold('8')">8-fold</button>
+  <button class="fold-tab" data-fold="12" onclick="switchFold('12')">12-fold</button>
+  <span style="flex:1"></span>
+  <span id="foldOrigin" style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">India · Agra Fort</span>
+</div>
+
+<div id="foldDesc" style="font-size:.78rem;color:rgba(45,38,28,.55);margin-bottom:.8rem;min-height:2.4em;line-height:1.6">
+The 4-fold system builds from interlocking squares — static and dynamic — inscribed
+within a circle. From their intersections, a family of small tangent circles grows.
+Lines through their centers create the grid from which the Mughal 8-pointed star lattice emerges.
+</div>
+
+<svg id="constructsvgMain" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
+
+<div class="controls" style="margin-top:1rem">
+  <button id="btnPlayPause" onclick="togglePlay()">▶ Play</button>
+  <button onclick="activeFoldStep(-1)">← Back</button>
+  <button onclick="activeFoldStep(1)" style="background:var(--accent);border-color:var(--accent)">Next →</button>
+  <button onclick="activeFoldStep(0)">Reset</button>
+  <span class="val" id="foldStepLabel" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="foldStepDots" style="margin-top:.6rem"></div>
+<p id="foldStepDesc" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:2.4em"></p>
+
+</div></div>
+<div class="section-text">
 <h2>3 · The Construction</h2>
 
 <p>
@@ -272,46 +307,30 @@ of which <strong>the design emerges</strong>."
 <cite>— Richard Henry on Master Oshaghi's workshop, Isfahan</cite>
 </blockquote>
 
-<!-- ─── Construction tab UI ─── -->
-<div class="demo" id="demo-construction-tabs">
-
-<div class="controls" id="foldTabBar" style="margin-bottom:1rem;gap:.5rem">
-  <button class="fold-tab active" data-fold="4" onclick="switchFold('4')">4-fold</button>
-  <button class="fold-tab" data-fold="6" onclick="switchFold('6')">6-fold</button>
-  <button class="fold-tab" data-fold="8" onclick="switchFold('8')">8-fold</button>
-  <button class="fold-tab" data-fold="12" onclick="switchFold('12')">12-fold</button>
-  <span style="flex:1"></span>
-  <span id="foldOrigin" style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">India · Agra Fort</span>
-</div>
-
-<div id="foldDesc" style="font-size:.78rem;color:rgba(45,38,28,.55);margin-bottom:.8rem;min-height:2.4em;line-height:1.6">
-The 4-fold system builds from interlocking squares — static and dynamic — inscribed
-within a circle. From their intersections, a family of small tangent circles grows.
-Lines through their centers create the grid from which the Mughal 8-pointed star lattice emerges.
-</div>
-
-<svg id="constructsvgMain" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
-
-<div class="controls" style="margin-top:1rem">
-  <button id="btnPlayPause" onclick="togglePlay()">▶ Play</button>
-  <button onclick="activeFoldStep(-1)">← Back</button>
-  <button onclick="activeFoldStep(1)" style="background:var(--accent);border-color:var(--accent)">Next →</button>
-  <button onclick="activeFoldStep(0)">Reset</button>
-  <span class="val" id="foldStepLabel" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
-</div>
-<div class="step-indicator" id="foldStepDots" style="margin-top:.6rem"></div>
-<p id="foldStepDesc" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:2.4em"></p>
-
-</div>
-
 <pre><span class="cm">// All four constructions follow Sandy Kurt's compass-and-ruler method:</span>
 <span class="cm">// 4-fold: Square grid → tangent circles → star lattice (Agra Fort)</span>
 <span class="cm">// 6-fold: Flower of Life → hexagonal grid → hexagram (Isfahan)</span>
 <span class="cm">// 8-fold: Static+dynamic squares → 16-fold → khatam rosette (Morocco)</span>
 <span class="cm">// 12-fold: Lozenge → hexagonal circles → 12-ray star (Andalusia)</span></pre>
+</div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════ -->
 <!-- ─── Section: The Tiling ─── -->
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-tiling">
+  <div class="tiling-svg-wrap">
+    <svg id="tilingsvg" viewBox="0 0 560 400" style="width:100%;height:auto;max-height:500px;display:block;background:rgba(232,228,220,.01)"></svg>
+    <div class="unit-label" id="unitLabel">unit cell</div>
+  </div>
+  <div class="controls">
+    <label>Grid</label>
+    <input type="range" id="tilingGrid" min="1" max="6" value="3" step="1">
+    <span class="val" id="tilingGridVal">3 × 3</span>
+    <button id="tilingShowUnit" class="active" onclick="tilingToggleUnit()">Show unit</button>
+  </div>
+</div></div>
+<div class="section-text">
 <h2>4 · The Tiling</h2>
 
 <p>
@@ -331,18 +350,7 @@ infinite extension. The tile defines its own limits while implying no limit at a
 Adjust the grid size to see how the pattern scales. Each repetition is the <em>same</em>
 unit cell — the khatam rosette — perfectly interlocked with its neighbors.
 </p>
-
-<div class="demo" id="demo-tiling">
-  <div class="tiling-svg-wrap">
-    <svg id="tilingsvg" viewBox="0 0 560 400" width="560" height="400" style="width:100%;height:auto;display:block;background:rgba(232,228,220,.01)"></svg>
-    <div class="unit-label" id="unitLabel">unit cell</div>
-  </div>
-  <div class="controls">
-    <label>Grid</label>
-    <input type="range" id="tilingGrid" min="1" max="6" value="3" step="1">
-    <span class="val" id="tilingGridVal">3 × 3</span>
-    <button id="tilingShowUnit" class="active" onclick="tilingToggleUnit()">Show unit</button>
-  </div>
+</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
@@ -354,6 +362,21 @@ To be oriented is to know where you are, which direction you face, and to whom y
 <cite>— Henry Corbin, <em>The Man of Light in Iranian Sufism</em></cite>
 </blockquote>
 
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-fractal">
+  <div style="position:relative;overflow:hidden;border-radius:0;background:rgba(232,228,220,.01)">
+    <svg id="fractalsvg" viewBox="-200 -200 400 400" style="width:100%;height:auto;display:block;aspect-ratio:1"></svg>
+    <div id="fractal-hint" style="position:absolute;bottom:.8rem;left:50%;transform:translateX(-50%);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(45,38,28,.45);pointer-events:none;transition:opacity .5s">
+      zoom in to find the same pattern
+    </div>
+  </div>
+  <div class="controls">
+    <label>Zoom</label>
+    <input type="range" id="fractalZoom" min="0" max="100" value="0" step="1">
+    <span class="val" id="fractalZoomVal">1×</span>
+  </div>
+</div></div>
+<div class="section-text">
 <h2>5 · Self-Similarity</h2>
 
 <p>
@@ -375,22 +398,27 @@ In 2007, Peter Lu and Paul Steinhardt demonstrated that the tiles on the
 self-similar quasicrystalline structure — the same mathematical property
 that Roger Penrose described in 1974, five centuries later.
 </p>
-
-<div class="demo" id="demo-fractal">
-  <div style="position:relative;overflow:hidden;border-radius:0;background:rgba(232,228,220,.01)">
-    <svg id="fractalsvg" viewBox="-200 -200 400 400" style="width:100%;height:auto;display:block;aspect-ratio:1"></svg>
-    <div id="fractal-hint" style="position:absolute;bottom:.8rem;left:50%;transform:translateX(-50%);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(45,38,28,.45);pointer-events:none;transition:opacity .5s">
-      zoom in to find the same pattern
-    </div>
-  </div>
-  <div class="controls">
-    <label>Zoom</label>
-    <input type="range" id="fractalZoom" min="0" max="100" value="0" step="1">
-    <span class="val" id="fractalZoomVal">1×</span>
-  </div>
+</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-10fold">
+<div class="controls" style="margin-bottom:1rem;gap:.5rem">
+  <span style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">Iran · Darb-i Imam, Isfahan · 1453 CE</span>
+</div>
+<div id="desc10fold" style="font-size:.78rem;color:rgba(45,38,28,.55);margin-bottom:.8rem;min-height:2.4em;line-height:1.6"></div>
+<svg id="svg10fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
+<div class="controls" style="margin-top:.8rem">
+  <button onclick="step10fold(-1)">← Back</button>
+  <button onclick="step10fold(0)">↺ Reset</button>
+  <button onclick="step10fold(1)">Next →</button>
+  <span class="val" id="label10fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="dots10fold" style="margin-top:.6rem"></div>
+<p id="stepdesc10fold" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:3.2em"></p>
+</div></div>
+<div class="section-text">
 <h2>5 · The Shamsa — 10-Fold Decagonal Pattern</h2>
 
 <p>
@@ -405,24 +433,26 @@ ratio φ = (1+√5)/2 ≈ 1.618</strong>. The decagon side length equals R/φ ex
 The {10/3} star's inner decagon sits at radius R/φ. Every intersection, every proportion,
 every self-similar level is a power of 1/φ.
 </p>
-
-<div class="demo" id="demo-10fold">
-<div class="controls" style="margin-bottom:1rem;gap:.5rem">
-  <span style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">Iran · Darb-i Imam, Isfahan · 1453 CE</span>
 </div>
-<div id="desc10fold" style="font-size:.78rem;color:rgba(45,38,28,.55);margin-bottom:.8rem;min-height:2.4em;line-height:1.6"></div>
-<svg id="svg10fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
-<div class="controls" style="margin-top:.8rem">
-  <button onclick="step10fold(-1)">← Back</button>
-  <button onclick="step10fold(0)">↺ Reset</button>
-  <button onclick="step10fold(1)">Next →</button>
-  <span class="val" id="label10fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
-</div>
-<div class="step-indicator" id="dots10fold" style="margin-top:.6rem"></div>
-<p id="stepdesc10fold" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:3.2em"></p>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-7fold">
+<div class="controls" style="margin-bottom:1rem;gap:.5rem">
+  <span style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">Afghanistan / Turkey · 12th–13th century CE · Experimental</span>
+</div>
+<svg id="svg7fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
+<div class="controls" style="margin-top:.8rem">
+  <button onclick="step7fold(-1)">← Back</button>
+  <button onclick="step7fold(0)">↺ Reset</button>
+  <button onclick="step7fold(1)">Next →</button>
+  <span class="val" id="label7fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
+</div>
+<div class="step-indicator" id="dots7fold" style="margin-top:.6rem"></div>
+<p id="stepdesc7fold" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:3.2em"></p>
+</div></div>
+<div class="section-text">
 <h2>6 · The Seven-Fold Mystery</h2>
 
 <p>
@@ -439,37 +469,12 @@ Afghanistan, 1099–1115 CE</strong>. Jay Bonner and Marc Pelletier documented t
 systematic 7/14 construction in their 2012 Bridges paper, revealing how heptagonal
 sub-grids generate these rare patterns.
 </p>
-
-<div class="demo" id="demo-7fold">
-<div class="controls" style="margin-bottom:1rem;gap:.5rem">
-  <span style="font-size:.65rem;letter-spacing:.08em;color:var(--dim)">Afghanistan / Turkey · 12th–13th century CE · Experimental</span>
 </div>
-<svg id="svg7fold" viewBox="-160 -160 320 320" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
-<div class="controls" style="margin-top:.8rem">
-  <button onclick="step7fold(-1)">← Back</button>
-  <button onclick="step7fold(0)">↺ Reset</button>
-  <button onclick="step7fold(1)">Next →</button>
-  <span class="val" id="label7fold" style="flex:1;text-align:right;font-size:.7rem">Step 1</span>
-</div>
-<div class="step-indicator" id="dots7fold" style="margin-top:.6rem"></div>
-<p id="stepdesc7fold" style="font-size:.78rem;margin-top:.8rem;color:var(--dim);min-height:3.2em"></p>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
-<h2>7 · Pattern Metamorphosis</h2>
-
-<p>
-Every Islamic star pattern can be described by a single number: the <strong>contact angle θ</strong>.
-Move θ from 30° to 75° and the pattern transforms continuously from 3-fold to 12-fold symmetry.
-</p>
-
-<p>
-This is Craig Kaplan's "parquet deformation" — inspired by Hofstadter and Huff's work on
-continuously morphing tilings. The pattern below uses a hexagonal base tiling; as you drag
-the slider, the star arms lengthen and rotate, passing through every fold family.
-</p>
-
-<div class="demo" id="demo-metamorphosis">
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-metamorphosis">
 <svg id="morphsvg" viewBox="0 0 400 240" style="width:100%;height:auto;display:block"></svg>
 <div class="controls" style="margin-top:.8rem">
   <label>θ</label>
@@ -487,18 +492,26 @@ the slider, the star arms lengthen and rotate, passing through every fold family
   <button onclick="morphJumpTo(77.14)" title="14-fold" id="btn-morph-14">14</button>
   <span style="font-size:.65rem;color:var(--dim);margin-left:auto">← drag or tap fold count →</span>
 </div>
+</div></div>
+<div class="section-text">
+<h2>7 · Pattern Metamorphosis</h2>
+
+<p>
+Every Islamic star pattern can be described by a single number: the <strong>contact angle θ</strong>.
+Move θ from 30° to 75° and the pattern transforms continuously from 3-fold to 12-fold symmetry.
+</p>
+
+<p>
+This is Craig Kaplan's "parquet deformation" — inspired by Hofstadter and Huff's work on
+continuously morphing tilings. The pattern below uses a hexagonal base tiling; as you drag
+the slider, the star arms lengthen and rotate, passing through every fold family.
+</p>
+</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
-<h2>8 · Generate Any Pattern</h2>
-
-<p>
-Any fold count, any contact angle, instant SVG. This is tenfold's power demo.
-The generator uses the <strong>Kaplan PIC algorithm</strong> on a hexagonal tiling —
-the same mathematical engine that underlies all Islamic geometric art.
-</p>
-
-<div class="demo" id="demo-generate">
+<div class="section-row">
+<div class="demo-col"><div class="demo" id="demo-generate">
 <svg id="gensvg" viewBox="0 0 400 400" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto"></svg>
 <div class="controls" style="margin-top:1rem">
   <label>Fold</label>
@@ -518,6 +531,16 @@ the same mathematical engine that underlies all Islamic geometric art.
   <button onclick="genExportSVG()" style="margin-left:auto">⬇ SVG</button>
 </div>
 <p id="genCaption" style="font-size:.7rem;color:var(--dim);margin-top:.6rem;margin-bottom:0;text-align:center"></p>
+</div></div>
+<div class="section-text">
+<h2>8 · Generate Any Pattern</h2>
+
+<p>
+Any fold count, any contact angle, instant SVG. This is tenfold's power demo.
+The generator uses the <strong>Kaplan PIC algorithm</strong> on a hexagonal tiling —
+the same mathematical engine that underlies all Islamic geometric art.
+</p>
+</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════ -->
