@@ -162,43 +162,16 @@ export function construct4Fold(R) {
   })
   steps.push({
     desc: 'Using the same radius, draw small circles at all 8 intersections and the center. Quarter circles bloom at each corner of the outer square.',
-    elements: (() => {
-      const els = []
-      const acc = '#2c3e6b'
-      const grid = 3
-      const spacing = R * 0.7
-      // Draw a grid of 8-pointed stars
-      for (let row = -1; row <= 1; row++) {
-        for (let col = -1; col <= 1; col++) {
-          const cx = col * spacing
-          const cy = row * spacing
-          const sr = spacing * 0.35
-          // 8-pointed star: two overlapping squares
-          for (let sq = 0; sq < 2; sq++) {
-            const rot = sq * Math.PI / 4
-            for (let i = 0; i < 4; i++) {
-              const a1 = rot + (i / 4) * Math.PI * 2
-              const a2 = rot + ((i + 1) / 4) * Math.PI * 2
-              els.push({ type: 'line', x1: cx + Math.cos(a1)*sr, y1: cy + Math.sin(a1)*sr, x2: cx + Math.cos(a2)*sr, y2: cy + Math.sin(a2)*sr, stroke: acc, sw: 1.3 })
-            }
-          }
-        }
-      }
-      // Connecting lines between stars (kite shapes)
-      for (let row = -1; row <= 0; row++) {
-        for (let col = -1; col <= 0; col++) {
-          const cx = (col + 0.5) * spacing
-          const cy = (row + 0.5) * spacing
-          const kr = spacing * 0.18
-          for (let i = 0; i < 4; i++) {
-            const a1 = (i / 4) * Math.PI * 2
-            const a2 = ((i + 1) / 4) * Math.PI * 2
-            els.push({ type: 'line', x1: cx + Math.cos(a1)*kr, y1: cy + Math.sin(a1)*kr, x2: cx + Math.cos(a2)*kr, y2: cy + Math.sin(a2)*kr, stroke: acc, sw: 1.0 })
-          }
-        }
-      }
-      return els
-    })()
+    elements: [
+      ...innerIntersections.map(p => ({
+        type: 'circle', cx: p.x, cy: p.y, r: rSmall, stroke: cons, fill: 'none', sw: 0.5
+      })),
+      { type: 'circle', cx: 0, cy: 0, r: rSmall, stroke: cons, fill: 'none', sw: 0.5 },
+      ...outerCorners.map(cc => ({
+        type: 'circle', cx: cc.x, cy: cc.y, r: rSmall * 2, stroke: C(0.4), fill: 'none', sw: 0.4
+      })),
+      { type: 'text', x: R*0.6, y: R*0.7, text: 'r = R·(√2−1)/2', fill: C(0.5), size: 9 }
+    ]
   })
 
   // ─── Step 5: Connect circle centers ───────────────────────────────────
@@ -309,7 +282,37 @@ export function construct4Fold(R) {
 
   steps.push({
     desc: 'The pattern of Agra Fort reveals itself — interlocking 8-pointed stars, the glory of Mughal India.',
-    elements: finalEls,
+    elements: (() => {
+      const els = []
+      const acc = '#2c3e6b'
+      const spacing = R * 0.7
+      for (let row = -1; row <= 1; row++) {
+        for (let col = -1; col <= 1; col++) {
+          const cx = col * spacing, cy = row * spacing
+          const sr = spacing * 0.35
+          for (let sq = 0; sq < 2; sq++) {
+            const rot = sq * Math.PI / 4
+            for (let i = 0; i < 4; i++) {
+              const a1 = rot + (i / 4) * Math.PI * 2
+              const a2 = rot + ((i + 1) / 4) * Math.PI * 2
+              els.push({ type: 'line', x1: cx+Math.cos(a1)*sr, y1: cy+Math.sin(a1)*sr, x2: cx+Math.cos(a2)*sr, y2: cy+Math.sin(a2)*sr, stroke: acc, sw: 1.3 })
+            }
+          }
+        }
+      }
+      for (let row = -1; row <= 0; row++) {
+        for (let col = -1; col <= 0; col++) {
+          const cx = (col+0.5)*spacing, cy = (row+0.5)*spacing
+          const kr = spacing * 0.18
+          for (let i = 0; i < 4; i++) {
+            const a1 = (i/4)*Math.PI*2, a2 = ((i+1)/4)*Math.PI*2
+            els.push({ type: 'line', x1: cx+Math.cos(a1)*kr, y1: cy+Math.sin(a1)*kr, x2: cx+Math.cos(a2)*kr, y2: cy+Math.sin(a2)*kr, stroke: acc, sw: 1.0 })
+          }
+        }
+      }
+      els.push({ type: 'text', x: -R*0.95, y: R*1.1, text: '4-fold · {8/3} lattice', fill: acc, size: 10 })
+      return els
+    })(),
     isFinal: true
   })
 

@@ -45,7 +45,8 @@ export function construct6Fold(R) {
     desc: 'Place the compass at the center. Draw the first circle — the seed from which all will bloom.',
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.65) }
+      { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.65) },
+      { type: 'text', x: R*0.45, y: -8, text: 'R', fill: C(0.5), size: 11 }
     ]
   })
 
