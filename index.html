@@ -806,19 +806,10 @@ function makeConstructionDemo({ steps, svgId, labelId, dotsId, descId }) {
       const step = steps[s]
       const isCurrent = (s === current)
       
-      if (isFinalStep && !step.isFinal) {
-        // Ghost out construction on final reveal
-        for (const el of step.elements) {
-          const faded = {...el}
-          if (faded.stroke && faded.stroke !== 'none') faded.stroke = 'rgba(232,228,220,.03)'
-          if (faded.fill   && faded.fill   !== 'none') faded.fill   = 'rgba(232,228,220,.03)'
-          html += renderElement(faded, false)
-        }
-      } else {
+      // ALL construction layers always visible
+      {
         step.elements.forEach((el, idx) => {
-          // Stagger animation: each element 40ms after previous
-          const delay = isCurrent ? idx * 40 : 0
-          html += renderElement(el, isCurrent, delay)
+          html += renderElement(el, false, 0)
         })
       }
     }
