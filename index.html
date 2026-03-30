@@ -871,14 +871,8 @@ function renderActiveFold() {
   for (let s = 0; s <= current; s++) {
     const step = steps[s]
     const isCurrent = (s === current)
-    if (isFinalStep && !step.isFinal) {
-      for (const el of step.elements) {
-        const faded = {...el}
-        if (faded.stroke && faded.stroke !== 'none') faded.stroke = 'rgba(232,228,220,.03)'
-        if (faded.fill   && faded.fill   !== 'none') faded.fill   = 'rgba(232,228,220,.03)'
-        html += renderElement(faded, false)
-      }
-    } else {
+    // ALL construction layers ALWAYS visible — no fading, no hiding
+    {
       step.elements.forEach((el, idx) => {
         html += renderElement(el, isCurrent, isCurrent ? idx * 40 : 0)
       })
