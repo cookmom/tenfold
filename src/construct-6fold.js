@@ -62,7 +62,7 @@ export function construct6Fold(R) {
   steps.push({
     desc: 'Point the compass on each intersection between the circles — extend the Flower outward.',
     elements: outerPts.map(p => ({
-      type: 'circle', cx: p.x, cy: p.y, r: R, stroke: C(0.35), fill: 'none', sw: 0.4
+      type: 'circle', cx: p.x, cy: p.y, r: R, stroke: C(0.35), fill: 'none', sw: 1.0
     }))
   })
 
@@ -71,7 +71,7 @@ export function construct6Fold(R) {
   const h = R * Math.sqrt(3) / 2  // row spacing in hexagonal grid = R sin(60°)
   // Horizontal family
   for (const y of [0, h, -h, h * 2, -h * 2]) {
-    hLines.push({ type: 'line', x1: -EXT, y1: y, x2: EXT, y2: y, stroke: C(0.35), sw: 0.3 })
+    hLines.push({ type: 'line', x1: -EXT, y1: y, x2: EXT, y2: y, stroke: C(0.35), sw: 0.75 })
   }
   // 60° diagonal family (direction cos60, sin60 = 0.5, √3/2)
   const d60x = 0.5, d60y = Math.sqrt(3) / 2
@@ -83,7 +83,7 @@ export function construct6Fold(R) {
       type: 'line',
       x1: px - d60x * EXT, y1: py - d60y * EXT,
       x2: px + d60x * EXT, y2: py + d60y * EXT,
-      stroke: C(0.35), sw: 0.3
+      stroke: C(0.35), sw: 0.75
     })
   }
   steps.push({
@@ -94,7 +94,7 @@ export function construct6Fold(R) {
   // ─── Step 5: Vertical lines ───────────────────────────────────────────
   const vLines = []
   for (const x of [0, R * 0.5, -R * 0.5, R, -R, R * 1.5, -R * 1.5]) {
-    vLines.push({ type: 'line', x1: x, y1: -EXT, x2: x, y2: EXT, stroke: C(0.35), sw: 0.3 })
+    vLines.push({ type: 'line', x1: x, y1: -EXT, x2: x, y2: EXT, stroke: C(0.35), sw: 0.75 })
   }
   steps.push({
     desc: 'Draw vertical lines through the same points — every circle intersection is now a crossing.',
@@ -111,7 +111,7 @@ export function construct6Fold(R) {
       type: 'line',
       x1: px - d120x * EXT, y1: py - d120y * EXT,
       x2: px + d120x * EXT, y2: py + d120y * EXT,
-      stroke: C(0.35), sw: 0.3
+      stroke: C(0.35), sw: 0.75
     })
   }
   steps.push({

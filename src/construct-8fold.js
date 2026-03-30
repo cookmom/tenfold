@@ -81,7 +81,7 @@ export function construct8Fold(R) {
     elements: [
       { type: 'circle', cx: 0, cy: 0, r: R, stroke: cons, fill: 'none', sw: 0.5 },
       { type: 'circle', cx: 0, cy: 0, r: 2, stroke: 'none', fill: C(0.65) },
-      { type: 'line', x1: 0, y1: 0, x2: R*0.95, y2: 0, stroke: C(0.6), sw: 0.4 },
+      { type: 'line', x1: 0, y1: 0, x2: R*0.95, y2: 0, stroke: C(0.6), sw: 1.0 },
       { type: 'text', x: R*0.45, y: -8, text: 'R', fill: C(0.65), size: 11 }
     ]
   })
@@ -89,7 +89,7 @@ export function construct8Fold(R) {
   // Step 2: Divide into 8
   steps.push({
     desc: 'Divide the circle into 8 equal parts — the compass finds each point.',
-    elements: pts8.map(p => ({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: cons, sw: 0.4 }))
+    elements: pts8.map(p => ({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: cons, sw: 1.0 }))
       .concat(pts8.map(p => ({ type: 'circle', cx: p.x, cy: p.y, r: 2, stroke: 'none', fill: C(0.6) })))
   })
 
@@ -117,7 +117,7 @@ export function construct8Fold(R) {
     elements: pts16.filter((_, i) => i % 2 === 1).map(p => (
       { type: 'circle', cx: p.x, cy: p.y, r: 1.5, stroke: 'none', fill: C(0.65) }
     )).concat(pts16.filter((_, i) => i % 2 === 1).map(p => (
-      { type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.6), sw: 0.3 }
+      { type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.6), sw: 0.75 }
     )))
   })
 
@@ -131,7 +131,7 @@ export function construct8Fold(R) {
   steps.push({
     desc: 'Point the compass on each intersection — draw circles tangent to the construction lines. Radius r = R·tan(π/8)/2 ≈ 0.207R.',
     elements: circCenters.map(c => (
-      { type: 'circle', cx: c.x, cy: c.y, r: rSmall, stroke: cons, fill: 'none', sw: 0.4 }
+      { type: 'circle', cx: c.x, cy: c.y, r: rSmall, stroke: cons, fill: 'none', sw: 1.0 }
     )).concat([
       { type: 'text', x: R*0.55, y: R*0.85, text: 'r = R·tan(π/8)/2', fill: C(0.35), size: 9 }
     ])
@@ -142,11 +142,11 @@ export function construct8Fold(R) {
     desc: 'Draw pairs of horizontal and vertical lines connecting circle centers.',
     elements: [
       // Vertical pair
-      { type: 'line', x1: -rSmall, y1: -R * 1.1, x2: -rSmall, y2: R * 1.1, stroke: cons, sw: 0.3 },
-      { type: 'line', x1: rSmall, y1: -R * 1.1, x2: rSmall, y2: R * 1.1, stroke: cons, sw: 0.3 },
+      { type: 'line', x1: -rSmall, y1: -R * 1.1, x2: -rSmall, y2: R * 1.1, stroke: cons, sw: 0.75 },
+      { type: 'line', x1: rSmall, y1: -R * 1.1, x2: rSmall, y2: R * 1.1, stroke: cons, sw: 0.75 },
       // Horizontal pair
-      { type: 'line', x1: -R * 1.1, y1: -rSmall, x2: R * 1.1, y2: -rSmall, stroke: cons, sw: 0.3 },
-      { type: 'line', x1: -R * 1.1, y1: rSmall, x2: R * 1.1, y2: rSmall, stroke: cons, sw: 0.3 },
+      { type: 'line', x1: -R * 1.1, y1: -rSmall, x2: R * 1.1, y2: -rSmall, stroke: cons, sw: 0.75 },
+      { type: 'line', x1: -R * 1.1, y1: rSmall, x2: R * 1.1, y2: rSmall, stroke: cons, sw: 0.75 },
     ]
   })
 
@@ -156,11 +156,11 @@ export function construct8Fold(R) {
     desc: 'Repeat diagonally — a network of parallel lines fills the construction.',
     elements: [
       // Diagonal ↘ pair
-      { type: 'line', x1: -R*1.1 - d, y1: -R*1.1 + d, x2: R*1.1 - d, y2: R*1.1 + d, stroke: cons, sw: 0.3 },
-      { type: 'line', x1: -R*1.1 + d, y1: -R*1.1 - d, x2: R*1.1 + d, y2: R*1.1 - d, stroke: cons, sw: 0.3 },
+      { type: 'line', x1: -R*1.1 - d, y1: -R*1.1 + d, x2: R*1.1 - d, y2: R*1.1 + d, stroke: cons, sw: 0.75 },
+      { type: 'line', x1: -R*1.1 + d, y1: -R*1.1 - d, x2: R*1.1 + d, y2: R*1.1 - d, stroke: cons, sw: 0.75 },
       // Diagonal ↗ pair
-      { type: 'line', x1: -R*1.1 - d, y1: R*1.1 - d, x2: R*1.1 - d, y2: -R*1.1 - d, stroke: cons, sw: 0.3 },
-      { type: 'line', x1: -R*1.1 + d, y1: R*1.1 + d, x2: R*1.1 + d, y2: -R*1.1 + d, stroke: cons, sw: 0.3 },
+      { type: 'line', x1: -R*1.1 - d, y1: R*1.1 - d, x2: R*1.1 - d, y2: -R*1.1 - d, stroke: cons, sw: 0.75 },
+      { type: 'line', x1: -R*1.1 + d, y1: R*1.1 + d, x2: R*1.1 + d, y2: -R*1.1 + d, stroke: cons, sw: 0.75 },
     ]
   })
 
@@ -176,7 +176,7 @@ export function construct8Fold(R) {
   steps.push({
     desc: 'Eight circles at the inner ring — the rosette skeleton takes shape.',
     elements: ring2Centers.map(c => (
-      { type: 'circle', cx: c.x, cy: c.y, r: rSmall, stroke: cons, fill: 'none', sw: 0.4 }
+      { type: 'circle', cx: c.x, cy: c.y, r: rSmall, stroke: cons, fill: 'none', sw: 1.0 }
     ))
   })
 
@@ -188,8 +188,8 @@ export function construct8Fold(R) {
     const cos = Math.cos(a), sin = Math.sin(a)
     // Lines parallel to each radial direction, offset by rSmall
     const px = -sin * rSmall, py = cos * rSmall
-    lineNet.push({ type: 'line', x1: cos * R * 1.2 + px, y1: sin * R * 1.2 + py, x2: -cos * R * 1.2 + px, y2: -sin * R * 1.2 + py, stroke: C(0.4), sw: 0.25 })
-    lineNet.push({ type: 'line', x1: cos * R * 1.2 - px, y1: sin * R * 1.2 - py, x2: -cos * R * 1.2 - px, y2: -sin * R * 1.2 - py, stroke: C(0.4), sw: 0.25 })
+    lineNet.push({ type: 'line', x1: cos * R * 1.2 + px, y1: sin * R * 1.2 + py, x2: -cos * R * 1.2 + px, y2: -sin * R * 1.2 + py, stroke: C(0.4), sw: 0.625 })
+    lineNet.push({ type: 'line', x1: cos * R * 1.2 - px, y1: sin * R * 1.2 - py, x2: -cos * R * 1.2 - px, y2: -sin * R * 1.2 - py, stroke: C(0.4), sw: 0.625 })
   }
   steps.push({
     desc: 'Parallel lines in all 8 directions — the complete construction network.',

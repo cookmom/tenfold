@@ -108,8 +108,8 @@ export function construct12Fold(R) {
   steps.push({
     desc: 'Point the compass on A, open to B — draw a semi-circle above. Then reverse: B to A. Two arcs meet at the golden intersection.',
     elements: [
-      { type: 'circle', cx: A.x, cy: A.y, r: R * 2, stroke: C(0.35), fill: 'none', sw: 0.4 },
-      { type: 'circle', cx: B.x, cy: B.y, r: R * 2, stroke: C(0.35), fill: 'none', sw: 0.4 },
+      { type: 'circle', cx: A.x, cy: A.y, r: R * 2, stroke: C(0.35), fill: 'none', sw: 1.0 },
+      { type: 'circle', cx: B.x, cy: B.y, r: R * 2, stroke: C(0.35), fill: 'none', sw: 1.0 },
       { type: 'circle', cx: Ctop.x, cy: Ctop.y, r: 2.5, stroke: 'none', fill: C(0.35) },
       { type: 'circle', cx: Cbot.x, cy: Cbot.y, r: 2.5, stroke: 'none', fill: C(0.35) }
     ]
@@ -143,18 +143,18 @@ export function construct12Fold(R) {
       { type: 'circle', cx: Hmirr.x, cy: Hmirr.y, r: 3, stroke: 'none', fill: C(0.35) },
       { type: 'line',   x1: G.x, y1: G.y, x2: H.x, y2: H.y, stroke: C(0.4), sw: 0.5 },
       { type: 'circle', cx: innerCenter.x, cy: innerCenter.y, r: innerR, stroke: cons, fill: 'none', sw: 0.5 },
-      { type: 'circle', cx: -innerCenter.x, cy: innerCenter.y, r: innerR, stroke: C(0.6), fill: 'none', sw: 0.4 },
-      { type: 'circle', cx: innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.6), fill: 'none', sw: 0.4 },
-      { type: 'circle', cx: -innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.6), fill: 'none', sw: 0.4 }
+      { type: 'circle', cx: -innerCenter.x, cy: innerCenter.y, r: innerR, stroke: C(0.6), fill: 'none', sw: 1.0 },
+      { type: 'circle', cx: innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.6), fill: 'none', sw: 1.0 },
+      { type: 'circle', cx: -innerCenter.x, cy: -innerCenter.y, r: innerR, stroke: C(0.6), fill: 'none', sw: 1.0 }
     ]
   })
 
   // ─── Step 6: K point + 6 hexagonal circles ────────────────────────────
   const hexCircles = hexCenters.map(c => ({
-    type: 'circle', cx: c.x, cy: c.y, r: rK, stroke: cons, fill: 'none', sw: 0.45
+    type: 'circle', cx: c.x, cy: c.y, r: rK, stroke: cons, fill: 'none', sw: 1.125
   }))
   hexCircles.push({ type: 'circle', cx: K.x, cy: K.y, r: 3, stroke: 'none', fill: C(0.6) })
-  hexCircles.push({ type: 'circle', cx: 0, cy: 0, r: rK, stroke: C(0.4), fill: 'none', sw: 0.4 })
+  hexCircles.push({ type: 'circle', cx: 0, cy: 0, r: rK, stroke: C(0.4), fill: 'none', sw: 1.0 })
   steps.push({
     desc: 'The inner circle meets the vertical axis at K. Compass to center, open to K — draw 6 circles arranged as a hexagon. The 12-fold grid is forming.',
     elements: hexCircles
@@ -174,7 +174,7 @@ export function construct12Fold(R) {
     { x: 0, y: -rK * (Math.sqrt(3) - 1) }
   ]
   for (const tc of tangentCenters) {
-    centerLines.push({ type: 'circle', cx: tc.x, cy: tc.y, r: tangentR, stroke: cons, fill: 'none', sw: 0.4 })
+    centerLines.push({ type: 'circle', cx: tc.x, cy: tc.y, r: tangentR, stroke: cons, fill: 'none', sw: 1.0 })
   }
   steps.push({
     desc: 'Connect circle centers — where two lines cross the vertical axis, draw small circles tangent to both. The 12-fold structure clarifies.',
