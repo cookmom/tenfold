@@ -129,10 +129,10 @@ export function construct4Fold(R) {
   }))
   // Extend static square lines to outer square
   const extLines = [
-    { type: 'line', x1: -R * 1.05, y1: 0, x2: -R, y2: 0, stroke: C(0.1), sw: 0.4 },
-    { type: 'line', x1:  R * 1.05, y1: 0, x2:  R, y2: 0, stroke: C(0.1), sw: 0.4 },
-    { type: 'line', x1: 0, y1: -R * 1.05, x2: 0, y2: -R, stroke: C(0.1), sw: 0.4 },
-    { type: 'line', x1: 0, y1:  R * 1.05, x2: 0, y2:  R, stroke: C(0.1), sw: 0.4 },
+    { type: 'line', x1: -R * 1.05, y1: 0, x2: -R, y2: 0, stroke: C(0.4), sw: 0.4 },
+    { type: 'line', x1:  R * 1.05, y1: 0, x2:  R, y2: 0, stroke: C(0.4), sw: 0.4 },
+    { type: 'line', x1: 0, y1: -R * 1.05, x2: 0, y2: -R, stroke: C(0.4), sw: 0.4 },
+    { type: 'line', x1: 0, y1:  R * 1.05, x2: 0, y2:  R, stroke: C(0.4), sw: 0.4 },
   ]
   steps.push({
     desc: 'Draw a square outside the circle. Inside, inscribe the static (blue) and dynamic (gold) squares — extend their lines to the outer boundary.',
@@ -180,11 +180,11 @@ export function construct4Fold(R) {
   for (let i = 0; i < 8; i++) {
     const p = innerIntersections[i]
     const q = innerIntersections[(i + 1) % 8]
-    centerConnLines.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.14), sw: 0.45 })
+    centerConnLines.push({ type: 'line', x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: C(0.45), sw: 0.45 })
   }
   // Connect to center
   for (const p of innerIntersections) {
-    centerConnLines.push({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.1), sw: 0.3 })
+    centerConnLines.push({ type: 'line', x1: 0, y1: 0, x2: p.x, y2: p.y, stroke: C(0.4), sw: 0.3 })
   }
   steps.push({
     desc: 'Connect the centers of all small circles — this network divides each circle into 8 equal parts.',
@@ -195,18 +195,18 @@ export function construct4Fold(R) {
   // Diagonal lines (45°)
   const diagLines = []
   for (const off of [-rSmall, rSmall, -rSmall * 3, rSmall * 3]) {
-    diagLines.push({ type: 'line', x1: -EXT + off, y1: -EXT, x2: EXT + off, y2: EXT, stroke: C(0.09), sw: 0.3 })
-    diagLines.push({ type: 'line', x1: -EXT - off, y1: -EXT, x2: EXT - off, y2: EXT, stroke: C(0.09), sw: 0.3 })
+    diagLines.push({ type: 'line', x1: -EXT + off, y1: -EXT, x2: EXT + off, y2: EXT, stroke: C(0.4), sw: 0.3 })
+    diagLines.push({ type: 'line', x1: -EXT - off, y1: -EXT, x2: EXT - off, y2: EXT, stroke: C(0.4), sw: 0.3 })
   }
   // Vertical lines
   const vertLines = []
   for (const x of [0, rSmall, -rSmall, R/Math.SQRT2 - rSmall, -(R/Math.SQRT2 - rSmall), R/Math.SQRT2 + rSmall, -(R/Math.SQRT2 + rSmall)]) {
-    vertLines.push({ type: 'line', x1: x, y1: -EXT, x2: x, y2: EXT, stroke: C(0.09), sw: 0.3 })
+    vertLines.push({ type: 'line', x1: x, y1: -EXT, x2: x, y2: EXT, stroke: C(0.4), sw: 0.3 })
   }
   // Horizontal lines
   const horizLines = []
   for (const y of [0, rSmall, -rSmall, R/Math.SQRT2 - rSmall, -(R/Math.SQRT2 - rSmall), R/Math.SQRT2 + rSmall, -(R/Math.SQRT2 + rSmall)]) {
-    horizLines.push({ type: 'line', x1: -EXT, y1: y, x2: EXT, y2: y, stroke: C(0.09), sw: 0.3 })
+    horizLines.push({ type: 'line', x1: -EXT, y1: y, x2: EXT, y2: y, stroke: C(0.4), sw: 0.3 })
   }
   steps.push({
     desc: 'Draw the diagonal line network through each circle intersection — a lattice of parallels in all directions.',

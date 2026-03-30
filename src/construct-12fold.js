@@ -108,8 +108,8 @@ export function construct12Fold(R) {
   steps.push({
     desc: 'Point the compass on A, open to B — draw a semi-circle above. Then reverse: B to A. Two arcs meet at the golden intersection.',
     elements: [
-      { type: 'circle', cx: A.x, cy: A.y, r: R * 2, stroke: C(0.1), fill: 'none', sw: 0.4 },
-      { type: 'circle', cx: B.x, cy: B.y, r: R * 2, stroke: C(0.1), fill: 'none', sw: 0.4 },
+      { type: 'circle', cx: A.x, cy: A.y, r: R * 2, stroke: C(0.35), fill: 'none', sw: 0.4 },
+      { type: 'circle', cx: B.x, cy: B.y, r: R * 2, stroke: C(0.35), fill: 'none', sw: 0.4 },
       { type: 'circle', cx: Ctop.x, cy: Ctop.y, r: 2.5, stroke: 'none', fill: C(0.35) },
       { type: 'circle', cx: Cbot.x, cy: Cbot.y, r: 2.5, stroke: 'none', fill: C(0.35) }
     ]
@@ -195,7 +195,7 @@ export function construct12Fold(R) {
     connectLines.push({
       type: 'line', x1: pts12[i].x, y1: pts12[i].y,
       x2: pts12[j].x, y2: pts12[j].y,
-      stroke: C(0.18), sw: 0.7
+      stroke: C(0.45), sw: 0.7
     })
   }
   // Mark the 12 points
@@ -221,10 +221,10 @@ export function construct12Fold(R) {
     const tipIn  = { x: Math.cos(aMid) * innerR12 * 0.6, y: Math.sin(aMid) * innerR12 * 0.6 }
     const sideL  = { x: Math.cos(a1) * innerR12, y: Math.sin(a1) * innerR12 }
     const sideR  = { x: Math.cos(a2) * innerR12, y: Math.sin(a2) * innerR12 }
-    petalEls.push({ type: 'line', x1: tipOut.x, y1: tipOut.y, x2: sideL.x, y2: sideL.y, stroke: C(0.22), sw: 0.7 })
-    petalEls.push({ type: 'line', x1: tipOut.x, y1: tipOut.y, x2: sideR.x, y2: sideR.y, stroke: C(0.22), sw: 0.7 })
-    petalEls.push({ type: 'line', x1: tipIn.x,  y1: tipIn.y,  x2: sideL.x, y2: sideL.y, stroke: C(0.22), sw: 0.7 })
-    petalEls.push({ type: 'line', x1: tipIn.x,  y1: tipIn.y,  x2: sideR.x, y2: sideR.y, stroke: C(0.22), sw: 0.7 })
+    petalEls.push({ type: 'line', x1: tipOut.x, y1: tipOut.y, x2: sideL.x, y2: sideL.y, stroke: C(0.55), sw: 0.7 })
+    petalEls.push({ type: 'line', x1: tipOut.x, y1: tipOut.y, x2: sideR.x, y2: sideR.y, stroke: C(0.55), sw: 0.7 })
+    petalEls.push({ type: 'line', x1: tipIn.x,  y1: tipIn.y,  x2: sideL.x, y2: sideL.y, stroke: C(0.55), sw: 0.7 })
+    petalEls.push({ type: 'line', x1: tipIn.x,  y1: tipIn.y,  x2: sideR.x, y2: sideR.y, stroke: C(0.55), sw: 0.7 })
   }
   steps.push({
     desc: 'Draw the rosette petals — each petal a curved diamond between the grid intersections, opening like a flower.',

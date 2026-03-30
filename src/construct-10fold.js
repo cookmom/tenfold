@@ -146,7 +146,7 @@ export function construct10Fold(R) {
   }
   // Mark inner decagon at R/φ
   pentagramEl.push({
-    type: 'circle', cx: 0, cy: 0, r: Rin, stroke: C(0.18), fill: 'none', sw: 0.7
+    type: 'circle', cx: 0, cy: 0, r: Rin, stroke: C(0.45), fill: 'none', sw: 0.7
   })
   steps.push({
     desc: `The diagonals of each pentagon cross to form a pentagram {5/2}. Their intersections fall on a circle of radius R/φ ≈ ${Rin.toFixed(2)} — this is where the golden ratio emerges geometrically. The inner circle is drawn at exactly R/φ.`,
